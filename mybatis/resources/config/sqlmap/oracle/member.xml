@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!-- 최상위 태그 mapper 필수 -->
+<!-- 
+	MemberMapper를 다른 xml과 구분하기 위해
+	사용하는 매퍼클래스의 구분
+
+	namespace 자바에서 패키지 처럼
+	xml에서 태그 구분을 위해 사용하는 것
+	
+	얘를 사용하는 DAO 클래스의 풀네임을 준다.
+ -->
+<mapper namespace="kr.co.mlec.member.mapper.MemberMapper">
+    <!--
+     mapper 파일에서는 select, inset, delete, update 등 쿼리를 적용
+   	 쿼리 뒤에 ; 붙히면 에러
+    -->
+    
+    <!-- id는 태크과 태그를 구분하게 해준다. -->
+    <!-- parameterType은 #{}에 들어갈 타입-->
+    <!-- resultType는 sql 결과의 타입  값으로는 sqlMapConfig.xml의 alias 사용-->
+    <select id="getMemberInfo1" parameterType="string" resultType="member">
+    select *
+    	from mybatis_member
+    where id = #{id}
+    </select>
+    
+    <select id="getMemberInfo2" resultType="member"
+    parameterType="member" > <!-- member 객체를 보낸다 -->
+    	select *
+    		from mybatis_member
+    	where id = #{id}
+    		and name = #{name}
+    </select>
+    
+    <select id="getMemberInfo3" resultType="string"
+    parameterType="string" > <!-- 결과값이 스트링이다 -->
+    	select name
+    		from mybatis_member
+    	where id = #{id}
+    </select>
+    
+    <select id="getMemberInfo4" resultType="int">
+    	select count(*)
+    		from mybatis_member    
+    </select>
+    
+<!-- sql문은  list 결과나 하나의 행 결과나 결국 result 타입은 member(도메인) 하나다 -->
+    <select id="getMemberList1" resultType="member">
+    	select *
+    		from mybatis_member
+    	order by id DESC
+    </select>
+
+    <select id="getMemberList2" resultType="string">
+    	select name
+    		from mybatis_member
+    	order by id DESC
+    </select>
+
+	<!--테이블 데이터의 결과를 VO에 설정해서 변환 -->
+	<!--type은 실행된 결과를 받아야할 VO를 받아야 된다.-->
+	<resultMap id="memberMap" type="member"> 
+		<!--
+			name - > name
+			id - > id
+			..
+			join_date -> joinDate
+		-->
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="email" property="email"/>
+		<result column="addr" property="addr"/>
+		<result column="join_date" property="joinDate"/>
+		
+	</resultMap>
+    <!--내가 결과를 만드는게 아니라 resultMap을 통해서 결과를 받겠다-->
+    <select id="getMemberList3" resultMap="memberMap">
+<!--     	select join_date as joinDate -->
+			select *
+    		from mybatis_member
+    	order by id DESC
+    </select>
+    
+    
+   
+	<insert id="insertMember" parameterType="member">
+		insert into mybatis_member(
+			id,name,email,addr
+		)values(
+			#{id},#{name},#{email},#{addr}
+		)
+	</insert>    
+    
+    
+    <update id="updateMember" parameterType="member">
+    	update mybatis_member
+    		set name = #{name},
+    			email = #{email},
+    			addr = #{addr}
+    	where id = #{id}
+    </update>
+    
+    
+    <delete id="deleteMember" parameterType="member">
+    	delete 
+    		from mybatis_member
+    	where id=#{id} and name=#{name}
+    </delete>
+    
+    
+    <select id="getMemberIteratorList" 
+    parameterType="member" resultMap="memberMap">
+    	select *
+    		from mybatis_member  
+    	where addr in <foreach item="addr" collection="addrs" 
+    					open="(" separator="," close=")"> <!-- collection : List -->
+    					#{addr}
+    				  </foreach>
+						<!-- = where addr in ('busan' , 'seoul') -->
+						<!-- = where addr = 'busan' or addr = 'seoul' -->
+    </select>
+    
+	
+	<sql id="whereCommon">
+    	where id like '%mem%'
+	</sql>
+    
+    <select id="getMemberIncludeList" resultMap="memberMap">
+    	select *
+    		from mybatis_member
+    	<include refid="whereCommon" />
+    </select>
+    
+    
+    <select id="getMemberIncludeListCount" resultType="int">
+		select count(*)
+			from mybatis_member
+		<include refid="whereCommon" />	
+    </select>
+    
+    <select id="getMemberSearchList" parameterType="search"
+    resultMap="memberMap">
+    	select *
+    		from mybatis_member
+    	<choose>
+    		<when test="searchType == 'id'">
+	    		where id like '%' || #{searchWord} || '%'
+    		</when>
+    		<otherwise>
+		    	where name like '%' || #{searchWord} || '%'
+    		</otherwise>
+    	</choose>
+    </select>
+
+    
+    <select id="getMemberSearchList2" parameterType="member"
+    resultMap="memberMap">
+    	select *
+    		from mybatis_member
+		<where> <!-- and가 없어야되거나 있어야될떄 알아서 처리해줌 -->
+	    	<!-- id만 있는경우 -->
+			<if test="id != null">
+	    		id like '%' || #{id} || '%'		
+			</if>
+	    	<!-- name만 있는경우 -->
+			<if test="name != null">
+		    	and name like '%' || name} || '%'
+			</if>
+	    	<!-- 둘다 있는경우 -->
+	    	<!-- 둘다 없는경우는 where절 안만듬 -->
+    	</where>
+
+    </select>
+
+
+    
+</mapper>

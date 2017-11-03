@@ -1,0 +1,50 @@
+<!-- 
+	background-size : auto, 크기지정, 백분율
+	
+	background-size : 배경 이미지의 크기 지정
+	//  넓이가 줄어드는 비율만큼 높이도 비율단위로 줄어든다.
+    background-size : 200px;
+    background-size : 200px 150px;
+    background-size : 50%;
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+	img {
+		margin-top: 10px;
+	}
+	
+	#contain {
+		width: 574px; height: 358px;
+		background: url("../images/pic4.jpg") no-repeat;
+		
+		background-size: 287px 358px;
+		background-size: 287px 179px;
+		background-size: 287px;
+		background-size: 30%;
+		border: 1px solid black;
+	}
+</style>
+</head>
+<body>
+    <div id="contain"></div>
+    <div id="cover"></div>
+    <img src="../images/pic4.jpg" />
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

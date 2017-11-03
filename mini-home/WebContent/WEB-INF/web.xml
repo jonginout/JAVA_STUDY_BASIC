@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>my-home</display-name>
+  
+  	<!-- 로그인 안해도 되는 목록	 -->
+	<filter>
+		<filter-name>auth</filter-name>
+		<filter-class>filter.AuthFilter</filter-class>
+		<init-param>
+			<param-name>nonelogin</param-name>
+			<param-value>
+				<!-- /;	 -->
+				<!--우리는 디폴트 url 이 없으니깐 안해도 된다. -->
+				/jsp/signin/idchk;
+				/jsp/main/main;
+				/jsp/login/loginform;
+				/jsp/login/loginprocess;
+				/jsp/signin/signinform;
+				/jsp/signin/signinprocess;
+				/jsp/homepage/homepage;
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>nonedirlogin</param-name>
+			<param-value>
+				/css;
+				<!-- 폴더 제외	 -->
+			</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>auth</filter-name>
+		<url-pattern>*</url-pattern>
+	<!-- 로그인을 처리안해도 될것만 처리한다 -->
+	</filter-mapping>
+	
+  
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>charset</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>*</url-pattern>
+		<!-- 모든 URL -->
+	</filter-mapping>
+
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	
+</web-app>

@@ -1,0 +1,75 @@
+<!-- 
+    넘치는 텍스트 표기하기
+      -  text-overflow : 속성
+        : ellipsis(말줄임표 ... 표시)
+        
+    3가지 - width,  white-space,  overflow
+ -->
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>한줄텍스트</title>
+<style>
+	p {
+		font-size: 1.5em;
+		border: 1px solid black;
+		padding: 10px;
+		
+		width: 400px;
+		white-space: nowrap;
+		overflow: hidden;	
+	}
+	p.over { text-overflow: ellipsis; }
+	
+	table { 
+		width: 400px;
+		/* 테이블 크기 고정 */
+		table-layout: fixed;
+	}
+	
+	table, td {
+		border: 1px solid black;	
+		border-collapse: collapse;
+		
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis; 		
+	}
+	/*  
+		span : inline 형태의 태그들은 내용물에 맞춰서 크기가 자동 지정
+		따라서 width, height 적용되지 않는다.
+	*/
+	div, span {
+		width: 400px;
+		border: 1px solid black;
+		
+		display: block;	
+		
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis; 	
+	}
+	
+</style>
+</head>
+
+<body>
+	<div>bbb</div>
+	<span>aaa</span>
+	<span>fdd</span>
+	<span>gghhg</span>
+    <h2>최근 시장성 및 전망</h2>    
+    <p class="over">아들이 돌아왔다. 그것도 웬 여자애를 하나 데리고서.</p>
+
+    <table>
+        <tr>
+            <td>아들이 돌아왔다. 그것도 웬 여자애를 하나 데리고서. 에밀은 지난 몇 달 동안 아들이 무사히 돌아오길 간절히 기도했다.</td>
+        </tr>
+    </table>
+    
+    <div>
+        <span>아들이 돌아왔다. 그것도 웬 여자애를 하나 데리고서. 에밀은 지난 몇 달 동안 아들이 무사히 돌아오길 간절히 기도했다.</span>
+    </div>
+</body>
+</html>

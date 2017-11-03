@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>transform-origin(변형 기준점)</title>
+<meta charset="utf-8" />
+<style>
+	div {
+		background: yellow;
+		width: 300px;  height: 250px;
+		border: 2px solid tomato;
+		float: left;
+		margin: 20px;
+	}
+	img {
+		width: 300px;  height: 250px;
+	}
+	
+	#x > img { transform: rotate(30deg); }
+	#x1 > img { 
+		transform-origin: 0% 0%;
+		transform: rotate(30deg);  
+	}
+	#x2 > img { 
+		transform-origin: right bottom;
+		transform: rotate(30deg); 
+	}
+		
+</style>
+</head>
+<body>
+    <h1>transform-origin</h1>
+    <div id="x" ><img src="../images/pic1.jpg" /></div>
+    <div id="x1"><img src="../images/pic1.jpg" /></div>
+    <div id="x2"><img src="../images/pic1.jpg" /></div>
+</body>
+</html>
+

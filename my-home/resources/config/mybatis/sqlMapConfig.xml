@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	
+<!-- 최상위 태그로 꼭 configuration -->
+<configuration>
+
+	<!-- 설정파일에서 사용할 프로퍼티의 파일의 경로 지정: classpath -->
+	<!-- XML에서는 프로젝트 개념이 아니라 폴더 개념이라서 / 이다 -->
+	<!-- db.properties경로를 꼭 입력해라 -->
+	<properties resource="config/mybatis/db.properties"/>
+	
+	<!-- SQL의 결과를 담을 VO 객체들의 별칭을 설정하여 사용의 편의를 도모  -->
+	<!-- JDBC에서 Domain 이라고 보면됨-->
+	<!--  SQL이 작성되는 mapper.xml 파일에서 참조할 때 사용ㅋㅋ -->
+	<typeAliases>
+		<typeAlias alias="login" type="com.jongin.login.Login" />
+		<typeAlias alias="signin" type="com.jongin.signin.Signin" />
+		<typeAlias alias="board" type="com.jongin.board.BoardDomain" />
+	</typeAliases>
+	
+	<!-- 
+		설정된 정보를 이용해서 자동으로 데이터베이스의 정보를 로딩하고 연결함..
+		여러개의 environment 중에 기본적으로(default) 쓸 id가 development
+	 -->
+	<environments default="development">
+		<!-- 		어떤 환경을 사용할지 / environment 여러개 가능 -->
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+		<!-- 		연결방법 => JDBC -->
+			<dataSource type="POOLED">
+		<!-- 		DB커넥션 POOLED 개념을 사용하겠다. -->
+				<!-- name="driver..url.." 등 name 명은 바꾸면 안된다. -->
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${username}"/>
+				<property name="password" value="${password}"/>
+				<!-- url=jdbc:oracle:thin:@localhost:1521:XE -->
+				<!-- driver=oracle.jdbc.driver.OracleDriver -->
+				<!-- username=hr -->
+				<!-- password=hr -->
+			</dataSource>
+		</environment>
+<!-- 	<environment id="local"> -->	
+<!-- 		어떤 환경을 사용할지 / environment 여러개 가능 -->
+<!-- 	</environment> -->
+	</environments>
+
+<!-- 
+	 사용자가 작성한 xml 파일들의 위치 (sql)
+ -->
+	<mappers>
+		<mapper resource="config/sqlmap/oracle/login.xml"/>
+		<mapper resource="config/sqlmap/oracle/signin.xml"/>
+		<mapper resource="config/sqlmap/oracle/board.xml"/>
+	</mappers>
+</configuration>

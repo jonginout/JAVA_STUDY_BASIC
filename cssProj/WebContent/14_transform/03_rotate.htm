@@ -1,0 +1,55 @@
+<html>
+<head>
+<title> rotate (회전) </title>
+<meta charset="utf-8" />
+<style>
+	div {
+		background: yellow;
+		width: 300px;  height: 250px;
+		border: 2px solid tomato;
+		float: left;
+		margin: 20px;
+		
+		overflow: hidden;
+	}
+	img {
+		width: 300px;  height: 250px;
+	}
+	
+	.outer {
+		width: 100%; height: 300px;
+	}
+	
+	#x > img { transform: rotateX(45deg); }
+	#x1 > img { transform: rotateX(70deg);  }
+	#x2 > img { transform: rotateX(120deg);   }
+	
+	#y > img { transform: rotateY(45deg); }
+	#y1 > img { transform: rotateY(70deg);  }
+	#y2 > img { transform: rotateY(120deg);   }
+	
+	#all > img { transform: rotateZ(45deg); }
+	#all1 > img { transform: rotateZ(70deg);  }
+	#all2 > img { transform: rotateZ(120deg);   }
+</style>
+</head>
+<body>
+    <h1>rotate (회전)</h1>
+    <div class="outer">
+	    <div id="x"><img src="../images/pic1.jpg" /></div>
+	    <div id="x1"><img src="../images/pic1.jpg" /></div>
+	    <div id="x2"><img src="../images/pic1.jpg" /></div>
+    </div>
+    <div class="outer">
+        <div id="y"><img src="../images/pic1.jpg" /></div>
+        <div id="y1"><img src="../images/pic1.jpg" /></div>
+        <div id="y2"><img src="../images/pic1.jpg" /></div>
+    </div>
+    <div class="outer">
+        <div id="all"><img src="../images/pic1.jpg" /></div>
+        <div id="all1"><img src="../images/pic1.jpg" /></div>
+        <div id="all2"><img src="../images/pic1.jpg" /></div>
+    </div>
+</body>
+</html>
+

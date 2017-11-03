@@ -1,0 +1,55 @@
+<html>
+<head>
+<title> 테이블 스타일 꾸미기 </title>
+<meta charset="utf-8" />
+<style>
+	table, th, td {
+		border: 1px solid #345;
+	}
+	table {
+		border-collapse: collapse;
+		width: 80%;
+	}
+	th {
+		height: 40px;
+		background: #787621;
+		color: white;
+	}
+	td {
+		height: 40px;
+		padding-left: 5px;
+	}
+	tr:NTH-CHILD(odd) {
+		background: rgba(255, 0, 0, 0.3);
+	}
+	tr:NTH-CHILD(even) {
+		background: rgba(0, 255, 0, 0.3);
+	}
+	tr:hover {
+		background: tomato;
+		color: white;
+	}
+</style>
+</head>
+<body>
+
+<table>
+  <tr>
+    <th>번호</th>
+    <th>제목</th>
+    <th>글쓴이</th>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>CSS 테이블 스타일</td>
+    <td>홍길동</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>CSS 연습중..</td>
+    <td>장길산</td>
+  </tr>
+</table>
+
+</body>
+</html>

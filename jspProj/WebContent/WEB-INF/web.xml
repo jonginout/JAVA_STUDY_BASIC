@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>my-home</display-name>
+ 
+ 	<filter>
+		<filter-name>myFilter</filter-name>
+		<filter-class>day07.MyFilter</filter-class>
+		<init-param>
+			<param-name>app_name</param-name>
+			<param-value>mytest</param-value>
+		</init-param>
+		<init-param>
+			<param-name>server_port</param-name>
+			<param-value>8080</param-value>
+		</init-param>
+	</filter>
+	
+	
+	<!--필터 클래스를 특정, 호출과 연결하기 -->
+	<filter-mapping>
+		<filter-name>myFilter</filter-name>
+		<url-pattern>/board/*</url-pattern>
+	<!-- /board/* 디렉토리의 어떤 것들을 지나갈때는
+	 반드시 common.LoginCheckFilter 를 거쳐라 -->
+	</filter-mapping>
+ 
+ 
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+	
+</web-app>

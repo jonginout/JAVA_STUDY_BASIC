@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jongin.staffSkill.StaffSkillMapper">
+
+	<resultMap id="staffSkillMap" type="staffSkill"> 
+		<result column="staff_skill_no" property="staffSkillNo"/>
+		<result column="staff_no" property="staffNo"/>
+		<result column="skill_code" property="skillCode"/>
+	</resultMap>
+
+<!-- 	<sql id="whereCommon"> -->
+<!-- 		<where> -->
+<!-- 			<if test="staffName != null"> -->
+<!-- 				staff_name like '%' || #{staffName} || '%' -->
+<!-- 			</if> -->
+<!-- 		</where>		 -->
+<!-- 	</sql> -->
+
+	<insert id="insertStaffSkill" parameterType="staffSkill">
+       INSERT INTO STAFF_SKILL 
+	        (staff_skill_no, 
+	        staff_no, 
+	        skill_code) 
+       VALUES
+	        (STAFF_SKILL_SEQ.nextval,
+	        #{staffNo}, 
+	        #{skillCode})
+	</insert>
+	
+	<delete id="deleteStaffSkill" parameterType="int">
+		delete from staff_skill where staff_no = #{staffNo}
+	</delete>
+    
+    <select id="detailStaffSkill" parameterType="int" resultMap="staffSkillMap">
+    	select * 
+    		from staff_skill
+    	where staff_no = #{staffNo} 
+    </select>
+    
+</mapper>

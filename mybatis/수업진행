@@ -1,0 +1,10 @@
+xml 파일등 java 이외의 설정관련 파일 저장
+- 프로젝트에서 마우스 오른쪽 버튼을 클릭해서 source folder 생성한다.
+
+  (resources 이름으로 생성)
+- 생성된 폴더에 config 폴더를 붙여넣기
+
+라이브러리 build path 추가하기
+- lib 폴더 생성후 mybatis와 ojdbc 파일 붙여넣기
+- 프로젝트 우클릭후 빌드패스 add libraries해서 라이브러리 추가
+- 
