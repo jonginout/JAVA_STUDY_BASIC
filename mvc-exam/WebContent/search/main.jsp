@@ -17,7 +17,7 @@
 	.btn{
 		padding: 2px !important;
     	border-radius: 25px;
-	}
+	} 
 </style>
 </head>
 <body>
