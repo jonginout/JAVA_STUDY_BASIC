@@ -59,17 +59,35 @@
 			
 			
 <script type="text/javascript">
-	
-	var url = "";
-	var param = '${param.year}';
-	if (param.length>0) {
-		url = `
-		&staffName=${param.staffName}&religionCode=${param.religionCode}&year=${param.year}&month=${param.month}&day=${param.day}&year2=${param.year2}&month2=${param.month2}&day2=${param.day2}&graduateDay1=${param.graduateDay1}&graduateDay2=${param.graduateDay2}
-		`;		
-	}
-	
+
 	function goPage(pageNo) {
+		
+		var url = location.href;
+		var uri = url.split(".do?");
+		
+		var param = "";
+		
+		if(uri.length>1){
+			param = uri[1];
+			if(param.indexOf('pageNo=')!=-1){
+				if (param.indexOf('&')!=-1) {
+					//페이지 파라미터 외에 다른 파라미터가 많을때 
+					tmp = param.substring((param.indexOf("&")));
+					param = "pageNo="+pageNo+tmp;
+				}else{
+					//페이지 파라미터 혼자 있을때
+					param = "pageNo="+pageNo;
+				}
+			}else{
+				// 페이지 파라미터가 없을때
+				param = "pageNo="+pageNo+"&"+param;
+			}
+		}else{
+			param = "pageNo="+pageNo;
+		}
+		
+		
 		location.href =
-			"${url}?pageNo="+pageNo+url;
+			"${url}?"+param;
 	}
 </script>

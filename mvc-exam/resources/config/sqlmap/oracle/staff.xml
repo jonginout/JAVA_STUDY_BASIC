@@ -12,7 +12,7 @@
 		<result column="graduate_day" property="graduateDay"/>
 	</resultMap>
 
-	<sql id="whereCommon">
+	<sql id="whereCommon">	  
 		<where>
 			<if test="staffName != null">
 				staff_name like '%' || #{staffName} || '%'
@@ -35,26 +35,75 @@
 			</if>
 		</where>		
 	</sql>
+
+	<sql id="whereCommon2">
+		<where>
+			<if test="skillCodes != null">
+	    			SKILL_CODE in <foreach item="skillCode" collection="skillCodes" 
+    									open="(" separator="," close=")"> <!-- collection : List -->
+    									#{skillCode}
+    				  			</foreach>
+    		</if>
+		</where>	
+	</sql>
 	
 	
 	<select id="listStaff" parameterType="staff" resultMap="staffMap">
-			select *
-				from (select rownum runum, a.*
-						from (select staff.*
-								from STAFF 
-							<include refid="whereCommon" />
-							order by staff_no desc) a)
-			where runum between #{begin} and #{end}
+	
+	select *
+	from
+	(
+		select rownum runum, RESULT_TABLE.*
+		from
+		(
+			select distinct
+			STAFF_TB.*, SKILL_TB.STAFF_NO as join_staff_no
+			from 
+			(
+				select *
+					from 
+				STAFF
+					<include refid="whereCommon" />
+			) STAFF_TB
+			, 
+			(
+				select STAFF_NO
+					from
+				STAFF_SKILL
+					<include refid="whereCommon2" />
+			) SKILL_TB
+			where STAFF_TB.STAFF_NO = SKILL_TB.STAFF_NO
+				order by STAFF_TB.STAFF_NO desc
+		) RESULT_TABLE
+	)
+	where runum between #{begin} and #{end}
+
 	</select>
 
 
 	<select id="listStaffCount" parameterType="staff" resultType="int">
 		select count(*)
-			from (select rownum runum, a.*
-						from (select staff.*, SUBSTR(JUMIN_NO, 8, 1) as sex 
-								from STAFF 
-							order by staff_no desc) a)
-			<include refid="whereCommon" />				
+			from
+			(
+				select distinct
+				STAFF_TB.*, SKILL_TB.STAFF_NO as join_staff_no
+				from 
+				(
+					select *
+						from 
+					STAFF
+						<include refid="whereCommon" />
+				) STAFF_TB
+				, 
+				(
+					select STAFF_NO
+						from
+					STAFF_SKILL
+						<include refid="whereCommon2" />
+				) SKILL_TB
+				where STAFF_TB.STAFF_NO = SKILL_TB.STAFF_NO
+					order by STAFF_TB.STAFF_NO desc
+			) 
 	</select>
 
 

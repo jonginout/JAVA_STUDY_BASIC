@@ -13,7 +13,7 @@
 	<c:import url="/include/basicInclude.jsp" />
 	
 	<form action="${pageContext.request.contextPath}/search/insert.do"
-	 method="post" name="insertForm">
+	 method="post" name="insertForm" onsubmit="return false;">
 		<table border="1">
 			<tr>
 				<td colspan="6">사원 정보 등록</td>

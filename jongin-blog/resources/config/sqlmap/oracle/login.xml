@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.jongin.blog.login.LoginMapper">
+
+	<resultMap id="loginMap" type="login"> 
+		<result column="member_no" property="memberNo"/>
+		<result column="id" property="id"/>
+		<result column="pw" property="pw"/>
+	</resultMap>
+
+	<select id="login" parameterType="login" resultMap="loginMap">
+		select *
+			from MEMBERS
+		where id = #{id} and pw = #{pw}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

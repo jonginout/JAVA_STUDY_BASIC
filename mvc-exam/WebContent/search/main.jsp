@@ -204,6 +204,15 @@
 	var staffParam = '${param}';
 	if(staffParam){
 		
+		//제이슨
+		var skillCode = "${param.skillCode}";
+		if (!skillCode.length<1) {			
+		var skillCodes = ${skillCodes};
+			for (var i = 0; i < skillCodes.length; i++) {
+				$("input:checkbox[name=skillCode][value="+skillCodes[i]+"]").prop("checked", true);			
+			}
+		}
+		
 		var staffName = "${param.staffName}";
 		if (!staffName.length<1) {			
 			$("#staffName").val('${param.staffName}');

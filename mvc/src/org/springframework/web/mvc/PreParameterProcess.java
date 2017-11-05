@@ -29,6 +29,7 @@ public class PreParameterProcess {
 		
 		int index=0;
 		for (Parameter p : pArr) {
+			
 
 			Class<?> tClz = p.getType();
 			// 클래스를 넘겨줘야 하니깐 
@@ -47,6 +48,8 @@ public class PreParameterProcess {
 			}
 			String pValue = request.getParameter(pName); 
 			// pName에 대한 파라미터 얻고
+			
+
 			
 			if (pValue == null) { // 파라미터 값이 없으면
 				pValue = defaultValue;

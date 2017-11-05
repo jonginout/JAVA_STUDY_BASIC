@@ -14,6 +14,12 @@ public class MainController{
 		return new ModelAndView("/main/main.jsp");
 	}
 	
+	@RequestMapping(value="/main/main2.do")
+	public ModelAndView main2() throws Exception {
+		
+		return new ModelAndView("/main/main2.jsp");
+	}
+	
 }
 
 

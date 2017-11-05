@@ -35,7 +35,7 @@ public class SearchController {
 		
 		//스태프를 페이지에 상속
 		
-		String skillCode[] = request.getParameterValues("skillCode");
+		String [] skillCodes = request.getParameterValues("skillCode");
 
 		int listPerPage = 5; // 페이지 당 리스트
 		int pagePerBlock = 3;	// 블록당 페이지 수
@@ -50,6 +50,8 @@ public class SearchController {
 		List<SkillDomain> skillList = skillDao.listSkill();
 		List<SchoolDomain> schoolList = schoolDao.listSchool();
 		List<ReligionDomain> religionList = religionDao.listReligion();
+		
+		staff.setSkillCodes(skillCodes);
 		List<StaffDomain> staffList = staffDao.listStaff(staff);
 		int staffListCount = staffDao.listStaffCount(staff);
 		
@@ -57,6 +59,11 @@ public class SearchController {
 		PageResult pageResult = new PageResult(pageNo, staffListCount, pagePerBlock, listPerPage);
 		
 		ModelAndView mav = new ModelAndView("/search/main.jsp");
+		
+		Gson gson = new Gson();
+        String result = gson.toJson(staff.getSkillCodes());
+		
+        mav.addAttribute("skillCodes", result);
 		mav.addAttribute("skillList", skillList);
 		mav.addAttribute("schoolList", schoolList);
 		mav.addAttribute("religionList", religionList);
@@ -66,6 +73,34 @@ public class SearchController {
 		
 		return mav;
 
+	}
+	
+	
+	@RequestMapping(value="/search/insert.do")
+	public String insert(
+			StaffDomain staff , StaffSkillDomain staffSkill,
+			HttpServletRequest request
+			) throws Exception {
+
+
+		String skillCodes[] = request.getParameterValues("skillCode");
+
+		
+		StaffMapper StaffDao = new StaffMapper();
+		StaffSkillMapper staffSkillDao = new StaffSkillMapper();
+		
+		int nextStaffNo = StaffDao.staffGetNextStaffNo();
+		staff.setStaffNo(nextStaffNo);
+		StaffDao.insertStaff(staff);
+		
+		for (String skill : skillCodes) {
+			System.out.println("선택한스킬"+skill);
+			staffSkill.setStaffNo(nextStaffNo); //스태프
+			staffSkill.setSkillCode(Integer.parseInt(skill));
+			staffSkillDao.insertStaffSkill(staffSkill);			
+		}
+
+		return "redirect:/search/main.do";
 	}
 	
 	@RequestMapping(value = "/search/insertfrom.do")
@@ -144,33 +179,7 @@ public class SearchController {
 		
 		return "redirect:/search/main.do";
 	}
-	
-	@RequestMapping(value="/search/insert.do")
-	public String write(
-			StaffDomain staff , StaffSkillDomain staffSkill,
-			HttpServletRequest request
-			) throws Exception {
 
-
-		String skillCodes[] = request.getParameterValues("skillCode");
-
-		
-		StaffMapper StaffDao = new StaffMapper();
-		StaffSkillMapper staffSkillDao = new StaffSkillMapper();
-		
-		int nextStaffNo = StaffDao.staffGetNextStaffNo();
-		staff.setStaffNo(nextStaffNo);
-		StaffDao.insertStaff(staff);
-		
-		for (String skill : skillCodes) {
-			System.out.println("선택한스킬"+skill);
-			staffSkill.setStaffNo(nextStaffNo); //스태프
-			staffSkill.setSkillCode(Integer.parseInt(skill));
-			staffSkillDao.insertStaffSkill(staffSkill);			
-		}
-
-		return "redirect:/search/main.do";
-	}
 	
 	@RequestMapping(value="/search/delete.do")
 	public String delete(int staffNo) throws Exception {

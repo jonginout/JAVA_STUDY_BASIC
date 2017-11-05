@@ -13,7 +13,7 @@
 	<c:import url="/include/basicInclude.jsp" />
 	
 	<form action="${pageContext.request.contextPath}/search/modify.do?staffNo=${staff.staffNo}"
-	 method="post" name="modifyForm">
+	 method="post" name="modifyForm" onsubmit="return false;">
 		<table border="1">
 			<tr>
 				<td colspan="6">사원 정보 등록</td>

@@ -45,6 +45,7 @@ public class DispatcherServlet extends HttpServlet{
 		
 		//특정 URL에 대한 작업 클래스를 호출한다;
 		String uri = request.getRequestURI();
+		
 		// /mvc
 		System.out.println("uri : "+uri);
 		
@@ -96,7 +97,7 @@ public class DispatcherServlet extends HttpServlet{
 				break;
 			case "void":
 				m.invoke(target, params);
-				view = uri.replace(".do", ".jsp");
+				view = "/jsp"+uri.replace(".do", ".jsp");
 				break;
 			case "ModelAndView":
 				mav = (ModelAndView)m.invoke(target, params);

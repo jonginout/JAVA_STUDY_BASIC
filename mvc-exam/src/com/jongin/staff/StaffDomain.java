@@ -1,5 +1,7 @@
 package com.jongin.staff;
 
+import java.util.Arrays;
+
 import com.jongin.search.Page;
 
 public class StaffDomain extends Page{
@@ -15,7 +17,15 @@ public class StaffDomain extends Page{
 	private String juminNoSt;
 	private String graduateDay1;
 	private String graduateDay2;
+	String [] skillCodes;
 	
+	
+	public String[] getSkillCodes() {
+		return skillCodes;
+	}
+	public void setSkillCodes(String[] skillCodes) {
+		this.skillCodes = skillCodes;
+	}
 	public String getGraduateDay1() {
 		return graduateDay1;
 	}
@@ -77,8 +87,12 @@ public class StaffDomain extends Page{
 	public String toString() {
 		return "StaffDomain [staffNo=" + staffNo + ", staffName=" + staffName + ", juminNo=" + juminNo + ", schoolCode="
 				+ schoolCode + ", religionCode=" + religionCode + ", graduateDay=" + graduateDay + ", juminNoSt="
-				+ juminNoSt + ", graduateDay1=" + graduateDay1 + ", graduateDay2=" + graduateDay2 + "]";
+				+ juminNoSt + ", graduateDay1=" + graduateDay1 + ", graduateDay2=" + graduateDay2 + ", skillCodes="
+				+ Arrays.toString(skillCodes) + "]";
 	}
+
+	
+	
 	
 
 }
