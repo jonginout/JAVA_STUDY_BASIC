@@ -1,24 +1,50 @@
 package co.kr.jongin.blog.blog;
 
-public class BlogDomain {
+public class BlogDomain{
 
-    private String blogNo;
-    private String memberNo;
+    private int blogNo;
+    private int memberNo;
     private String title;
     private String tag;
-    private String logoNo;
-    private String showNum;
-    private String visit;
-	public String getBlogNo() {
+    private int logoNo;
+    private int showNum;
+    private int visit;
+    private String id;
+    
+    
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	private String column;
+	private String word;
+	
+	public String getColumn() {
+		return column;
+	}
+	public void setColumn(String column) {
+		this.column = column;
+	}
+	public String getWord() {
+		return word;
+	}
+	public void setWord(String word) {
+		this.word = word;
+	}
+    
+    
+	public int getBlogNo() {
 		return blogNo;
 	}
-	public void setBlogNo(String blogNo) {
+	public void setBlogNo(int blogNo) {
 		this.blogNo = blogNo;
 	}
-	public String getMemberNo() {
+	public int getMemberNo() {
 		return memberNo;
 	}
-	public void setMemberNo(String memberNo) {
+	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
 	}
 	public String getTitle() {
@@ -33,25 +59,23 @@ public class BlogDomain {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	public String getLogoNo() {
+	public int getLogoNo() {
 		return logoNo;
 	}
-	public void setLogoNo(String logoNo) {
+	public void setLogoNo(int logoNo) {
 		this.logoNo = logoNo;
 	}
-	public String getShowNum() {
+	public int getShowNum() {
 		return showNum;
 	}
-	public void setShowNum(String showNum) {
+	public void setShowNum(int showNum) {
 		this.showNum = showNum;
 	}
-	public String getVisit() {
+	public int getVisit() {
 		return visit;
 	}
-	public void setVisit(String visit) {
+	public void setVisit(int visit) {
 		this.visit = visit;
 	}
 	
-    
-    
 }

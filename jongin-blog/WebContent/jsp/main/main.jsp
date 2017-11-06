@@ -21,17 +21,17 @@
 			<h3>
 				<c:choose>
 					<c:when test="${empty user}">
-						<a href="${pageContext.request.contextPath}/login/loginform.do">로그인</a>
+			 			<a href="${pageContext.request.contextPath}/login/loginform.do">로그인</a>
 						<a href="${pageContext.request.contextPath}/signin/signinform.do">회원가입</a>					
 					</c:when>
 					<c:otherwise>
 						<a href="${pageContext.request.contextPath}/login/logout.do">로그아웃</a>		
 						<c:choose>
-							<c:when test="${empty hompi}">
-								<a id="blogBtn" href="">블로그 생성</a>
+							<c:when test="${myBlog}">
+								<button id="blogBtn" onclick="myBlog()">내 블로그</button>
 							</c:when>
 							<c:otherwise>
-								<a id="blogBtn" href="${pageContext.request.contextPath}/blog/bloginsert.do">내 블로그</a>
+								<button id="blogBtn" onclick="makeBlog()">블로그 생성</button>
 							</c:otherwise>
 						</c:choose>
 					</c:otherwise>
@@ -41,15 +41,54 @@
 			<form action="">
 				<div id="searchBox">
 					<select id="searchSelect" name="column">
-						<option value="">블로그 제목</option>
-						<option value="">블로거</option>
-						<option value="">태그</option>
+						<option value="title">블로그 제목</option>
+						<option value="memberNo">블로거</option>
+						<option value="tag">태그</option>
 					</select> 
 					<input id="searchText" type="text" name="word"/>
 					<button id="searchBtn">검색</button>
 				</div>
 			</form>	
 			
+		
+		
+				<table id="blogList" border="1" width="400">
+					<tr>
+						<td>번호</td>
+						<td>블로그명</td>
+						<td>블로거</td>
+						<td>로고</td>
+					</tr>
+					<c:forEach var="blog" items="${blogList}">
+						<tr>
+							<td>${blog.blogNo}</td>
+							<td>${blog.title}</td>
+							<td>${blog.id}</td>
+							<td>${blog.logoNo}</td>
+						</tr>
+					</c:forEach>
+				</table>
+			
 		</div>
+		
 </body>
 </html>
+
+<script type="text/javascript">
+	
+	if("${param.column}") $("#searchSelect").val("${param.column}");
+	if("${param.word}") $("#searchText").val("${param.word}");
+
+	function makeBlog() {
+		if (confirm('나만의 블로그를 생성하겠습니까?')) {			
+			location.href=		
+			"${pageContext.request.contextPath}/blog/bloginsert.do";
+		}
+	}
+	
+	function myBlog() {
+		location.href=		
+		"${pageContext.request.contextPath}/blog/bloginsert.do";
+	}
+
+</script>

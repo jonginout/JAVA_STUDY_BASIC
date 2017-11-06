@@ -43,3 +43,8 @@
 	float: right;
 	color: #ffffff;
 }
+#blogList{
+	background: lightyellow;
+	margin: auto;
+	margin-top: 20px;
+}

@@ -13,7 +13,21 @@ import org.springframework.web.mvc.RequestMapping;
 public class LoginController {
 
 	@RequestMapping("/login/loginform.do")
-	public void loginForm() {}
+	public ModelAndView loginForm(HttpServletRequest request) {
+		
+		ModelAndView mav = new ModelAndView("/jsp/login/loginform.jsp");
+		
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c : cookies) {
+				if ("cid".equals(c.getName())) {
+					mav.addAttribute("cid", c.getValue());
+					break;
+				}
+			}
+		}		
+		return mav;
+	}
 
 	@RequestMapping("/login/logout.do")
 	public String logout(
@@ -47,7 +61,7 @@ public class LoginController {
 		if(login!=null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", login);
-			mav.setView("/jsp/main/main.jsp");
+			mav.setView("redirect:/main/main.do");
 		}else {
 			mav.setView("/jsp/login/loginform.jsp");
 			mav.addAttribute("error", "입력한 정보가 올바르지 않습니다.");
@@ -56,3 +70,5 @@ public class LoginController {
 	}
 	
 }
+
+//아이디 기억

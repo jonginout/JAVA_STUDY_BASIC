@@ -29,7 +29,7 @@ create table BLOGS(
     member_no number(30) not null,
     title varchar2(30) not null,
     tag varchar2(30) default '태그를 입력하세요.',
-    logo_no number(30) not null,
+    logo_no number(30) ,
     show_num number(3) default 1,
     visit number(30) default 1,
     FOREIGN KEY(member_no) REFERENCES MEMBERS(member_no),
