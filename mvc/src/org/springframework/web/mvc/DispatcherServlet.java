@@ -1,6 +1,7 @@
 package org.springframework.web.mvc;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -10,6 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.JsonObject;
 
 /*
 	Dispatcher의 역할 (FrontController)
@@ -113,6 +116,10 @@ public class DispatcherServlet extends HttpServlet{
 					view = contextPath+view;
 				}
 				response.sendRedirect(view);
+			}else if (view.startsWith("jsonView:")) {
+				view = view.substring("jsonView:".length());
+				response.setContentType("application/x-json; charset=UTF-8");
+				response.getWriter().print(view);
 			}else {
 				if (mav != null) {
 					//모델앤뷰가 존재한다면.
@@ -124,7 +131,8 @@ public class DispatcherServlet extends HttpServlet{
 		                  request.setAttribute(
 		                		  (String)me.getKey(), me.getValue()
 		                	  );        
-		            	}
+		            }
+		            
 	            }
 
 				

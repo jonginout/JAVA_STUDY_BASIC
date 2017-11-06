@@ -1,4 +1,4 @@
--- MEMBERS Å×ÀÌºí
+-- MEMBERS í…Œì´ë¸”
 CREATE TABLE MEMBERS (
     member_no number(30),
     id varchar2(30) not null unique,
@@ -6,10 +6,10 @@ CREATE TABLE MEMBERS (
     PRIMARY KEY (member_no)
 );
 
---member_no ½ÃÄö½º
+--member_no ì‹œí€€ìŠ¤
 create sequence member_no_sq;
 
--- LOGOS Å×ÀÌºí »ı¼º
+-- LOGOS í…Œì´ë¸” ìƒì„±
 create table LOGOS(
     logo_no number(30),
     blog_no number(30) not null,
@@ -20,27 +20,27 @@ create table LOGOS(
     PRIMARY KEY (logo_no)
 );
 
---logo_no ½ÃÄö½º
+--logo_no ì‹œí€€ìŠ¤
 create sequence logo_no_sq;
 
--- BLOGS Å×ÀÌºí »ı¼º
+-- BLOGS í…Œì´ë¸” ìƒì„±
 create table BLOGS(
     blog_no number(30),
     member_no number(30) not null,
     title varchar2(30) not null,
-    tag varchar2(30) default 'ÅÂ±×¸¦ ÀÔ·ÂÇÏ¼¼¿ä.',
+    tag varchar2(30) default 'íƒœê·¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.',
     logo_no number(30) not null,
     show_num number(3) default 1,
     visit number(30) default 1,
-    FOREIGN KEY(member_no) REFERENCES MEMBER(member_no),
-    FOREIGN KEY(logo_no) REFERENCES LOGO(logo_no),
+    FOREIGN KEY(member_no) REFERENCES MEMBERS(member_no),
+    FOREIGN KEY(logo_no) REFERENCES LOGOS(logo_no),
     PRIMARY KEY (blog_no)
 );
 
---blog_no ½ÃÄö½º
+--blog_no ì‹œí€€ìŠ¤
 create sequence blog_no_sq;
 
--- CATEGORYS Å×ÀÌºí »ı¼º
+-- CATEGORYS í…Œì´ë¸” ìƒì„±
 create table CATEGORYS(
     category_no number(30),
     blog_no number(30) not null,
@@ -48,14 +48,14 @@ create table CATEGORYS(
     show_type varchar2(30) default 'TITLE',
     show_num number(3) default 1,
     description varchar2(100) not null,
-    FOREIGN KEY(blog_no) REFERENCES BLOG(blog_no),
+    FOREIGN KEY(blog_no) REFERENCES BLOGS(blog_no),
     PRIMARY KEY (category_no)
 );
 
--- category_no ½ÃÄö½º
+-- category_no ì‹œí€€ìŠ¤
 create sequence category_no;
 
--- POSTS Å×ÀÌºí »ı¼º
+-- POSTS í…Œì´ë¸” ìƒì„±
 create table POSTS(
     post_no number(30),
     blog_no number(30) not null,
@@ -67,16 +67,16 @@ create table POSTS(
     reg_date date default sysdate,
     update_date date default sysdate,
     visit number(30) default 1,
-    FOREIGN KEY(blog_no) REFERENCES BLOG(blog_no),
-    FOREIGN KEY(member_no) REFERENCES MEMBER(member_no),
-    FOREIGN KEY(category_no) REFERENCES CATEGORY(category_no),
+    FOREIGN KEY(blog_no) REFERENCES BLOGS(blog_no),
+    FOREIGN KEY(member_no) REFERENCES MEMBERS(member_no),
+    FOREIGN KEY(category_no) REFERENCES CATEGORYS(category_no),
     PRIMARY KEY (post_no)
 );
 
--- post_no ½ÃÄö½º
+-- post_no ì‹œí€€ìŠ¤
 create sequence post_no_sq;
 
--- COMMENTS Å×ÀÌºí »ı¼º
+-- COMMENTS í…Œì´ë¸” ìƒì„±
 create table COMMENTS(
     comment_no number(30),
     post_no number(30) not null,
@@ -84,14 +84,14 @@ create table COMMENTS(
     content varchar2(4000) not null,
     reg_date date default sysdate,
     update_date date default sysdate,
-    FOREIGN KEY(post_no) REFERENCES POST(post_no),
+    FOREIGN KEY(post_no) REFERENCES POSTS(post_no),
     PRIMARY KEY (comment_no)
 );
 
--- comment_no ½ÃÄö½º
+-- comment_no ì‹œí€€ìŠ¤
 create sequence comment_no_sq;
 
---FILES Å×ÀÌºí »ı¼º
+--FILES í…Œì´ë¸” ìƒì„±
 create table FILES(
     file_no number(30),
     post_no number(30) not null,
@@ -99,9 +99,9 @@ create table FILES(
     ori_name varchar2(200) not null,
     system_name varchar2(200) not null,
     file_size number(30) not null,
-    FOREIGN KEY(post_no) REFERENCES POST(post_no),
+    FOREIGN KEY(post_no) REFERENCES POSTS(post_no),
     PRIMARY KEY (file_no)
 );
 
--- file_no ½ÃÄö½º
+-- file_no ì‹œí€€ìŠ¤
 create sequence file_no_sq;

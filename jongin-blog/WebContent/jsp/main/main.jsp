@@ -11,11 +11,12 @@
 <body>
 		<div id="content">
 			
-			<div id="mainLogo">
+			<h1 id="mainLogo">
 				<a href="${pageContext.request.contextPath}/main/main.do">
-					<img width="200" src="http://postfiles4.naver.net/MjAxNzExMDVfMjUx/MDAxNTA5ODA5NDMzNzk3.frdOfv32zFGzwyEfnT0yFUK3qfyTcCuNiadOhg_hW40g.8gk74wuaTAb5kCdZ3XRMLIZblkv2MCvMkeXl2URcHtAg.PNG.jonginout/main.png?type=w2" alt="메인로고" />
+					<i class="fa fa-home" aria-hidden="true"></i>
+					Jongin Blog
 				</a>
-			</div>
+			</h1>
 			
 			<h3>
 				<c:choose>
@@ -24,13 +25,15 @@
 						<a href="${pageContext.request.contextPath}/signin/signinform.do">회원가입</a>					
 					</c:when>
 					<c:otherwise>
-						<a href="${pageContext.request.contextPath}/login/logout.do">로그아웃</a>
-						<c:if test="홈페이지 없으면">
-							<a href="">내 블로그 생성하기</a>
-						</c:if>				
-						<c:if test="홈페이지 있으면">
-							<a href="">내 블로그</a>
-						</c:if>				
+						<a href="${pageContext.request.contextPath}/login/logout.do">로그아웃</a>		
+						<c:choose>
+							<c:when test="${empty hompi}">
+								<a id="blogBtn" href="">블로그 생성</a>
+							</c:when>
+							<c:otherwise>
+								<a id="blogBtn" href="${pageContext.request.contextPath}/blog/bloginsert.do">내 블로그</a>
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</h3>

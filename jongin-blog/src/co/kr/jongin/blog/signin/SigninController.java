@@ -1,20 +1,20 @@
 package co.kr.jongin.blog.signin;
 
 
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.web.mvc.Controller;
+import org.springframework.web.mvc.ModelAndView;
 import org.springframework.web.mvc.RequestMapping;
 
-import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 
 import co.kr.jongin.blog.login.LoginDomain;
 
 @Controller
 public class SigninController {
-
+	
 	@RequestMapping("/signin/signinform.do")
 	public void name() {}
 	
@@ -26,23 +26,24 @@ public class SigninController {
 	}
 	
 	@RequestMapping("/signin/idchk.do")
-	public void idchk(String id, HttpServletResponse response) throws Exception{
+	public String idchk(String id) throws Exception{
+		
+		Map<String, Object> obj = new HashMap<>();
+		ModelAndView mav= new ModelAndView();
+		SigninMapper signinDAO = new SigninMapper();		 
+		
+		if (signinDAO.signinIdChk(id)<1) {
+			
+			obj.put("result", 1);
+			obj.put("msg", "사용 가능한 아이디 입니다.");
 
-		SigninMapper signinDAO = new SigninMapper();
-		JsonObject jsonObject = new JsonObject();				 
-		PrintWriter out = null;
-		response.setContentType("application/x-json; charset=UTF-8"); //HttpServletResponse response
-
-		if (signinDAO.signinIdChk(id)<1) {		
-			jsonObject.addProperty("success", "사용 가능한 아이디 입니다.");
-			out = response.getWriter();
-		}else {			 
-			jsonObject.addProperty("error", "존재하는 아이디 입니다.");
-			out = response.getWriter();
+		}else {	
+			
+			obj.put("result", 2);
+			obj.put("msg", "이미 존재하는 아이디 입니다.");
 		}
 		
-		out.print(jsonObject);
-		out.close();	
+		return "jsonView:"+new Gson().toJson(obj);	
 	}
 	
 }

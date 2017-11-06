@@ -85,15 +85,15 @@
 	            	},
 	            dataType : "json",
 	            success : function(data){
-	            	if (data.success) {
-	            		alert(data.success);
+	            	if (data.result==1) {
+	            		alert(data.msg);
 		                $("#id").attr("readonly", "readonly");
 		                $("#submit").show(200);
 		                $("#clear").show(200);
 		                $("#idChkBtn").hide(200);
 		                $("#chkMsg").show(200);
 					}else {
-	            		alert(data.error);
+	            		alert(data.msg);
 					}
 	            }
 	             
