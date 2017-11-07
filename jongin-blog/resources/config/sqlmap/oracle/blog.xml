@@ -29,30 +29,40 @@
 			where member_no = #{member_no}
 	</select>
 	
+	<select id="blogDetail" parameterType="int" resultMap="blogMap">
+		select *
+			from BLOGS
+		where blog_no = #{blogNo}
+	</select>
+	
+	<select id="myBlogDetail" parameterType="int" resultMap="blogMap">
+		select *
+			from BLOGS
+		where member_no = #{memberNo}
+	</select>
 
 	<select id="blogList" parameterType="blog" resultMap="blogMap">
-    		select MEMBER_NO_LIST.id,BLOG_LIST.*
-    			from
-    			(
-    				 select member_no, id
-       					 from MEMBERS
-       				<if test="column == 'memberNo'">
-   						 where id like '%' || #{word} || '%'
-   					</if>
-    			) MEMBER_NO_LIST
-				,
-   				 (
-    				select *
-        				from BLOGS
-				<if test="column == 'title'">
-					where title like '%' || #{word} || '%'
-				</if>
-				<if test="column == 'tag'">
-					where tag like '%' || #{word} || '%'
-				</if>
-    			) BLOG_LIST
-    		where MEMBER_NO_LIST.member_no = BLOG_LIST.member_no
+		select b.*, m.id
+			from BLOGS b
+				inner join MEMBERS m
+			on b.MEMBER_NO = m.MEMBER_NO
+		<include refid="whereSearch" />
+		order by blog_no
 	</select>
+	
+	<sql id="whereSearch">
+		<where>
+			<if test="column == 'title'">
+	    		title like '%' || #{word} || '%'		
+			</if>
+			<if test="column == 'tag'">
+	    		and tag like '%' || #{word} || '%'		
+			</if>
+			<if test="column == 'memberNo'">
+	    		and id like '%' || #{word} || '%'		
+			</if>
+    	</where>
+	</sql>
 	
 </mapper>
 

@@ -60,7 +60,7 @@
 						<td>로고</td>
 					</tr>
 					<c:forEach var="blog" items="${blogList}">
-						<tr>
+						<tr id="goBlog" onclick="goBlog('${blog.blogNo}')">
 							<td>${blog.blogNo}</td>
 							<td>${blog.title}</td>
 							<td>${blog.id}</td>
@@ -88,7 +88,12 @@
 	
 	function myBlog() {
 		location.href=		
-		"${pageContext.request.contextPath}/blog/blog.do";
+		"${pageContext.request.contextPath}/blog/myblog.do?memberNo=${user.memberNo}";
+	}
+	
+	function goBlog(blogNo) {
+		location.href=		
+		"${pageContext.request.contextPath}/blog/blog.do?blogNo="+blogNo;
 	}
 
 </script>
