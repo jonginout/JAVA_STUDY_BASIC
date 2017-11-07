@@ -17,7 +17,7 @@ var arr2 = arr;
 
 arr[1] = 2000;
 
-console.log("arr" : arr);
-console.log("arr2" : arr2); // 같은 공간을 보고있다.
+console.log("arr" , arr);
+console.log("arr2" , arr2); // 같은 공간을 보고있다.
 
 

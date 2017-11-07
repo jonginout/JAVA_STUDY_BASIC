@@ -88,7 +88,7 @@
 	
 	function myBlog() {
 		location.href=		
-		"${pageContext.request.contextPath}/blog/bloginsert.do";
+		"${pageContext.request.contextPath}/blog/blog.do";
 	}
 
 </script>

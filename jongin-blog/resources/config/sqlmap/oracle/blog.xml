@@ -31,35 +31,27 @@
 	
 
 	<select id="blogList" parameterType="blog" resultMap="blogMap">
-    	<choose>
-    		<when test="column == 'memberNo'">
-	    		select BLOGS.*,MEMBER_NO_LIST.id
-    				from BLOGS,
-    				(
-    					select member_no, id
-       						 from MEMBERS
+    		select MEMBER_NO_LIST.id,BLOG_LIST.*
+    			from
+    			(
+    				 select member_no, id
+       					 from MEMBERS
+       				<if test="column == 'memberNo'">
    						 where id like '%' || #{word} || '%'
-   					 ) MEMBER_NO_LIST
-				where BLOGS.member_no = MEMBER_NO_LIST.member_no
-    		</when>
-    		<otherwise>
-    			select MEMBERS.id,BLOG_LIST.*
-    				from MEMBERS,
-   					 (
-    					select *
-        					from BLOGS
-					<if test="column == 'title'">
-						where title like '%' || #{word} || '%'
-					</if>
-					<if test="column == 'tag'">
-						where tag like '%' || #{word} || '%'
-					</if>
-    				) BLOG_LIST
-    			where MEMBERS.member_no = BLOG_LIST.member_no
-
-    		</otherwise>
-    	</choose>
-
+   					</if>
+    			) MEMBER_NO_LIST
+				,
+   				 (
+    				select *
+        				from BLOGS
+				<if test="column == 'title'">
+					where title like '%' || #{word} || '%'
+				</if>
+				<if test="column == 'tag'">
+					where tag like '%' || #{word} || '%'
+				</if>
+    			) BLOG_LIST
+    		where MEMBER_NO_LIST.member_no = BLOG_LIST.member_no
 	</select>
 	
 </mapper>
