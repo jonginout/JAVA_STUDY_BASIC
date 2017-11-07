@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.kr.jongin.blog.blog.BlogMapper">
+
+
+	<resultMap id="blogMap" type="blog"> 
+		<result column="blog_no" property="blogNo"/>
+		<result column="member_no" property="memberNo"/>
+		<result column="title" property="title"/>
+		<result column="tag" property="tag"/>
+		<result column="logo_no" property="logoNo"/>
+		<result column="show_num" property="showNum"/>
+		<result column="visit" property="visit"/>
+		<result column="id" property="id"/>
+	</resultMap>
+
+	<insert id="blogInsert" parameterType="blog">
+		insert into BLOGS
+			(blog_no,member_no,title)
+		values
+			(BLOG_NO_SQ.NEXTVAL,#{memberNo},#{title})
+	</insert>
+	
+	<select id="chkMyBlog" parameterType="int" resultType="int">
+		select count(*)
+			from
+		BLOGS
+			where member_no = #{member_no}
+	</select>
+	
+
+	<select id="blogList" parameterType="blog" resultMap="blogMap">
+    	<choose>
+    		<when test="column == 'memberNo'">
+	    		select BLOGS.*,MEMBER_NO_LIST.id
+    				from BLOGS,
+    				(
+    					select member_no, id
+       						 from MEMBERS
+   						 where id like '%' || #{word} || '%'
+   					 ) MEMBER_NO_LIST
+				where BLOGS.member_no = MEMBER_NO_LIST.member_no
+    		</when>
+    		<otherwise>
+    			select MEMBERS.id,BLOG_LIST.*
+    				from MEMBERS,
+   					 (
+    					select *
+        					from BLOGS
+					<if test="column == 'title'">
+						where title like '%' || #{word} || '%'
+					</if>
+					<if test="column == 'tag'">
+						where tag like '%' || #{word} || '%'
+					</if>
+    				) BLOG_LIST
+    			where MEMBERS.member_no = BLOG_LIST.member_no
+
+    		</otherwise>
+    	</choose>
+
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

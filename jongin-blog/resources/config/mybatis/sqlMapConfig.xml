@@ -12,6 +12,7 @@
 	-->
 	<typeAliases>
 		<typeAlias alias="login" type="co.kr.jongin.blog.login.LoginDomain" />
+		<typeAlias alias="blog" type="co.kr.jongin.blog.blog.BlogDomain" />
 	</typeAliases>
 	
 	<!-- 
@@ -35,6 +36,7 @@
 	<mappers>
 		<mapper resource="config/sqlmap/oracle/signin.xml"/>
 		<mapper resource="config/sqlmap/oracle/login.xml"/>
+		<mapper resource="config/sqlmap/oracle/blog.xml"/>
 	</mappers>
 </configuration>
 
