@@ -28,4 +28,12 @@ public class BlogMapper {
 		return session.selectList(NS + "blogList", blog);
 	}
 	
+	public BlogDomain blogDetail(int blogNo) throws Exception {
+		return session.selectOne(NS + "blogDetail", blogNo);
+	}
+	
+	public BlogDomain myBlogDetail(int memberNo) throws Exception {
+		return session.selectOne(NS + "myBlogDetail", memberNo);
+	}
+	
 }
