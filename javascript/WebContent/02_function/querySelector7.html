@@ -1,0 +1,119 @@
+<!-- 
+
+    querySelector("css 선택자");
+    - css 선택자에 해당하는 요소 중 하나를 반환한다.
+    
+    querySelectorAll("css 선택자");
+    - css 선택자에 해당하는 모든 요소를 다 반환한다.
+
+    엘리먼트(요소)의 속성
+    - innerHTML : <div>innerHTML</div>
+      처리할 문자에 html 태그가 있는경우 적용
+      
+      
+      - innerText : <div>innerText</div>
+      처리할 문자에 html 태그가 있는경우 일반 텍스트로 표시
+
+ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+        <style>
+        	table{
+        		width: 300px;
+        		height: 500px; 
+        		
+        	}
+			td{
+				text-align : center;
+				font-size: 40px;
+				padding : 5px;
+				cursor: pointer;
+				font-weight: bold;
+			}
+			td:hover{
+				background: black;
+				color: white;
+			}
+            #result{
+                width: 150px;;
+                text-align: right;
+                font-size: 14px;
+                word-break: break-all;
+            }
+		</style>
+    </head>
+    <body>
+
+        <h1></h1>
+        
+        <table border="1" >
+        	<tr>
+        		<td colspan="3" id="result">
+                </td>
+                <td onclick="action('c')">C</td>                
+        	</tr>
+        	<tr>
+        		<td onclick="action(7)">7</td>
+        		<td onclick="action(8)">8</td>
+        		<td onclick="action(9)">9</td>
+        		<td onclick="action('+')">+</td>
+        	</tr>
+        	<tr>
+        		<td onclick="action(4)">4</td>
+        		<td onclick="action(5)">5</td>
+        		<td onclick="action(6)">6</td>
+        		<td onclick="action('-')">-</td>
+        	</tr>
+        	<tr>
+        		<td onclick="action(1)">1</td>
+        		<td onclick="action(2)">2</td>
+        		<td onclick="action(3)">3</td>
+        		<td onclick="action('*')">*</td>
+        	</tr>
+        	<tr>
+        		<td onclick="action('del')">←</td>
+        		<td onclick="action(0)">0</td>
+        		<td onclick="action('=')">=</td>
+        		<td onclick="action('/')">/</td>
+        	</tr>
+        </table>
+        
+        <script type="text/javascript">
+
+            function action(e){
+
+
+                var result = document.querySelector("#result");
+                if((typeof e)=='number'){
+                    result.innerText += e;
+                }else{
+                    switch (e) {
+                        case "c":
+                            result.innerText = "";
+                            break;
+                        case "del":
+                            result.innerText = result.innerText.substring(0, result.innerText.length-1);
+                            break;
+                        case "+":
+                            result.innerText += "+";
+                            var txt = result.innerText;
+                            pro.push = parseInt(txt.substring(0, txt.length-1));
+                            pro.push = "+";
+                            console.log(pro)
+                            break;
+                        case "=":
+                            var txt = result.innerText;
+                            break;
+                        
+                        default:
+                            break;
+                    }
+                }
+            }
+			
+		</script>
+    </body>
+</html>
