@@ -26,9 +26,45 @@
 					fdg
 				</div>
 				<div id="sidebar">
-					<button>로그인</button>
-					<button>로그아웃</button>
-					<button>블로그 관리</button>
+					<div id="loginBtn">
+						<c:choose>
+							<c:when test="${empty user}">
+								<a href="${pageContext.request.contextPath}/login/loginform.do">로그인</a>
+							</c:when>
+							<c:otherwise>
+								<a href="${pageContext.request.contextPath}/login/logout.do">로그아웃</a>
+								<c:if test="${blog.memberNo == user.memberNo}">
+									<a href="${pageContext.request.contextPath}/blog/blogsetform.do?blogNo=${blog.blogNo}">블로그관리</a>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div id="logoBox">
+						<c:choose>
+							<c:when test="${empty user}">
+								<img src="https://s3.ap-northeast-2.amazonaws.com/dankookie/profiles/default.jpg"/>
+							</c:when>
+							<c:otherwise>
+								<img src="https://s3.ap-northeast-2.amazonaws.com/dankookie/profiles/default.jpg"/>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div id="categoryBox">
+						<strong>카테고리</strong>
+						<ul>
+							<li><a href="">카테고리</a></li>
+							<li><a href="">카테고리</a></li>
+							<li><a href="">카테고리</a></li>
+						</ul>
+					</div>
+					<div id="mainLogoBox">
+						<h2>
+							<a href="${pageContext.request.contextPath}/main/main.do"> 
+								<i class="fa fa-home" aria-hidden="true"></i>
+								Jongin Blog
+							</a>
+						</h2>
+					</div>
 				</div>
 			</div>
 	

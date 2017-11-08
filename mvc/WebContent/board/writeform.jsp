@@ -14,7 +14,9 @@
 	</div>
 	<div class="content">
 	<form method="post" 
-	      action="${pageContext.request.contextPath}/board/write.do">
+	      action="${pageContext.request.contextPath}/board/write.do"
+	      
+	      >
 		<table>
 			<tbody>
 				<tr>
@@ -36,6 +38,12 @@
 						>내용을 입력하세요</textarea>
 					</td>
 				</tr>
+<!-- 				<tr> -->
+<!-- 					<th>사진</th> -->
+<!-- 					<td> -->
+<!-- 						<input type="file" name="file"/> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
 				<tr>
 					<td colspan="2">
 						<button>등록</button>

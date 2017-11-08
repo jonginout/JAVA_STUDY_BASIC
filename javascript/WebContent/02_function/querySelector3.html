@@ -1,0 +1,55 @@
+<!-- 
+
+    querySelector("css 선택자");
+    - css 선택자에 해당하는 요소 중 하나를 반환한다.
+    
+    querySelectorAll("css 선택자");
+    - css 선택자에 해당하는 모든 요소를 다 반환한다.
+
+    엘리먼트(요소)의 속성
+    - innerHTML : <div>innerHTML</div>
+      처리할 문자에 html 태그가 있는경우 적용
+      
+      
+      - innerText : <div>innerText</div>
+      처리할 문자에 html 태그가 있는경우 일반 텍스트로 표시
+
+ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+    </head>
+    <body>
+        <h1>0</h1>
+        <span>
+            <button onclick="doAction();">쿼리셀렉터</button>
+        </span>
+        
+        
+        <script type="text/javascript">
+            var count = 3;
+            var id = setInterval(()=>{
+                if(count==0){
+                    var h1Ele = document.querySelector("h1");
+                    var buttonEle = document.querySelector("span");
+                    var num = parseInt(h1Ele.innerText);
+                    h1Ele.innerHTML = num+"회 클릭하셨습니다.";
+                    buttonEle.innerHTML = "";
+                    clearInterval(id);
+                    return
+                }
+                console.log(count--);
+            }, 1000)
+
+			function doAction() {
+                var h1Ele = document.querySelector("h1");
+                var num = parseInt(h1Ele.innerText);
+                h1Ele.innerText = num+1;
+
+            }
+
+		</script>
+    </body>
+</html>

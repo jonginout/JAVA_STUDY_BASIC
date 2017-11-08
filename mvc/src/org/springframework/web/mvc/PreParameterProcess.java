@@ -75,6 +75,7 @@ public class PreParameterProcess {
 				break;
 			default:
 				rArr[index++] = WebUtil.toVO(request, tClz);
+				// 파라미터 클래스를 그냥 바로 넘겨준다.
 			}
 			
 		}

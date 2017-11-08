@@ -1,0 +1,64 @@
+<!-- 
+
+    querySelector("css 선택자");
+    - css 선택자에 해당하는 요소 중 하나를 반환한다.
+    
+    querySelectorAll("css 선택자");
+    - css 선택자에 해당하는 모든 요소를 다 반환한다.
+
+    엘리먼트(요소)의 속성
+    - innerHTML : <div>innerHTML</div>
+      처리할 문자에 html 태그가 있는경우 적용
+      
+      
+      - innerText : <div>innerText</div>
+      처리할 문자에 html 태그가 있는경우 일반 텍스트로 표시
+
+ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+    </head>
+    <body>
+        <h1>연습</h1>
+        <div>자바스크립트를 이용한 접근</div>
+        <div>자바스크립트를 이용한 접근</div>
+        <div>자바스크립트를 이용한 접근</div>
+        <p id="food">
+        	모든 음식에서는 <span id="spanEle">정성이</span> 들어가야 한다.
+        </p>
+        <button onclick="doAction();">쿼리셀렉터</button>
+        <button onclick="doAction2();">쿼리셀렉터2</button>
+        
+        
+        <script type="text/javascript">
+			function doAction() {
+                var h1Ele = document.querySelector("h1");
+                alert(h1Ele.innerText);
+                // h1Ele.innerText = "안녕 허졉아?"
+                // h1Ele.innerHTML = 
+                // `
+                // <a href="http://www.naver.com">네이버 짱짱맨</a>
+                // `
+                h1Ele.innerText = 
+                `
+                <a href="http://www.naver.com">네이버 짱짱맨</a>
+                `
+
+                var divs = document.querySelectorAll("div");
+                for( var div of divs){
+                    div.innerText = "고마웡~";
+                }
+            }
+            
+            var doAction2 = () => {
+                var spanEle = document.querySelector("#spanEle");
+                // spanEle.innerText = "소금이";
+                spanEle.innerHTML = "<strong>소금이</strong>";
+            }
+
+		</script>
+    </body>
+</html>

@@ -1,0 +1,83 @@
+<!-- 
+
+    querySelector("css 선택자");
+    - css 선택자에 해당하는 요소 중 하나를 반환한다.
+    
+    querySelectorAll("css 선택자");
+    - css 선택자에 해당하는 모든 요소를 다 반환한다.
+
+    엘리먼트(요소)의 속성
+    - innerHTML : <div>innerHTML</div>
+      처리할 문자에 html 태그가 있는경우 적용
+      
+      
+      - innerText : <div>innerText</div>
+      처리할 문자에 html 태그가 있는경우 일반 텍스트로 표시
+
+ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+    </head>
+    <body>
+        <h1>로또게임</h1>
+        <span id="h3">
+
+        </span>
+        <span id="h2" style="color: red">
+
+        </span>
+        <br>
+        <span>
+            <button onclick="doAction();">쿼리셀렉터</button>
+        </span>
+        
+        
+        <script type="text/javascript">
+
+			function doAction() {
+                
+                var count = 0;
+                var id = setInterval(function(){
+
+
+                    var id2 = setInterval(function(){
+                        var no = parseInt(Math.random() * 45);
+                        var h2 = document.querySelector("#h2");
+                        h2.innerText = no;
+                        if (count==6) {
+                            h2.innerText = "";
+                        }
+                    },50)
+
+
+                    var no = parseInt(Math.random() * 45);
+                    var h3 = document.querySelector("#h3");
+
+                    var h3Txt = h3.innerText;
+                    var arr = h3Txt.split(",");
+
+                    var chk = false;
+                    for(var n of arr){
+                        if(n==no){
+                            chk = true;
+                            return;
+                        }
+                    }
+                    if(!chk){
+                        h3.innerText += no+",";
+                        count += 1;
+                    }
+                    if (count==6) {
+                        clearInterval(id);
+                    }
+                    
+                }, 1000)
+                
+            }
+
+		</script>
+    </body>
+</html>

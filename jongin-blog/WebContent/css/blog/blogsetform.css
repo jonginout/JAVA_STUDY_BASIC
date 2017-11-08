@@ -23,33 +23,18 @@
 }
 #main {
 	float: left;
-	width: 65%;
+	width: 100%;
 	background: #efdfed;
 	
 	min-height: 600px;
 }
-#sidebar {
-	float: right;
-	width: 35%;
-	background: #d3e3ef;
-	
-	min-height: 600px;
+#setBtnBox{
+	margin: 10px;
 }
-
+#formBox{	
+	margin: 50px;
+}
 #loginBtn {
 	margin-top: 10px;
-	text-align: center;
-}
-
-#logoBox {
-	margin-top: 20px;
-	text-align: center;
-}
-
-#categoryBox {
-	padding: 15px;
-	min-height: 300px;
-}
-#mainLogoBox{
 	text-align: center;
 }

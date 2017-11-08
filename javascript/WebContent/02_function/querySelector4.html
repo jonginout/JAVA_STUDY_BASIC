@@ -1,0 +1,53 @@
+<!-- 
+
+    querySelector("css 선택자");
+    - css 선택자에 해당하는 요소 중 하나를 반환한다.
+    
+    querySelectorAll("css 선택자");
+    - css 선택자에 해당하는 모든 요소를 다 반환한다.
+
+    엘리먼트(요소)의 속성
+    - innerHTML : <div>innerHTML</div>
+      처리할 문자에 html 태그가 있는경우 적용
+      
+      
+      - innerText : <div>innerText</div>
+      처리할 문자에 html 태그가 있는경우 일반 텍스트로 표시
+
+ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Insert title here</title>
+    </head>
+    <body>
+        <h1></h1>
+        <span>
+            <button onclick="doAction();">쿼리셀렉터</button>
+            <button onclick="stop();">중지</button>
+        </span>
+        
+        
+        <script type="text/javascript">
+
+
+            var func = () => {
+                var date = new Date();
+                var time = date.toLocaleTimeString();
+                var h1 = document.querySelector("h1");
+                h1.innerText = time;
+            }
+
+            var id;
+			function doAction() {
+                id = setInterval(func, 1000);
+            }
+
+            function stop(){
+                clearTimeout(id);
+            }
+
+		</script>
+    </body>
+</html>
