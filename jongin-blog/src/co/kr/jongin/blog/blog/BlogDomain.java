@@ -12,6 +12,13 @@ public class BlogDomain{
     private String id;
     
     
+	@Override
+	public String toString() {
+		return "BlogDomain [blogNo=" + blogNo + ", memberNo=" + memberNo + ", title=" + title + ", tag=" + tag
+				+ ", logoNo=" + logoNo + ", showNum=" + showNum + ", visit=" + visit + ", id=" + id + ", column="
+				+ column + ", word=" + word + "]";
+	}
+	
 	public String getId() {
 		return id;
 	}

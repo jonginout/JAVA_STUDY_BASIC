@@ -15,11 +15,35 @@
 		<result column="id" property="id"/>
 	</resultMap>
 
+	<resultMap id="logoMap" type="logo"> 
+		<result column="logo_no" property="logoNo"/>
+		<result column="blog_no" property="blogNo"/>
+		<result column="file_path" property="filePath"/>
+		<result column="ori_name" property="oriName"/>
+		<result column="system_name" property="systemName"/>
+		<result column="file_size" property="fileSize"/>
+	</resultMap>
+
 	<insert id="blogInsert" parameterType="blog">
 		insert into BLOGS
 			(blog_no,member_no,title)
 		values
 			(BLOG_NO_SQ.NEXTVAL,#{memberNo},#{title})
+	</insert>
+	
+	<update id="blogModify" parameterType="blog">
+		update BLOGS
+			set title = #{title},
+				tag = #{tag},
+				show_num = #{showNum}
+		where blog_no = #{blogNo}
+	</update>
+	
+	<insert id="logoInsert" parameterType="logo">
+		insert into LOGOS
+			(LOGO_NO,BLOG_NO,FILE_PATH,ORI_NAME,SYSTEM_NAME,FILE_SIZE)
+		values
+			(LOGO_NO_SQ.NEXTVAL,#{blogNo},#{filePath},#{oriName},#{systemName},#{fileSize})
 	</insert>
 	
 	<select id="chkMyBlog" parameterType="int" resultType="int">
@@ -32,6 +56,12 @@
 	<select id="blogDetail" parameterType="int" resultMap="blogMap">
 		select *
 			from BLOGS
+		where blog_no = #{blogNo}
+	</select>
+
+	<select id="logoDetail" parameterType="int" resultMap="logoMap">
+		select *
+			from LOGOS
 		where blog_no = #{blogNo}
 	</select>
 	

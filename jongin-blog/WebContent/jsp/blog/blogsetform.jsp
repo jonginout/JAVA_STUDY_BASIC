@@ -31,14 +31,15 @@
 						<button>블로그 삭제</button>				
 					</div>
 					<div id="formBox">
-						<form action="" enctype="multipart/form-data">
+						<form action="${pageContext.request.contextPath}/blog/modifyblog.do?blogNo=${blog.blogNo}" 
+						enctype="multipart/form-data" method="post">
 							<p>
 								블로그 제목 : 
-								<input type="title" value="${blog.title}"/>
+								<input name="title" type="text" value="${blog.title}"/>
 							</p>	
 							<p>
 								블로그 태그 : 
-								<input type="tag" value="${blog.tag}"/>
+								<input name="tag" type="text" value="${blog.tag}"/>
 							</p>
 							<p>
 								메인페이지 포스트 : 
@@ -54,11 +55,17 @@
 							</p>
 							<p>
 								현재 로고 이미지 :
-								<img src="" alt="현재로고 이미지" />
+								<span>${logo.oriName}</span>
+								<img src="${pageContext.request.contextPath}/common/down.do?filePath=${logo.filePath}&systemName=${logo.systemName}" 
+								alt="현재 로고 이미지" class="img-thumbnail"/>
+								<a href="${pageContext.request.contextPath}/common/down.do?filePath=${logo.filePath}&systemName=${logo.systemName}&oriName=${logo.oriName}">
+									${logo.oriName}
+								</a>
+								
 							</p>	
 							<p>
 								<button type="button" onclick="clean()">폼 초기화</button>
-								<button type="button" onclick="set()">블로그 수정</button>
+								<button onclick="set()">블로그 수정</button>
 							</p>			
 						</form>
 					</div>
@@ -69,9 +76,10 @@
 		
 		
 <script type="text/javascript">
+	$("select[name=showNum]").val("${blog.showNum}");
 	function clean() {
 		location.href = 
-			"${pageContext.request.contextPath}/blog/blog.do?blogNo=${blog.blogNo}";
+			"${pageContext.request.contextPath}/blog/blogsetform.do?blogNo=${blog.blogNo}";
 	}
 	function set() {
 		location.href = 

@@ -32,8 +32,21 @@ public class BlogMapper {
 		return session.selectOne(NS + "blogDetail", blogNo);
 	}
 	
+	public LogoDomain logoDetail(int blogNo) throws Exception {
+		return session.selectOne(NS + "logoDetail", blogNo);
+	}
+	
 	public BlogDomain myBlogDetail(int memberNo) throws Exception {
 		return session.selectOne(NS + "myBlogDetail", memberNo);
 	}
+	
+	public void blogModify(BlogDomain blog) throws Exception {
+		session.update(NS + "blogModify", blog);
+	}
+	
+	public void logoInsert(LogoDomain logo) throws Exception {
+		session.insert(NS + "logoInsert", logo);
+	}
+	
 	
 }
