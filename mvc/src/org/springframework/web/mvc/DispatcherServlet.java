@@ -114,6 +114,8 @@ public class DispatcherServlet extends HttpServlet{
 					view = contextPath+view;
 				}
 				response.sendRedirect(view);
+			}else if (view.equals("none")) {
+				
 			}else if (view.startsWith("jsonView:")) {
 				view = view.substring("jsonView:".length());
 				response.setContentType("application/x-json; charset=UTF-8");

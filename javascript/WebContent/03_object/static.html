@@ -1,0 +1,39 @@
+<!-- 
+
+    객체 이해하기 11
+
+    인스턴스와 연관없는 함수는 함수 객체 자체에 등록을 추천한다.
+    ( 자바의 static과 유사하다?? )
+
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+    <script>
+
+        function Member(id, name) {
+            this.id = id;
+            this.name = name;
+        }
+        Member.info = function(){
+            console.log("회원의 정보를 관리하는 클래스 개념입니다.");
+        }
+
+        Member.prototype.info = function () {
+            // console.log("회원의 정보를 관리하는 클래스 개념입니다.")
+            // this를 쓰는 것도 아닌데 왜 prototype에 ?? 약간 비효율
+        }
+
+        var m1 = new Member();
+
+        console.dir(m1);
+
+    </script>
+</body>
+</html>

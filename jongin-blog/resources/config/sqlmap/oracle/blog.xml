@@ -39,12 +39,33 @@
 		where blog_no = #{blogNo}
 	</update>
 	
+	
+	<delete id="logoDelete" parameterType="int">
+		delete 
+			from LOGOS
+		where blog_no = #{blogNo}
+	</delete>
+	<update id="logoNoDelete" parameterType="int">
+		update BLOGS
+			set logo_no = null
+		where blog_no = #{blogNo}
+	</update>
+	
+	<select id="getlogoNoSequence" resultType="int">
+		select logo_no_sq.nextval from dual
+	</select>
 	<insert id="logoInsert" parameterType="logo">
 		insert into LOGOS
 			(LOGO_NO,BLOG_NO,FILE_PATH,ORI_NAME,SYSTEM_NAME,FILE_SIZE)
 		values
-			(LOGO_NO_SQ.NEXTVAL,#{blogNo},#{filePath},#{oriName},#{systemName},#{fileSize})
+			(#{logoNo},#{blogNo},#{filePath},#{oriName},#{systemName},#{fileSize})
 	</insert>
+	<update id="logoNoInsert" parameterType="int">
+		update BLOGS
+			set logo_no = #{logoNo}
+		where blog_no = #{blogNo}
+	</update>
+	
 	
 	<select id="chkMyBlog" parameterType="int" resultType="int">
 		select count(*)

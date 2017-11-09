@@ -45,7 +45,15 @@ public class BlogMapper {
 	}
 	
 	public void logoInsert(LogoDomain logo) throws Exception {
+		int nextSq = session.selectOne(NS + "getlogoNoSequence");
+		logo.setLogoNo(nextSq);
 		session.insert(NS + "logoInsert", logo);
+		session.update(NS + "logoNoInsert", logo);
+	}
+	
+	public void logoDelete(int blogNo) throws Exception {
+		session.update(NS + "logoNoDelete", blogNo);
+		session.delete(NS + "logoDelete", blogNo);
 	}
 	
 	

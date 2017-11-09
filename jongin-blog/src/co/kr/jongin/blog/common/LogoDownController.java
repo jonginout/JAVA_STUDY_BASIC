@@ -17,7 +17,7 @@ import co.kr.jongin.blog.blog.LogoDomain;
 public class LogoDownController extends HttpServlet{
 
 	@RequestMapping("/common/down.do")
-	public void name(
+	public String down(
 			LogoDomain logo, HttpServletResponse response
 			) throws Exception {
 		
@@ -90,6 +90,8 @@ public class LogoDownController extends HttpServlet{
 
 		bos.close();
 		out.close();
+		
+		return "none";
 	}
 	
 }

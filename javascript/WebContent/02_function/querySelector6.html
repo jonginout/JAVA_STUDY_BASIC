@@ -23,61 +23,76 @@
     </head>
     <body>
         <h1>로또게임</h1>
-        <span id="h3">
-
-        </span>
-        <span id="h2" style="color: red">
-
-        </span>
+        <div style="height: 50px">
+            <span id="result">
+    
+            </span>
+            <span id="roll">
+    
+            </span>
+        </div>
         <br>
-        <span>
-            <button onclick="doAction();">쿼리셀렉터</button>
+        <span id="btnBox">
+            <button onclick="lotto();">로또번호 뽑기</button>
         </span>
         
         
         <script type="text/javascript">
 
-			function doAction() {
-                
-                var count = 0;
-                var id = setInterval(function(){
+            function lotto(){
+                var resultEle = document.querySelector("#result");
+                resultEle.innerHTML = "";
+                doAction();
 
-
-                    var id2 = setInterval(function(){
-                        var no = parseInt(Math.random() * 45);
-                        var h2 = document.querySelector("#h2");
-                        h2.innerText = no;
-                        if (count==6) {
-                            h2.innerText = "";
-                        }
-                    },50)
-
-
-                    var no = parseInt(Math.random() * 45);
-                    var h3 = document.querySelector("#h3");
-
-                    var h3Txt = h3.innerText;
-                    var arr = h3Txt.split(",");
-
-                    var chk = false;
-                    for(var n of arr){
-                        if(n==no){
-                            chk = true;
-                            return;
-                        }
-                    }
-                    if(!chk){
-                        h3.innerText += no+",";
-                        count += 1;
-                    }
-                    if (count==6) {
-                        clearInterval(id);
-                    }
+                var lottoArr = [];
+                var rollCount = 0;
+                function doAction() {
                     
-                }, 1000)
-                
+                    var roll;
+    
+                    var btnBox = document.querySelector("#btnBox");
+                    btnBox.innerHTML = "";
+                    if(rollCount==5){
+                        console.log(lottoArr);
+                        btnBox.innerHTML = `<button onclick="lotto();">로또번호 뽑기</button>`;
+                        return;
+                    }
+                    rollCount++;
+    
+                    var i = 1;
+                    function count(){
+                        i++;
+                        if(i==2){
+                            clearInterval(rollT);
+                            for(var l of lottoArr){
+                                if(l==roll){
+                                    console.log("중복!")
+                                    rollCount--;
+                                    doAction();
+                                    return;
+                                }
+                            }
+                            lottoArr.push(roll);
+                            var rollEle = document.querySelector("#roll");
+                            var resultEle = document.querySelector("#result");
+                            resultEle.innerHTML += rollEle.innerHTML;
+                            rollEle.innerHTML = "";
+                            doAction();
+                        }
+                    }
+                    var id = setInterval(count, 500); 
+    
+                    var rollT = setInterval(function () {
+                        var rollEle = document.querySelector("#roll");
+                        roll = parseInt(Math.random()*44)+1;
+                        rollEle.innerHTML = `<img src="../lottoImg/ball${roll}.gif"/>`;
+                     }, 30)
+                    
+                }
             }
-
+            
+            
+            
 		</script>
     </body>
 </html>

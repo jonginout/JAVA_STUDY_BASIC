@@ -38,8 +38,6 @@ public class WebUtil {
 			
 			// 변경된 이름에 해당하는 파라미터 추출하기
 			String reqName = request.getClass().getSimpleName();
-			System.out.println("mName : "+mName);
-			System.out.println("reqName : "+reqName);
 			
 			String pValue = null;
 			switch (reqName) {

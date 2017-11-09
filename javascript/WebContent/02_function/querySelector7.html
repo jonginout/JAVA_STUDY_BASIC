@@ -53,7 +53,7 @@
         	<tr>
         		<td colspan="3" id="result">
                 </td>
-                <td onclick="action('c')">C</td>                
+                <td onclick="clean()">C</td>                
         	</tr>
         	<tr>
         		<td onclick="action(7)">7</td>
@@ -76,44 +76,36 @@
         	<tr>
         		<td onclick="action('del')">←</td>
         		<td onclick="action(0)">0</td>
-        		<td onclick="action('=')">=</td>
+        		<td onclick="result()">=</td>
         		<td onclick="action('/')">/</td>
         	</tr>
         </table>
         
         <script type="text/javascript">
-
-            function action(e){
-
-
+            function action(num){
                 var result = document.querySelector("#result");
-                if((typeof e)=='number'){
-                    result.innerText += e;
-                }else{
-                    switch (e) {
-                        case "c":
-                            result.innerText = "";
-                            break;
-                        case "del":
-                            result.innerText = result.innerText.substring(0, result.innerText.length-1);
-                            break;
-                        case "+":
-                            result.innerText += "+";
-                            var txt = result.innerText;
-                            pro.push = parseInt(txt.substring(0, txt.length-1));
-                            pro.push = "+";
-                            console.log(pro)
-                            break;
-                        case "=":
-                            var txt = result.innerText;
-                            break;
-                        
-                        default:
-                            break;
-                    }
+                if(num=='del'){
+                    result.innerText = result.innerText.substring(0,result.innerText.length-1);
+                    return;
                 }
+                result.innerText += num;
+            }
+        
+            function result(){
+                var result = document.querySelector("#result");
+                var eq = result.innerText;
+                result.innerText = eval(eq);
+            }
+        
+            function clean(){
+                var result = document.querySelector("#result");
+                result.innerText = "";
             }
 			
 		</script>
     </body>
 </html>
+
+
+
+

@@ -49,20 +49,26 @@
 									</c:forEach>
 								</select>
 							</p>
-							<p>
-								로고 이미지 : 
-								<input name="logoImg" type="file" />
-							</p>
-							<p>
-								현재 로고 이미지 :
-								<span>${logo.oriName}</span>
-								<img src="${pageContext.request.contextPath}/common/down.do?filePath=${logo.filePath}&systemName=${logo.systemName}" 
-								alt="현재 로고 이미지" class="img-thumbnail"/>
-								<a href="${pageContext.request.contextPath}/common/down.do?filePath=${logo.filePath}&systemName=${logo.systemName}&oriName=${logo.oriName}">
-									${logo.oriName}
-								</a>
-								
-							</p>	
+							<c:choose>
+								<c:when test="${blog.logoNo==0}">
+									<p>
+										로고 이미지 : 
+										<input name="logoImg" type="file" />
+									</p>
+								</c:when>
+								<c:otherwise>
+									<p>
+										현재 로고 이미지 :
+										<a href="javascript:delLogo();">
+											<img src="${pageContext.request.contextPath}/common/down.do?filePath=${logo.filePath}&systemName=${logo.systemName}" 
+											alt="현재 로고 이미지" class="img-thumbnail"/>
+										</a>
+										<a href="${pageContext.request.contextPath}/common/down.do?filePath=${logo.filePath}&systemName=${logo.systemName}&oriName=${logo.oriName}">
+											${logo.oriName}
+										</a>								
+									</p>	
+								</c:otherwise>
+							</c:choose>
 							<p>
 								<button type="button" onclick="clean()">폼 초기화</button>
 								<button onclick="set()">블로그 수정</button>
@@ -84,6 +90,12 @@
 	function set() {
 		location.href = 
 			"${pageContext.request.contextPath}/blog/modifyblog.do?blogNo=${blog.blogNo}";
+	}
+	function delLogo() {
+		if(confirm('로고를 정말로 삭제하시겠습니까?')){			
+			location.href = 
+				"${pageContext.request.contextPath}/blog/deletelogo.do?blogNo=${blog.blogNo}";
+		}
 	}
 </script>	
 </body>

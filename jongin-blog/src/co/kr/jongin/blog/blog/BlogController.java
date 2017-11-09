@@ -85,7 +85,7 @@ public class BlogController {
 			new HanbitFileRenamePolicy()	// 기본제공 이름 중복 정책
 			//생성자만 호출해도 자동으로 rename 메소드 호출
 		);
-		
+	
 		blog.setTitle(mRequest.getParameter("title"));
 		blog.setTag(mRequest.getParameter("tag"));
 		blog.setShowNum(Integer.parseInt(mRequest.getParameter("showNum")));
@@ -126,4 +126,12 @@ public class BlogController {
 		return "redirect:/blog/blogsetform.do?blogNo="+blog.getBlogNo();
 	}
 	
+	@RequestMapping("/blog/deletelogo.do")
+	public String logoDelete(int blogNo) throws Exception {
+		BlogMapper blogDAO = new BlogMapper();
+		blogDAO.logoDelete(blogNo);
+		return "redirect:/blog/blogsetform.do?blogNo="+blogNo;
+	}
+	
 }
+

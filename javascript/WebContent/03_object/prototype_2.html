@@ -1,0 +1,61 @@
+<!-- 
+
+    객체 이해하기 9
+
+    자바스크립트의 생성자를 이용하기
+
+
+    프로토 타입
+    - 모든 객체들이 참조하는 객체영역
+    - 객체간의 공통의 영역을 사용한다.
+
+
+    prototype 공간활용
+    - 객체들이 공동으로 사용하는 함수나 변수를 prototype에 보관하면
+    각 객체별로 중복해서 생성할 필요가 없어 메모리가 효율적이다.
+    - 모든 생성자는 prototype 객체를 갖고 있다.
+
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+    <script>
+
+        function Member(id, name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        // Member.prototype.getId = function () {
+        //     return this.id;
+        // }
+        // Member.prototype.getName = function () {
+        //     return this.name;
+        // }
+        // Member.prototype.setId = function (id) {
+        //     this.id = id;
+        // }
+        // Member.prototype.setName = function (name) {
+        //     this.name = name;
+        // }
+
+        
+        // prototype 자체를 아예 바꿔버릴 수 있다.
+        Member.prototype = {
+            setId : function (id) {this.id = id },
+            setName : function (name) {this.name = name},
+            getId : function () { return this.id },
+            getName : function () { return this.name}
+        };
+        // 이러면 프로토타입에 컨스트럭터가 없어지니깐 다시 추가해준다.
+        Member.prototype.constructor = Member;
+
+    </script>
+</body>
+</html>
