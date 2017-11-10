@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>테이블 어펜드</title>
+    </head>
+    <body>
+
+        <button type="button" onclick="addTd()">추가</button>
+        <button type="button" onclick="delTd()">삭제</button>
+
+        <table id="tbl" border="1">
+            <tbody>
+                <tr>
+                    <td><input type="text" size="10"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" size="10"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script type="text/javascript">
+            function addTd() {
+                var tdStr = '<input type="text" size="10">';
+                var myTr = document.querySelectorAll("tr");
+                for (var i = 0; i < myTr.length; i++) {
+                    var tdEle = document.createElement("td")
+                    tdEle.innerHTML = tdStr;
+                    myTr[i].appendChild(tdEle);
+                }
+            }
+
+            function delTd() {
+                var tdList = document.querySelectorAll("#tbl tr > td:last-child");
+            	for (let i = 0; i < tdList.length; i++) {
+            		tdList[i].remove();
+            	}
+            }
+        </script>
+    </body>
+</html>

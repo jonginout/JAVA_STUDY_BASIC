@@ -131,6 +131,14 @@ public class BlogController {
 		BlogMapper blogDAO = new BlogMapper();
 		blogDAO.logoDelete(blogNo);
 		return "redirect:/blog/blogsetform.do?blogNo="+blogNo;
+	}	
+	
+	@RequestMapping("/blog/categorysetform.do")
+	public ModelAndView categorySetForm(int blogNo) throws Exception {
+		ModelAndView mav = new ModelAndView("/jsp/blog/categorysetform.jsp");
+		BlogMapper blogDAO = new BlogMapper();
+		mav.addAttribute("blog", blogDAO.categoryDetail(blogNo));
+		return mav;
 	}
 	
 }

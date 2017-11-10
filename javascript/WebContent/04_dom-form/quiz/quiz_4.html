@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>퀴즈 4</title>
+        <script src="quiz_4.js" charset="utf-8"></script>
+        <style media="screen">
+            form{
+                display: flex;
+            }
+            table{
+                font-weight: bold;
+                background: gray;
+            }
+            td{
+                padding: 5px;
+            }
+            #resultBox{
+                padding: 10px;
+                margin: 20px;
+                float: left;
+                min-width: 400px;
+                min-height: 80px;
+                border: 4px red solid;
+            }
+        </style>
+    </head>
+    <body>
+        <form name="mForm" action="" onsubmit="">
+            <table>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="skill" onclick="addSkill(this.checked)" id="java">
+                        <label for="java">JAVA</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="skill" onclick="addSkill(this.checked)" id="sql">
+                        <label for="sql">SQL</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="skill" onclick="addSkill(this.checked)" id="html">
+                        <label for="html">HTML</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="skill" onclick="addSkill(this.checked)" id="css">
+                        <label for="css">CSS</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="skill" onclick="addSkill(this.checked)" id="javascript">
+                        <label for="javascript">JAVASCRIPT</label>
+                    </td>
+                </tr>
+            </table>
+            <span id="resultBox">
+            </span>
+        </form>
+    </body>
+</html>

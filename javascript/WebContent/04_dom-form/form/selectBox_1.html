@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+
+    셀렉박스
+
+    select Box의 선택도니 항목의 인덱스 위치
+    - select객체.selectedIndex; => 선택된거의 인덱스 값
+
+ -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>From</title>
+    </head>
+    <body>
+
+        <form name="mForm" action="">
+            <select name="searchType">
+                <option value="">선택하세요</option>
+                <option value="title">제목</option>
+                <option value="writer">작성자</option>
+            </select>
+            <input type="text" name="word">
+            <button type="button" onclick="doSearch();">검색</button>
+
+            <button type="button" onclick="changeDisabled(false);">활성화</button>
+            <button type="button" onclick="changeDisabled(true);">비활성화</button>
+        </form>
+
+
+        <script type="text/javascript">
+
+            function changeDisabled(chk) {
+                var f = document.mForm;
+                f.searchType.selectedIndex = 0;
+                f.searchType.disabled = chk;
+            }
+
+
+            function doSearch() {
+                // 검색버튼이 눌렀을때 searchType의 select box가
+                // 뭔가 하나라도 선택이 되어있는지 확ㅇ니
+                var f = document.mForm;
+                if(f.searchType.selectedIndex == 0){
+                    alert('검색항목을 선택하세요');
+                    return;
+                }
+                alert('검색....');
+            }
+
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+
+    DOM API
+    속성을 추가하자 닷[.] 방식
+
+    엘리먼트객체.속성명 = 값;
+
+ -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Dom and Form</title>
+    </head>
+    <body>
+        <button onclick="doAdd()">추가</button>
+        <div id="list"></div>
+
+        <script type="text/javascript">
+            function doAdd() {
+                var imgObj = document.createElement("img");
+                imgObj.src = "./img/pic1.jpg";
+                imgObj.width = 200;
+                imgObj.height = 150;
+                //사용자 정의 속성 주가
+                // 사용자 정의 속성은 닷(.) 추가 방식으로는 안된다.
+                imgObj.msg = "사용자 추가 속성..";
+                document.querySelector("#list").appendChild(imgObj);
+            }
+        </script>
+    </body>
+</html>

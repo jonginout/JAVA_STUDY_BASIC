@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+
+    Form 관련 체크 사항
+
+    - form이 submit 되는 시점에 체크 사항이 있다면...
+    onsubmit="return false;" => submit 취소 됨
+    onsubmit="return 이외의 모든것" => submit 진행
+
+ -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>From</title>
+    </head>
+    <body>
+
+        <form name="mForm" action="" onsubmit="return doCheck();">
+            <input type="text" name="id"><br>
+            <input type="password" name="pass"><br>
+            <input type="password" name="pass2"><br>
+            <button type="submit">서브밋</button>
+            <button type="button" onclick="doCheck2();">서브밋</button>
+        </form>
+
+
+        <script type="text/javascript">
+
+            function isEmpty(obj, msg){
+                if(!obj.value){
+                    alert(msg);
+                    obj.focus();
+                    return true; //비어있으면
+                }
+                return false;
+            }
+
+            function doCheck() {
+
+                var f = document.mForm;
+                var id = f.id, pass = f.pass, pass2 = f.pass2;
+
+                if(isEmpty(id, "아이디를 입력하세요")) return false;
+                if(isEmpty(pass, "비밀번호를 입력하세요")) return false;
+                if(isEmpty(pass2, "비밀번호 확인을 입력하세요")) return false;
+
+                if(pass!=pass2){
+                    alert("비밀번호가 일치하지 않습니다.");
+                    f.pass.focus();
+                    f.pass.select();
+
+                    f.pass2.value="";
+                    return false;
+                }
+                return true;
+            }
+
+            function doCheck2() {
+
+                var f = document.mForm;
+                var id = f.id, pass = f.pass, pass2 = f.pass2;
+
+                if(isEmpty(id, "아이디를 입력하세요")) return false;
+                if(isEmpty(pass, "비밀번호를 입력하세요")) return false;
+                if(isEmpty(pass2, "비밀번호 확인을 입력하세요")) return false;
+
+                if(pass.value!=pass2.value){
+                    alert("비밀번호가 일치하지 않습니다.");
+                    f.pass.focus();
+                    f.pass.select();
+
+                    f.pass2.value="";
+                    return false;
+                }
+
+                // 직접 서브밋 해야한다.
+                document.modForm.hidId.value = document.mForm.id.value;
+                document.modForm.submit();
+            }
+        </script>
+
+        <form action="mod.html" name="modForm">
+            <input type="hidden" name="hidId" >
+        </form>
+    </body>
+</html>

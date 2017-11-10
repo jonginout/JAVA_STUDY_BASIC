@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>셀렉봑수</title>
+    </head>
+    <body>
+
+        <form name="mForm">
+            <button type="button" onclick="add();">추가</button>
+            <button type="button" onclick="del();">삭제</button>
+
+            <div>
+                <select name="sel">
+                    <option value="">선택하세요</option>
+                </select>
+            </div>
+
+        </form>
+
+
+        <script type="text/javascript">
+            function add() {
+                var sel = document.mForm.sel;
+/*
+                // 1번째 방식 : DOM API 활용
+                var opt = document.createElement("option");
+                opt.value = 0;
+                var text = document.createTextNode("옵션테스트~");
+                opt.appendChild(text);
+                sel.appendChild(opt);
+*/
+
+/*
+                // 2번째 방식 : JS 내장 객체 활용
+                console.log(sel.options);
+                sel.options[sel.options.length] = new Option("텍스트이름", "값");
+*/
+
+                // 3번째 방식 : innerHTML을 활용
+                sel.innerHTML += "<option value='100'>테스트이비다~</option>";
+
+            }
+
+
+            function del() {
+                // option 항목 삭제하기..
+                // options 배열의 항목을 null로 변경하면 삭제효과..
+
+                var sel = document.mForm.sel;
+                var len = sel.options.length-1;
+                if(len!=0){
+                    sel.options[len] = null;
+                }
+
+                // 배열의 요소를 하나만 남기고 삭제
+                sel.options.length = 1;
+            }
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>퀴즈3</title>
+        <style media="screen">
+            .input{
+                text-align: center;
+            }
+            td{
+                padding: 10px;
+            }
+        </style>
+        <script src="quiz_3.js" charset="utf-8"></script>
+    </head>
+    <body>
+
+        <form name="mForm" action="" onsubmit="return doSubmit();">
+            <table border="1">
+                <tbody>
+                    <tr>
+                        <td>
+                            이름
+                        </td>
+                        <td class="input">
+                            <input type="text" name="name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            아이디
+                        </td>
+                        <td class="input">
+                            <input type="text" name="id">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            비밀번호
+                        </td>
+                        <td class="input">
+                            <input type="password" name="pass1">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            비밀번호확인
+                        </td>
+                        <td class="input">
+                            <input type="password" name="pass2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            경력여부
+                        </td>
+                        <td class="input">
+                            <input type="checkbox" name="career" id="new">
+                            <label for="new">신입</label>
+                            <input type="checkbox" name="career" id="old" onclick="checkOld(!this.checked)" checked>
+                            <label for="old">경력</label>
+                            <select name="time">
+                                <option value="0">선택</option>
+                                <option value="1">3개월 미만</option>
+                                <option value="2">3개월 이상</option>
+                                <option value="3">6개월 이상</option>
+                                <option value="4">1년이상</option>
+                                <option value="5">2년이상</option>
+                                <option value="6">3년이상</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            이메일
+                        </td>
+                        <td class="input">
+                            <input type="email" name="email">
+                            <input type="checkbox" name="allowEmail" id="ae" checked><label for="ae">메일수신</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button style="width:100%">확인</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+    </body>
+</html>

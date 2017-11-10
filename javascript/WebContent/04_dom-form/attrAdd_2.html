@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!--
+
+    DOM API
+    setAttribute 방식
+
+    엘리먼트객체.setAttribute("속성명", "값");
+    사용자 정의 속성도 추가가 가능하다.
+    
+    // 사용자 정의 속성을 표준화 해서 사용..
+    data-속성명
+      이렇게 시작하면 표준으로 인정하겠다.!
+
+ -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Dom and Form</title>
+    </head>
+    <body>
+        <button onclick="doAdd()">추가</button>
+        <div id="list"></div>
+
+        <script type="text/javascript">
+            function doAdd() {
+                var imgObj = document.createElement("img");
+                imgObj.setAttribute("src", "./img/pic1.jpg");
+                imgObj.setAttribute("width", 140);
+                imgObj.setAttribute("height", 200);
+                imgObj.setAttribute("msg", "사용자 추가 속성..");
+                document.querySelector("#list").appendChild(imgObj);
+            }
+        </script>
+    </body>
+</html>

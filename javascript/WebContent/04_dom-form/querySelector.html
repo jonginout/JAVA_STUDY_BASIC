@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+
+   DOM (Document Object Model)
+   - 웹브라우저의 자바스크립트 엔진이 html 태그를 읽고
+   각 태그를 자바스크립트 객체로 생성 관리
+
+   dom tree
+   - 태그와 태그의 관계(부모, 형제)를 표현하기 위해서 트리 구조 사용
+
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dom and Form</title>
+  </head>
+  <body>
+
+    <button onclick="doAction(1)">태그 선택자</button>
+    <button onclick="doAction(2)">아이디 선택자</button>
+    <button onclick="doAction(3)">클래스 선택자</button>
+
+    <div>테스트1</div>
+    <div id="a">테스트2</div>
+    <div class="b">테스트3</div>
+
+    <script type="text/javascript">
+
+        /*
+            ECMA5 부터 권장하는 방식
+            quert
+            querySelector('css선택자') => 결과가 한개
+            querySelectorAll('css선택자') => 결과가 여러개
+
+        */
+        function doAction(type) {
+            var obj;
+            switch (type) {
+              case 1: // 태그 선택자
+                obj = document.querySelectorAll("div");
+                break;
+              case 2: // id 선택자
+                obj = document.querySelector("#a");
+                break;
+              case 3: // class 선택자
+                obj = document.querySelectorAll(".b");
+                break;
+            }
+            if (obj.length) {
+                for (var i = 0; i < obj.length; i++) {
+                    console.log(obj[i]);
+                }
+            }else {
+                console.log(obj);
+            }
+        }
+
+    </script>
+  </body>
+</html>
