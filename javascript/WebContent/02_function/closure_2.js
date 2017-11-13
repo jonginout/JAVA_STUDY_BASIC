@@ -1,10 +1,10 @@
-/* 
+/*
 
 
 
 */
 
-function nextId(val){
+function nextId(){
     var id = 1;
     return function () { return id++; };
 }

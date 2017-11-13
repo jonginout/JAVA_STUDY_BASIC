@@ -18,11 +18,11 @@ let func1 = function () {
 func1();
 
 
-/* 
+/*
 
     컴파일시
     var func;
-    
+
     실행시
     func1 = function () {
         console.log("익명함수 입니당~");

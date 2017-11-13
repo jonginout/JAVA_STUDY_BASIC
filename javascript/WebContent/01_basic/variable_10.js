@@ -15,10 +15,10 @@ var msg = 1;
 if (msg == 1) {
     let msg = 2;
 }
-console.log(msg);
+console.log(msg); // 1
 
-console.log(msg);
 {
     let msg2 = 3;
 }
-// console.log(msg2); // 에러 발생 : let는 선언된 블럭에서만 접근한다.
+// console.log(msg2);
+// 에러 발생 : let는 선언된 블럭에서만 접근한다.

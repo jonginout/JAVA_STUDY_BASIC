@@ -1,4 +1,4 @@
-/* 
+/*
 
     선언적 함수
     - 함수의 이름이 존재하는 것
@@ -32,4 +32,4 @@ function func2() {
 
 //반환이 없으면 기본 반환 -> undefined
 function func3() {}
-console.log(func3())
+console.log(func3()) //undefined

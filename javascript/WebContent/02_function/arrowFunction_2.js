@@ -1,4 +1,4 @@
-/* 
+/*
 
     ECMA6에서 추가된 화살표 함수 2
     (arrow function)
@@ -20,11 +20,11 @@ return 된다.
 
 var func1 = (num) => num * num;
 
-console.log(func1(2));
+console.log(func1(2)); //4
 
-func1 = (num) => console.log("테스트")
-console.log(func1(2));
+func1 = (num) => console.log("테스트");
+console.log(func1(2)); //테스트 undefined
 
-/* 
+/*
  {} 없이 사용하는 경우는 무조건 return 된다.
 */

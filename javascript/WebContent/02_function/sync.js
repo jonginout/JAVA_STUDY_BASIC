@@ -1,4 +1,4 @@
-/* 
+/*
 
     함수의 동기적 호출과 비동기적 호출
 
@@ -16,18 +16,20 @@
 
 */
 "use strict"
-var prompt1 = require('prompt-sync')();
-var prompt2 = require("prompt");
+var prompt1 = require('prompt-sync')(); //동기 모듈
+var prompt2 = require("prompt");  // 비동기 모듈
 
 var name = prompt1("당신의 이름은 뭐임?");
+// 동기라서 입력값이 있을때 까지 대기
 console.log("name : ", name);
 
 prompt2.start();
 // prompt2.get(['age'], function (err, result){}); 이게 실행이 끝나면
-// function (err, result){} 자동으로 호출된다 
+// function (err, result){} 자동으로 호출된다
 // 콜백함수
 prompt2.get(['age','addr'], function (err, result){
     console.log(`당신의 나이는 ${result.age}이고 주소는 ${result.addr}입니다.`);
 });
 
 console.log("누가 먼저 실행 될려나?? ");
+//이게 prompt2.get()와 동시에 실행 된다.

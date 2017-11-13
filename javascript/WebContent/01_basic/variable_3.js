@@ -6,10 +6,10 @@
 
 "use strict"
 var id = "hong";
-console.log(id);
+console.log(id); //hong
 
 var id = "kim";
-console.log(id);
+console.log(id); //kim
 
 
 /*

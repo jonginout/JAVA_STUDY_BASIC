@@ -1,4 +1,4 @@
-/* 
+/*
 
     객체 이해하기_2
 
@@ -30,7 +30,7 @@ console.log(member);
 // 객체의 프로퍼티 이름은 ""을 생략해도 처리가 된다..
 // 단 JSON 객체는 생략 불가..
 var member2 = {
-    id : "kim",
+    "id" : "kim",
     email : "jasod@asnd.com"
 };
 

@@ -10,16 +10,16 @@
 
 "use strict"
 var msg = 1;
-console.log(msg);
+console.log(msg); //1
 
 if(msg==1){
     var msg = 2;
-    console.log(msg)
+    console.log(msg); //2
 }
 
-console.log(msg)
+console.log(msg) //2
 
 {
     var msg2 = 3;
 }
-console.log(msg2)
+console.log(msg2) //3

@@ -1,4 +1,4 @@
-/* 
+/*
 
     객체 이해하기_3
 
@@ -19,13 +19,16 @@ member2.id = "kang";
 
 
 console.log("member1 : ",member1);
+// member1 :  { id: 'kang', email: 'jonginout@naver.com' }
 console.log("member2 : ",member2);
+// member2 :  { id: 'kang', email: 'jonginout@naver.com' }
 
 // 객체의 내용을 확인한다. for - in
 for (var m in member1) {
     console.log(m +":"+ member1[m]);
 }
-
+//id:kang
+//email:jonginout@naver.com
 
 // 객체는 배열과 마찬가지로 모든 타입의 값을 저장 할 수 있다.
 var obj = {
