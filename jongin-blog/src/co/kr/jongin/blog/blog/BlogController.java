@@ -137,7 +137,8 @@ public class BlogController {
 	public ModelAndView categorySetForm(int blogNo) throws Exception {
 		ModelAndView mav = new ModelAndView("/jsp/blog/categorysetform.jsp");
 		BlogMapper blogDAO = new BlogMapper();
-		mav.addAttribute("blog", blogDAO.categoryDetail(blogNo));
+		mav.addAttribute("categoryList", blogDAO.categoryList(blogNo));
+		mav.addAttribute("blog", blogDAO.blogDetail(blogNo));
 		return mav;
 	}
 	

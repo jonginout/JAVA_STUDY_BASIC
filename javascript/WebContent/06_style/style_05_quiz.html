@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>s</title>
+        <style media="screen">
+            .hidden{
+                background: gray;
+                height: 0px;
+                overflow: hidden;
+                /*// 자기 엘리먼트 영역 밖에 나가는거 숨김*/
+                transition: height 0.5s;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>어코디언 기능</h2>
+        <h3>오늘은 자바스크립트 CSS 적용</h3>
+        <div class="hidden">
+            오늘은 자바스크립트 CSS 적용 <br>
+            오늘은 자바스크립트 CSS 적용 <br>
+            오늘은 자바스크립트 CSS 적용
+        </div>
+
+        <script>
+            var hidden = document.querySelector(".hidden");
+            var h3 = document.querySelector('h3')
+            h3.addEventListener("click", function () {
+                var hiddenH = document.defaultView.getComputedStyle(hidden).height
+
+                if (parseInt(hiddenH)>0) {
+                    console.log("hiddenH>0");
+                    hidden.style.height = "0px";
+                }else {
+                    console.log("hiddenH=0");
+                    hidden.style.height = "100px";
+                }
+
+
+            }, false)
+        </script>
+    </body>
+</html>

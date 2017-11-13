@@ -30,7 +30,9 @@
 						<button onclick="goLink('post');">글작성</button>				
 						<button onclick="goLink('blogDel');">블로그 삭제</button>				
 					</div>
+					
 					<div id="formBox">
+					<h1>기본설정</h1>
 						<form name="setForm" enctype="multipart/form-data" method="post">
 							<p>
 								블로그 제목 : 
@@ -88,7 +90,7 @@
 			
 			var linkArr = {
 				"clear" : "/blog/blogsetform.do?blogNo=${blog.blogNo}",
-				"category" : "/blog/setcategory.do?blogNo=${blog.blogNo}",
+				"category" : "/blog/categorysetform.do?blogNo=${blog.blogNo}",
 				"post" : "/blog/post.do?blogNo=${blog.blogNo}",
 				"blogDel" : "/blog/blogdelete.do?blogNo=${blog.blogNo}",
 				"main" : "/main/main.do",

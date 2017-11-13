@@ -4,7 +4,7 @@
 	margin: auto;
 	padding-top: 20px;
 }
-#blogBtn{
+#blogBtn, #makeBlog{
 	float: right;
 }
 #content{
@@ -48,7 +48,7 @@
 	margin: auto;
 	margin-top: 20px;
 }
-#goBlog:hover{
+.goBlog:hover{
 	cursor: pointer;
 	background: yellow;
 }

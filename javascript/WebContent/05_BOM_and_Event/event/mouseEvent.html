@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<!--
+
+    이벤트 이해하기 - 이벤트 전파
+
+    이벤트가 발생한 객체의 부모중에서 동일한
+    이벤트 타입이 설정되어 있는 경우
+    부모의 이벤트도 같이 실행된다.
+
+
+    이벤트 전파 방식 : addEventListener(타입, 콜백, 전파방식);
+    - 캡쳐링 : 부모 => 자식 전파 (true)
+    - 버블링 : 자식 => 부모 전파 (기본 혹은 false)
+
+
+    이벤트 전파를 막고 싶으면
+    - 이벤트객체.stopPropagation();
+
+ -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>event</title>
+        <style media="screen">
+            p{
+                font-size: 20px;
+                font-weight: bold;
+                height: 40px;
+                background: tomato;
+                color: white;
+                text-align: center;
+                line-height: 40px;
+            }
+            #debug{
+                height: 500px;
+                background: yellow;
+                font-size: 15px;
+                overflow: auto;
+            }
+        </style>
+    </head>
+    <body>
+
+        <p>마우스 이벤트</p>
+
+        <div id="debug"></div>
+
+    </body>
+
+    <script type="text/javascript">
+
+        var pObj = document.querySelector("p");
+        var d = document.querySelector("#debug");
+
+        pObj.addEventListener("mouseenter", function (e) {
+            debug("마우스 들어감");
+        });
+        pObj.addEventListener("mouseleave", function (e) {
+            debug("마우스 나감");
+        });
+        pObj.addEventListener("mousedown", function (e) {
+            debug("마우스 눌렀을때");
+        });
+        pObj.addEventListener("mouseup", function (e) {
+            debug("마우스 올라감");
+        });
+        pObj.addEventListener("mousemove", function (e) {
+            var obj = e.target;
+            var left = pObj.offsetLeft;
+            var top = pObj.offsetTop;
+            var x = e.offsetX;
+            var y = e.offsetY;
+
+            debug(`left : ${left}, top : ${top}, x : ${x}, y : ${y}`)
+        });
+
+
+        function debug(msg) {
+            d.innerHTML = msg + "<br>" + d.innerHTML;
+        }
+
+
+    </script>
+</html>

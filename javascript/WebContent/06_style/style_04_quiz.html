@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+
+    적용된 스타일을 조회하기
+
+    - 객체.style.css프로퍼티명
+    으로 조회하는건 inline형식으로 정의된 style만 조회 가능
+
+    기본 설정된 정보를 조회를 해야하는 경우는
+
+ -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>s</title>
+    </head>
+    <body>
+        <p>
+            <a href="#1" id="link1">크게</a>
+            <a href="#2" id="link2">작게</a>
+        </p>
+
+        <div>
+            <p>
+                마술사<br>
+                300백년 전 유명한 악당이였던 에더마스크 그가 형을 찾아가고 있는데....
+            </p>
+        </div>
+
+        <script type="text/javascript">
+            var link1 = document.querySelector("#link1");
+            var link2 = document.querySelector("#link2");
+
+            var txt = document.querySelector("div")
+
+            link1.addEventListener("click", function(e) {
+                var bigger = document.defaultView.getComputedStyle(txt).fontSize;
+                txt.style.fontSize = parseInt(bigger)+2+"px";
+            })
+
+            link2.addEventListener("click", function() {
+                var smaller = document.defaultView.getComputedStyle(txt).fontSize;
+                txt.style.fontSize = parseInt(smaller)-2+"px";
+            })
+
+        </script>
+    </body>
+</html>

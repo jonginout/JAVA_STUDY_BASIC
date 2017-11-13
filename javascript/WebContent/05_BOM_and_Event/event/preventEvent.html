@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<!--
+
+    이벤트 이해하기 - 이벤트 객체
+
+    기본 이벤트 막기
+
+ -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>event</title>
+    </head>
+    <body>
+        <form id="f1">
+            <button>확인</button>
+        </form>
+
+        <a href="javascript:func1();">링크1</a>
+        <a href="http://www.dankookie.com" onclick="func1(); return false">링크2</a>
+        <a href="http://www.dankookie.com" onclick="return func2();">링크3</a>
+        <a href="http://www.dankookie.com" id="link4">링크4</a> <!--권장-->
+    </body>
+
+    <script type="text/javascript">
+
+        var aTag = document.querySelector("#link4");
+        aTag.addEventListener("click", function (e) {
+            alert("link4 클릭됨");
+
+            e.preventDefault();
+        })
+
+        function func1() {
+            alert("func1");
+        }
+
+        function func2() {
+            alert("func1");
+            return false;
+        }
+
+        var f1 = document.querySelector("#f1");
+        f1.onsubmit = function (e){
+            alert(e);
+
+            // 기본적으로 엘리먼트에 등록된 이벤트를 막을 수 있다.
+            // 온서브밋 온클릿 온체인지 같은거
+            e.preventDefault();
+        }
+
+    </script>
+</html>

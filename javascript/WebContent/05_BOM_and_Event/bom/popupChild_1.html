@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>c</title>
+    </head>
+    <body>
+        <h1>자식페이지</h1>
+        메서지 : <input type="text" id="msg">
+        <button type="button" onclick="winClose();">닫기</button>
+
+        <script type="text/javascript">
+            function winClose() {
+                var msg = document.querySelector("#msg").value;
+
+                // 자기를 열은 부모에 있는 doResult() 실행
+                opener.doResult(msg);
+
+                self.close(); // 현재창 닫기
+            }
+        </script>
+    </body>
+</html>

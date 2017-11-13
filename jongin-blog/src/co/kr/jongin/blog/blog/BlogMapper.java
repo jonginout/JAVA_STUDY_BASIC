@@ -56,5 +56,10 @@ public class BlogMapper {
 		session.delete(NS + "logoDelete", blogNo);
 	}
 	
+	public List<CategoryDomain> categoryList(int blogNo) throws Exception {
+		return session.selectList(NS + "categoryList", blogNo);
+	}
+	
+	
 	
 }

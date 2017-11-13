@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+
+BOM 브라우저 오브 오브젝트
+
+window.open(url, target, option)
+
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>1</title>
+    </head>
+    <body>
+        <button type="button" onclick="openPop(1)">팝업창1</button>
+        <button type="button" onclick="openPop(2)">팝업창2</button>
+        <button type="button" onclick="openPop(3)">팝업창3</button>
+        <button type="button" onclick="openPop(4)">팝업창4</button>
+
+        <h1 id="result"></h1>
+    </body>
+
+    <script type="text/javascript">
+        function openPop(type) {
+            switch (type) {
+                case 1:
+                    window.open(
+                        "http://www.dankookie.com",
+                        "pop1",
+                        "width=400, height=500"
+                    );
+                    break;
+                case 2:
+                    window.open(
+                        "http://www.dankookie.com",
+                        "pop2",
+                        "width=400, height=500"
+                    );
+                    break;
+                case 3:
+                    console.log(screen.width, screen.height);
+
+                    var left = (screen.width - 400) /2;
+                    var top = (screen.height - 300)/2;
+                    window.open(
+                        "http://www.dankookie.com",
+                        "pop3",
+                        "top="+top+", left="+left+", width=400, height=300"
+                    );
+                    break;
+                case 4:
+                    //자식이 작업하고 부모에게 넘긴다
+                    console.log(screen.width, screen.height);
+
+                    var left = (screen.width - 400) /2;
+                    var top = (screen.height - 300)/2;
+                    window.open(
+                        "popupChild.html",
+                        "pop4",
+                        "top="+top+", left="+left+", width=400, height=300"
+                    );
+                    break;
+            }
+        }
+
+        function doResult(msg){
+            var result = document.querySelector("#result");
+            result.innerText = msg;
+        }
+
+    </script>
+
+</html>

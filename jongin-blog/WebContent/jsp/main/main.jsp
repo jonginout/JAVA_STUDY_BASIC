@@ -12,7 +12,7 @@
 		<div id="content">
 			
 			<h1 id="mainLogo">
-				<a href="${pageContext.request.contextPath}/main/main.do">
+				<a href="">
 					<i class="fa fa-home" aria-hidden="true"></i>
 					Jongin Blog
 				</a>
@@ -20,18 +20,18 @@
 			
 			<h3>
 				<c:choose>
-					<c:when test="${empty user}">
-			 			<a href="${pageContext.request.contextPath}/login/loginform.do">로그인</a>
-						<a href="${pageContext.request.contextPath}/signin/signinform.do">회원가입</a>					
+					<c:when test="${empty user}">		
+						<button class="btn" id="login">로그인</button>			
+						<button class="btn" id="signin">회원가입</button>			
 					</c:when>
-					<c:otherwise>
-						<a href="${pageContext.request.contextPath}/login/logout.do">로그아웃</a>		
+					<c:otherwise>	
+						<button class="btn" id="logout">로그아웃</button>
 						<c:choose>
 							<c:when test="${myBlog}">
-								<button id="blogBtn" onclick="myBlog()">내 블로그</button>
+								<button class="btn" id="blogBtn">내 블로그</button>
 							</c:when>
 							<c:otherwise>
-								<button id="blogBtn" onclick="makeBlog()">블로그 생성</button>
+								<button class="btn" id="makeBlog">블로그 생성</button>
 							</c:otherwise>
 						</c:choose>
 					</c:otherwise>
@@ -60,7 +60,7 @@
 						<td>로고</td>
 					</tr>
 					<c:forEach var="blog" items="${blogList}">
-						<tr id="goBlog" onclick="goBlog('${blog.blogNo}')">
+						<tr class="goBlog" data-blogno="${blog.blogNo}">
 							<td>${blog.blogNo}</td>
 							<td>${blog.title}</td>
 							<td>${blog.id}</td>
@@ -78,22 +78,53 @@
 	
 	if("${param.column}") $("#searchSelect").val("${param.column}");
 	if("${param.word}") $("#searchText").val("${param.word}");
+	
+	//메인화면 버튼
+	var mainBtn = document.querySelector("#mainLogo")
+	mainBtn.addEventListener("click", function(e){
+		location.href=		
+			"${pageContext.request.contextPath}/main/main.do";
+	})
+	
+	// 로그인 여부와 관련있는 버튼
+	var btn = document.querySelectorAll(".btn");
+	for(b of btn){
+		b.addEventListener("click", function(e) {		
+			switch (e.target.id) {
+			case "login":
+				location.href=		
+					"${pageContext.request.contextPath}/login/loginform.do";
+				break;
+			case "signin":
+				location.href=		
+					"${pageContext.request.contextPath}/signin/signinform.do";
+				break;
+			case "logout":
+				location.href=		
+					"${pageContext.request.contextPath}/login/logout.do";
+				break;
+			case "blogBtn":
+				location.href=		
+					"${pageContext.request.contextPath}/blog/myblog.do?memberNo=${user.memberNo}";
+				break;
+			case "makeBlog":
+				if (confirm('나만의 블로그를 생성하겠습니까?')) {			
+					location.href=		
+					"${pageContext.request.contextPath}/blog/bloginsert.do";
+				}
+				break;
+			}
+		}, false);
+	}
 
-	function makeBlog() {
-		if (confirm('나만의 블로그를 생성하겠습니까?')) {			
+	// 블로그 가기 버튼
+	var goBlog = document.querySelectorAll(".goBlog");
+	for(g of goBlog){		
+		g.addEventListener("click", function(e){
+			var blogNo = e.target.parentNode.getAttribute("data-blogno"); /*자식은 chileNode*/
 			location.href=		
-			"${pageContext.request.contextPath}/blog/bloginsert.do";
-		}
+				"${pageContext.request.contextPath}/blog/blog.do?blogNo="+blogNo;
+		}, false);
 	}
 	
-	function myBlog() {
-		location.href=		
-		"${pageContext.request.contextPath}/blog/myblog.do?memberNo=${user.memberNo}";
-	}
-	
-	function goBlog(blogNo) {
-		location.href=		
-		"${pageContext.request.contextPath}/blog/blog.do?blogNo="+blogNo;
-	}
-
 </script>

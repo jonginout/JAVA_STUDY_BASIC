@@ -14,6 +14,7 @@
 		<typeAlias alias="login" type="co.kr.jongin.blog.login.LoginDomain" />
 		<typeAlias alias="blog" type="co.kr.jongin.blog.blog.BlogDomain" />
 		<typeAlias alias="logo" type="co.kr.jongin.blog.blog.LogoDomain" />
+		<typeAlias alias="category" type="co.kr.jongin.blog.blog.CategoryDomain" />
 	</typeAliases>
 	
 	<!-- 

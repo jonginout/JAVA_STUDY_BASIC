@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+
+    navigator
+
+    사용자의 시스템 환경 정보를 알 수 있다.
+
+    - userAgent
+
+ -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>na</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            console.log(navigator.userAgent);
+
+            var agent = navigator.userAgent;
+
+            if (agent.indexOf("iPhone") != -1) {
+                console.log("아이폰 접속");
+            }
+            else if (agent.indexOf("Android") != -1) {
+                console.log("안드로이드 접속");
+            }
+            else if (agent.indexOf("Chrome") != -1) {
+                console.log("Chrome 접속");
+            }
+        </script>
+    </body>
+</html>

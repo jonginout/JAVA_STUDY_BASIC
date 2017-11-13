@@ -30,50 +30,63 @@
 						<button onclick="goLink('post');">글작성</button>				
 						<button onclick="goLink('blogDel');">블로그 삭제</button>				
 					</div>
-					<div id="formBox">
-						<form name="setForm" enctype="multipart/form-data" method="post">
+					
+					<div id="categoryList">
+						<h1>카테고리 설정</h1>
+						<table id="blogTable" border="1">
+							<tr>
+								<td>번호</td>
+								<td>카테고리명</td>
+								<td>보이기 유형</td>
+								<td>포스트 수</td>
+								<td>설명</td>
+								<td>수정</td>
+								<td>삭제</td>
+							</tr>
+							<c:set var="i" value="0"/>
+							<c:forEach var="category" items="${categoryList}">
+								<tr>
+									<td>${i = i + 1}</td>
+									<td>${category.name}</td>
+									<td>${category.showType}</td>
+									<td>${category.showNum}</td>
+									<td>${category.description}</td>
+									<td><button>수정</button></td>
+									<td><button>삭제</button></td>
+								</tr>
+							</c:forEach>
+						</table>
+					</div>
+					
+					<div id="setCategoryBox">
+						<h2>새 카테고리 추가</h2>
+						<form name="categoryForm" method="post">
 							<p>
-								블로그 제목 : 
-								<input name="title" type="text" value="${blog.title}"/>
-							</p>	
-							<p>
-								블로그 태그 : 
-								<input name="tag" type="text" value="${blog.tag}"/>
+								카테고리명 : 
+								<input type="text" name="name"/>
 							</p>
 							<p>
-								메인페이지 포스트 : 
-								<select name="showNum">
-									<c:forEach var="i" begin="1" end="5">
-										<option value="${i}">${i}개씩</option>
-									</c:forEach>
-								</select>
+								보이기 유형 : 
+								<label for="title">타이틀</label>
+								<input type="radio" name="showType" id="title"/>
+								<label for="all">글전체</label>
+								<input type="radio" name="showType" id="all"/>
 							</p>
-							<c:choose>
-								<c:when test="${blog.logoNo==0}">
-									<p>
-										로고 이미지 : 
-										<input name="logoImg" type="file" />
-									</p>
-								</c:when>
-								<c:otherwise>
-									<p>
-										현재 로고 이미지 :
-										<a href="javascript:delImg();">
-											<img src="${pageContext.request.contextPath}/common/down.do?filePath=${logo.filePath}&systemName=${logo.systemName}" 
-											alt="현재 로고 이미지" style="max-height: 150px;"/>
-										</a>
-										<a href="javascript:goLink('imgDown');">
-											${logo.oriName}
-										</a>								
-									</p>	
-								</c:otherwise>
-							</c:choose>
 							<p>
-								<button type="button" onclick="goLink('clear')">폼 초기화</button>
-								<button onclick="modifyBlog()">블로그 수정</button>
-							</p>			
+								포스트 수 : 
+								<input type="text" name="showNum"/>
+								개 (1~20)
+							</p>
+							<p>
+								설명 :
+								<input type="text" name="description"/>
+							</p>
+							<p>
+								<button>카테고리 추가</button>
+							</p>
 						</form>
 					</div>
+					
 				</div>
 			</div>
 	
@@ -88,7 +101,7 @@
 			
 			var linkArr = {
 				"clear" : "/blog/blogsetform.do?blogNo=${blog.blogNo}",
-				"category" : "/blog/setcategory.do?blogNo=${blog.blogNo}",
+				"category" : "/blog/categorysetform.do?blogNo=${blog.blogNo}",
 				"post" : "/blog/post.do?blogNo=${blog.blogNo}",
 				"blogDel" : "/blog/blogdelete.do?blogNo=${blog.blogNo}",
 				"main" : "/main/main.do",

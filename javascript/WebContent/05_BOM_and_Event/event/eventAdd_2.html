@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<!--
+
+    이벤트 이해하기 - 1 (이벤트 설정 방식)
+
+    권장방식
+    - 객체.addEventListener("이벤트타입m 콜백함수(리스너), 전파방식(캡쳐링, 버블링)")
+
+ -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>event</title>
+    </head>
+    <body>
+        <button id="btn" onclick="console.log('0')">클릭</button>
+    </body>
+
+    <script type="text/javascript">
+        var btn = document.querySelector("#btn");
+
+        btn.addEventListener("click", func1, false);
+        btn.addEventListener("click", func2, false);
+        btn.onclick = func3;
+        // btn.onclick = func4; // 이건 덮어쓰기
+        //다중 이벤트 등록 가능
+
+        function func1(){
+            alert("ㅎ11111");
+        }
+        function func2(){
+            alert("ㅎ22222");
+        }
+        function func3(){
+            alert("ㅎ33333");
+        }
+        function func3(){
+            alert("ㅎ4444444");
+        }
+
+        // btn.removeEventListener("click")
+    </script>
+</html>

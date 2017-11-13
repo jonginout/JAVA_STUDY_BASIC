@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+
+    적용된 스타일을 조회하기
+
+    - 객체.style.css프로퍼티명
+    으로 조회하는건 inline형식으로 정의된 style만 조회 가능
+
+    기본 설정된 정보를 조회를 해야하는 경우는
+
+ -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>s</title>
+        <style>
+            div{
+                background-color: : green !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="width:200px; height:200px">
+            <p>디아비</p>
+        </div>
+
+        <script type="text/javascript">
+            var dObj = document.querySelector("div");
+            dObj.style.backgroundColor = "tomato";
+            var backVal = document.defaultView.getComputedStyle(dObj).backgroundColor;
+
+
+            console.log(dObj.style.backgroundColor);
+            console.log(backVal);
+        </script>
+    </body>
+</html>
