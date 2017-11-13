@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<!--
+
+    이벤트 이해하기 - 이벤트 객체
+
+    이벤트 객체
+
+ -->
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>event</title>
+    </head>
+    <body>
+        <button>시작</button>
+        <button>종료</button>
+    </body>
+
+    <script type="text/javascript">
+
+        var btn = document.querySelectorAll("button");
+        for (var i = 0; i < btn.length; i++) {
+            btn[i].onclick = function(e) {
+                console.dir(e);
+
+                var obj = e.target;
+                //이벤트 발생시킨 대상 객체에 접근한다 (button)
+                console.log(obj.innerText);
+
+                //좌표 연관된 정보..
+                // offset으로 시작되는건 : 이벤트 발생객체와 연관이 있다.
+
+                // 이벤트 발생 객체의 좌표
+                console.log("좌표:"+obj.offsetLeft, obj.offsetTop);
+
+                // 이벤트 발생 객체와 클릭된 위치의 차이
+                console.log("객체와의 거리:"+e.offsetX, e.offsetY);
+
+                // 브라우저 와의 거리
+                console.log("브라우저 거리:"+e.clientX, e.clientY);
+
+                // 스크린에서의 거리
+                console.log("스크린 거리:"+e.screenX, e.screenY);
+            }
+        }
+
+        // this = target
+        // 이벤트를 발생시킨 해당 객체
+
+    </script>
+</html>

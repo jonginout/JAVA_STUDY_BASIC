@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>이동</title>
+        <style media="screen">
+            div{
+                position: absolute;
+
+                top: 200px;
+                left: 200px;
+                /*기본적으로 static 방식이라 좌표가 안먹는다.*/
+
+                width: 100px;
+                height: 100px;
+                background: tomato;
+                font-size: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div>이동</div>
+        <script type="text/javascript">
+            var dObj = document.querySelector("div");
+            document.addEventListener("mousemove", function (e) {
+                dObj.style.left = e.clientX+"px";
+                dObj.style.top = e.clientY+"px";
+            })
+        </script>
+    </body>
+</html>

@@ -24,6 +24,16 @@
 		<result column="file_size" property="fileSize"/>
 	</resultMap>
 
+	<resultMap id="categoryMap" type="category"> 
+		<result column="category_noo" property="categoryNo"/>
+		<result column="blog_no" property="blogNo"/>
+		<result column="name" property="name"/>
+		<result column="show_type" property="showType"/>
+		<result column="show_num" property="showNum"/>
+		<result column="description" property="description"/>
+	</resultMap>
+
+
 	<insert id="blogInsert" parameterType="blog">
 		insert into BLOGS
 			(blog_no,member_no,title)
@@ -114,6 +124,13 @@
 			</if>
     	</where>
 	</sql>
+	
+	
+	<select id="categoryList" parameterType="int" resultMap="categoryMap">
+		select *
+			from CATEGORYS
+		where blog_no = #{blogNo}
+	</select>
 	
 </mapper>
 

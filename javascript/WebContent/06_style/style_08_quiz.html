@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>s</title>
+        <style media="screen">
+            img{
+                position: absolute;
+                left: 0px;
+                top: 0px;
+            }
+            #img1{width: 100px; height: 150px}
+            #img2{width: 100px; height: 150px}
+        </style>
+    </head>
+    <body>
+
+        <img src="../04_dom-form/img/pic1.jpg" id="img1">
+
+        <script>
+
+            var offsetX;
+            var offsetY;
+            var clientX;
+            var clientY;
+            var img1 = document.querySelector("#img1");
+
+            img1.addEventListener("dragstart",function (e) {
+                offsetX = e.offsetX;
+                offsetY = e.offsetY;
+            },false);
+
+            img1.addEventListener("dragend",function (e) {
+                clientX = e.clientX;
+                clientY = e.clientY;
+                img1.style.left = clientX-offsetX+"px";
+                img1.style.top = clientY-offsetY+"px";
+                e.preventDefault();
+            },false);
+
+
+        </script>
+    </body>
+</html>
