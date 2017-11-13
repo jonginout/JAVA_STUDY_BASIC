@@ -32,6 +32,23 @@
             this.name = name;
         }
 
+        
+        
+        // prototype 자체를 아예 바꿔버릴 수 있다.
+        Member.prototype = {
+            setId : function (id) {this.id = id },
+            setName : function (name) {this.name = name},
+            getId : function () { return this.id },
+            getName : function () { return this.name}
+        };
+        // 이러면 프로토타입에 컨스트럭터가 없어지니깐 다시 추가해준다.
+        Member.prototype.constructor = Member;
+
+        
+        var m1 = new Member("hz", "헤이즈");
+        var m2 = new Member("az", "안지영");
+
+
         // Member.prototype.getId = function () {
         //     return this.id;
         // }
@@ -44,18 +61,6 @@
         // Member.prototype.setName = function (name) {
         //     this.name = name;
         // }
-
-        
-        // prototype 자체를 아예 바꿔버릴 수 있다.
-        Member.prototype = {
-            setId : function (id) {this.id = id },
-            setName : function (name) {this.name = name},
-            getId : function () { return this.id },
-            getName : function () { return this.name}
-        };
-        // 이러면 프로토타입에 컨스트럭터가 없어지니깐 다시 추가해준다.
-        Member.prototype.constructor = Member;
-
-    </script>
+        </script>
 </body>
 </html>

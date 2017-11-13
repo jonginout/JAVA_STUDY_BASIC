@@ -12,12 +12,11 @@ function func() {
     console.log("func 호출됨");
 }
 
-
 var f1 = func;
 var f2 = f1;
 
 // 다 같은 곳을 바라보고 있다.
 
-func();
-f1();
-f2();
+func(); //func 호출됨
+f1(); //func 호출됨
+f2(); //func 호출됨

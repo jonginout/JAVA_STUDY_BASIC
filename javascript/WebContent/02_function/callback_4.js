@@ -1,13 +1,18 @@
 "use strict"
 
-var arrFor = (arr, cb) => {
+var arrFor = (arr, callBack) => {
     for(let i = 0; i < arr.length; i++){
-        cb(i, arr[i]);
+        callBack(i, arr[i]);
     }
 }
 
-let arr = [1,2,3,4,5];
-let sum = 0;
+var arr = [1,2,3,4,5];
+var sum = 0;
+
+arrFor( arr , (i, val) => { sum += val } ); //함수의 인자로 함수를
+console.log("합 : ", sum); //15
+
+
 
 // for(let i = 0; i < arr.length; i++){
 //     sum += arr[i];
@@ -15,8 +20,6 @@ let sum = 0;
 
 // console.log("합 : ", sum);
 
-arrFor(arr,(i, val) => { sum += val })
-console.log("합 : ", sum);
 
 
 var sum2 = 0;

@@ -13,10 +13,10 @@ function func(callback) {
 }
 
 /* 1 */
-func(()=>{console.log("익명함수 호출됨....")})
+// func(()=>{console.log("익명함수 호출됨....")})
 
 /* 2 */
-// func(function(){console.log("익명함수 호출됨....")})
+func(function(){console.log("익명함수 호출됨....")})
 
 
 /* 3 */
