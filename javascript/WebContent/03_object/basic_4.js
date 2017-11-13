@@ -1,4 +1,4 @@
-/* 
+/*
 
     객체 이해하기_4
 
@@ -9,8 +9,6 @@
 
 */
 "use strict"
-
-var memberArr = []
 
 var member = {
     id : "hong",
