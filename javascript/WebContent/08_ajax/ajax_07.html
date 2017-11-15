@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>비동기통신</title>
+        <script src="jquery.js"></script>
+    </head>
+    <body>
+        <h1>Ajax 통신으로 서버에서 받은 데이터</h1>
+        <div id="result"></div>
+        <br>
+        <button>Ajax 호출</button>
+
+
+        <script type="text/javascript">
+
+            $("button").on("click", function () {
+
+                $.ajax({
+                    // type : "GET",    // 전송방식
+                    url : "hello",    // 경로
+                    // data : {
+                    //
+                    // },   // 파라미터 (string, object)
+                    // dataType :   ,  // 결과타입 처리 (json, xml)
+                    success : function(data){
+                        $("#result").html(data);
+                    } //함수 (성공시 200일 경우)
+
+                });
+            });
+
+
+        </script>
+    </body>
+</html>

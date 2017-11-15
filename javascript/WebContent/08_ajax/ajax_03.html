@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>비동기통신</title>
+        <script src="jquery.js"></script>
+    </head>
+    <body>
+        <h1>Ajax 통신으로 서버에서 받은 데이터</h1>
+        <div id="result"></div>
+        <br>
+        <button>Ajax 호출</button>
+
+
+        <script type="text/javascript">
+
+            $("button").on("click", function () {
+                var xhr = new XMLHttpRequest();
+
+                // 비동기 방식이기 때문에 서버의
+                // 응답결과를 처리할 수 있도록 결과 처리 콜백함수 등록
+
+                // readyState가 체인지 될때마다 콜백이 실행되는 함수
+                xhr.onreadystatechange = function () {
+                    if(xhr.readyState==4){
+                        if (xhr.status==200) {
+                            console.log("ajax 호출 결과 : "+xhr.responseText);
+                            $("#result").html(xhr.responseText);
+                        }else {
+                            console.log("에러!!");
+                        }
+                    }
+                    else {
+                        // 처리중
+
+                        $("#result").html('<img src="loading.gif">');
+                        console.log("처리중입니다.");
+                    }
+                };
+
+                // 비동기식 서버 구현
+                // 서버 연결 open([요청방식,요청 페이지, 동기(false)비동기(true)])
+                xhr.open("GET", "hello", true);
+                // 서버와 데이터 주고받기
+                xhr.send();
+            });
+
+        </script>
+    </body>
+</html>

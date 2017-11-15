@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>비동기통신</title>
+        <script src="jquery.js"></script>
+    </head>
+    <body>
+        <h1>JSON 데이터 처리</h1>
+        <div id="result"></div>
+        <br>
+        <button id="clearBtn">초기화</button>
+        <button id="sendBtn">호출</button>
+
+
+        <script type="text/javascript">
+
+            $("#clearBtn").on("click", function () {
+                $("#result").text("실행 결과 표시");
+            });
+            $("#sendBtn").on("click", function () {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if(xhr.readyState != 4) return;
+                    if(xhr.status == 200){
+
+                        // var members = eval(xhr.responseText);
+                        // var members = eval("("+xhr.responseText+")");
+                        // 배열이 아닌 json객체가 1개 일 경우
+
+                        var members = JSON.parse(xhr.responseText);
+
+                        var html = "";
+                        for (var i = 0; i < members.length; i++) {
+                            var m = members[i]
+                            html += `
+                                <p>이름 : ${m.name}</p>
+                                <p>이메일 : ${m.email}</p>
+                                <p>나이 : ${m.age}</p>
+                            `
+                        }
+
+                        $("#result").html(html);
+                    }
+                };
+                xhr.open("GET", "test05", true);
+                xhr.send();
+            });
+
+        </script>
+    </body>
+</html>

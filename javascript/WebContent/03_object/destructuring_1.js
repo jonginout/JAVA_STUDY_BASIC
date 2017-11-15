@@ -21,5 +21,9 @@ var {id, name, email, addr="서울시"} = m;
 // var name = m.name;
 // var email = m.email;
 
-console.log(m);
-console.log(addr);
+console.log(m); 
+//{ id: 'hz', name: '헤이즈', email: 'ewqmk@as.com' }
+console.log(id); //hz
+console.log(name); //헤이즈
+console.log(email); //ewqmk@as.com
+console.log(addr); //서울시

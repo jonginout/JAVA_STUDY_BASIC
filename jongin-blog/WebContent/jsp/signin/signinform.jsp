@@ -5,6 +5,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/jsp/include/basicInclude.jsp" %>
+<style>
+	#regMsg, #dupMsg{
+		color : red;
+	}
+	#chkMsg{
+		color : green;
+	}
+</style>
 </head>
 <body>
 	<h1>Jongin Blog 회원가입</h1>
@@ -12,9 +20,10 @@
 	id="signinForm" name="signinForm" method="post" onsubmit="return signin();">
 		<p>
 			id 입력 : <input type="text" name="id" id="id"/>
-			<button type="button" id="idChkBtn" onclick="idChk()">중복확인</button>
-			<button id="clear" type="button" onclick="clearForm();">초기화</button>
-			<br /><span id="chkMsg">중복체크 완료!</span>
+			<br />
+			<span id="chkMsg">중복체크 완료!</span>
+			<span id="regMsg">Id는 영대소문자로 2~10자 입니다.</span>
+			<span id="dupMsg">이미 존재하는 아이디 입니다.</span>
 		</p>
 		<p>
 			pw 입력: <input type="password" name="pw"/>
@@ -35,18 +44,17 @@
 
 <script type="text/javascript">
 
-	$("#submit").hide();
-	$("#clear").hide();
 	$("#chkMsg").hide();
+	$("#dupMsg").hide();
 
-	var pattern = /^([a-zA-Z]){2,10}$/;
+	var pattern = /^([a-zA-Z]){3,10}$/;
 	function signin() {
 		
 		var pw = signinForm.pw.value;
 		var pw2 = signinForm.pw2.value;
 		
 		if(!pattern.test(pw)){
-			alert("패스워드는 영대소문자로 2~10자 입니다.");
+			alert("패스워드는 영대소문자로 3~10자 입니다.");
 			return false;
 		}
 		if(pw!=pw2){
@@ -60,24 +68,14 @@
 		location.href = "${pageContext.request.contextPath}/main/main.do";
 	}
 	
-	function clearForm() {
-		$("#id").removeAttr("readonly");
-		$("#submit").hide(200);
-        $("#clear").hide(200);
-        $("#idChkBtn").show(200);
-        $("#chkMsg").hide(200);
-	}
+
 	
-	function idChk() {
+	
+	$("#id").on("keyup", function(){
+		var recId = signinForm.id.value;
 		
-			var recId = signinForm.id.value;
-			if(!pattern.test(recId)){
-				alert("id는 영대소문자로 2~10자 입니다.");
-				return;
-			}
-			
+		if(pattern.test(recId)){
 	        $.ajax({
-	             
 	            type : "POST",
 	            url : "${pageContext.request.contextPath}/signin/idchk.do",
 	            data : {
@@ -86,18 +84,23 @@
 	            dataType : "json",
 	            success : function(data){
 	            	if (data.result==1) {
-	            		alert(data.msg);
-		                $("#id").attr("readonly", "readonly");
+	//             		alert(data.msg);
+	// 	                $("#id").attr("readonly", "readonly");
 		                $("#submit").show(200);
-		                $("#clear").show(200);
-		                $("#idChkBtn").hide(200);
 		                $("#chkMsg").show(200);
+		                $("#regMsg").hide(200);
+		                $("#dupMsg").hide(200);
 					}else {
-	            		alert(data.msg);
+		                $("#regMsg").hide(200);
+	            		$("#dupMsg").show(200);
 					}
 	            }
-	             
 	        });
-	}
-
+		}else {
+            $("#chkMsg").hide(200);
+            $("#regMsg").show(200);
+    		$("#dupMsg").hide(200);
+		}
+	})
+	
 </script>

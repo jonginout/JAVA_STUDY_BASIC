@@ -18,7 +18,8 @@ function Member(id, name, email) {
 var m1 = new Member("hz", "헤이즈", "hz@naber.com"); 
 var m2 = new Member("hz2", "헤이즈2", "hz22@naber.com"); 
 
-m1.info();
-m2.info();
+m1.info(); //hz 헤이즈 hz@naber.com
+m2.info(); //hz2 헤이즈2 hz22@naber.com
 
 console.log(m2.info())
+//hz2 헤이즈2 hz22@naber.com undefined

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>비동기통신</title>
+        <script src="jquery.js"></script>
+    </head>
+    <body>
+        <h1>Ajax 통신으로 서버에서 받은 데이터</h1>
+        <div class="result">
+        </div>
+        <br>
+        <button>Ajax 호출</button>
+
+
+
+        <script type="text/javascript">
+            $("button").on("click", function () {
+                // 1단계 - Ajax 통신을 위한 스크립트 객체 얻기(XMLHttpRequest)
+
+                var xhr = new XMLHttpRequest();
+
+                // 비동기식 서버 구현
+                // 서버 연결 open([요청방식,요청 페이지, 동기(false)비동기(true)])
+                xhr.open("GET", "hello.jsp", true);
+                // 서버와 데이터 주고받기
+                xhr.send();
+
+                // 결과받기
+                // console.log("ajax 호출 결과 : "+xhr.responseText);
+                // 비동기라 바로 실행해서 못받는다
+
+                // 텀을 준다.
+                setTimeout(()=>console.log("ajax 호출 결과 : "+xhr.responseText),100)
+            });
+        </script>
+    </body>
+</html>

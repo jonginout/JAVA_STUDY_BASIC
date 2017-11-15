@@ -23,11 +23,12 @@ function Member() {
     console.log(this);
 }
 
-var m1 = Member();
-var m2 = new Member(); 
+var m1 = Member(); //undefined
+var m2 = new Member(); // Member{}
 // new 하면 빈객체가 생기고 그거에 이름은 m1 이다.
 // new를 붙혀야지만 this(생성된 객체 자신)의 의미가 있다.
 
-
-console.log(m1); // 함수의 리턴값이 없을땐 반환은 언디파인드
-console.log(m2); // new 했을때 return 값이 따로 없으면 this 반환
+console.log(m1);  //undefined
+//함수의 리턴값이 없을땐 반환은 언디파인드
+console.log(m2);  // Member{}
+//new 했을때 return 값이 따로 없으면 this 반환

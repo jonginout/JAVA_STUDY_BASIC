@@ -27,4 +27,9 @@ var m2 = {
 
 
 m1.msg();
+//{ name: '헤이즈', msg: [Function: msg] }
+//헤이즈님이 입장함...
+
 m2.msg();
+//{ name: '헤이즈', msg: [Function: msg] }
+//헤이즈님이 입장함...

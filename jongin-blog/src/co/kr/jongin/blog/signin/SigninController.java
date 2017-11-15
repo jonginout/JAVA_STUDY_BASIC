@@ -14,9 +14,9 @@ import co.kr.jongin.blog.login.LoginDomain;
 
 @Controller
 public class SigninController {
-	
+
 	@RequestMapping("/signin/signinform.do")
-	public void name() {}
+	public void signinform() {}
 	
 	@RequestMapping("/signin/signin.do")
 	public String signin(LoginDomain login) throws Exception {
