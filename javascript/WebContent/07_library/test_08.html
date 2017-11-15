@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+
+	스타일 메소드 만들기
+
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery.min.js" charset="utf-8"></script>
+<style media="screen">
+	#list1{
+		background-color: tomato;
+		height: 100px;
+		width: 100px;
+		font-size: 15px;
+	}
+	#list2{
+		background-color: skyblue;
+		height: 100px;
+		width: 100px;
+		font-size: 15px;
+	}
+	#list3{
+		background-color: lightgreen;
+		height: 100px;
+		width: 100px;
+		font-size: 15px;
+	}
+</style>
+</head>
+<body>
+	<button>설정하기</button>
+	<button>가져오기</button>
+
+	<div id="list1">테스트</div>
+	<div id="list2">테스트1</div>
+	<div id="list3">테스트2</div>
+
+	<script>
+
+		var $btn1 = $("button")[0];
+		$btn1.addEventListener("click", function () {
+			$("div").css("background", "tomato").css("color", "white");
+			$("div").css({
+				"fontSize" : "30px",
+				"border" : "5px solid black"
+			})
+		});
+
+		var $btn2 = $("button")[1];
+		$btn2.addEventListener("click", function () {
+			alert($("div").css("color"));
+		});
+
+	</script>
+</body>
+</html>

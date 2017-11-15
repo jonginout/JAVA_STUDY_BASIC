@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+    innerText 대체
+    text();
+ -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>요소 찾기</title>
+        <script src="jquery.min.js" charset="utf-8"></script>
+    </head>
+    <body>
+
+        <button id="btn1">설정하기</button>
+        <button id="btn2">가져오기</button>
+        <button id="btn3">설정 후 가져오기</button>
+        <div id="a">테스트1</div>
+
+        <div class="b">테스트2</div>
+        <div>테스트3</div>
+
+
+        <script type="text/javascript">
+            // var btn1 = document.querySelector("#btn1");
+            // var btn2 = document.querySelector("button:nth-child(2)");
+
+            var btn1 = $("#btn1")[0];
+            btn1.addEventListener("click", function (e) {
+                $("div").text("<strong>변경됨</strong>");
+            });
+
+            var btn2 = $("button:nth-child(2)")[0];
+            btn2.addEventListener("click", function (e) {
+                alert($("div").text());
+                 // 가져올때는 다 가져온다
+                 // 다른거는 첫번째거 하나만 가져오는데
+                 // text만 유일하게 다 가져온다.
+            })
+
+            var btn2 = $("#btn3")[0];
+            btn2.addEventListener("click", function (e) {
+                alert($("div").text("<strong>변경됨</strong>").text());
+
+            })
+
+
+
+        </script>
+    </body>
+</html>

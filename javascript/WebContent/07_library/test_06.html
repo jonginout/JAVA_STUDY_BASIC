@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+
+	태그 생성 기능 추가하기
+
+	만들고 싶은 모양 : <div>테스트</div>
+
+    var divEle = document.createElement("div");
+    // <div></div> 가 메모리에 올라감
+
+    텍스트 노드 생성하기
+    var txtNode = document.createTextNode("테스트");
+    // "테스트" 가 메모리에 올라감
+
+    divEle.appendChild(txtNode);
+
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery.min.js" charset="utf-8"></script>
+<style media="screen">
+	#list1{
+		background-color: red;
+		height: 100px;
+		width: 100px;
+	}
+	#list2{
+		background-color: blue;
+		height: 100px;
+		width: 100px;
+	}
+	#list3{
+		background-color: green;
+		height: 100px;
+		width: 100px;
+	}
+</style>
+</head>
+<body>
+	<button>태그 추가하기</button>
+
+	<div id="list1"></div>
+	<div id="list2"></div>
+	<div id="list3"></div>
+	<script>
+
+		var $btn1 = $("button")[0];
+		$btn1.addEventListener("click", function () {
+
+			var h1Obj = $("<h1>").text("테스트");
+
+			// $("#list")[0].appendChild(h1Obj[0]);
+			$("div").append(h1Obj); // 찾는건 다 어펜드 된다
+
+
+		});
+
+	</script>
+</body>
+</html>

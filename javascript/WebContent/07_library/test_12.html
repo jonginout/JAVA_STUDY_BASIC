@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+
+	단축(심플)이벤트 설정 기능 추가하기
+
+	기존 : el.addEventListener("이벤트 타입", 콜백함수)
+
+	el.이벤트타입(콜백함수);
+	el.mousemove(function(){});
+
+ -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery.min.js" charset="utf-8"></script>
+<style media="screen">
+</style>
+</head>
+<body>
+
+	<button id="btn1">버튼1</button>
+	<button id="btn2">버튼2</button>
+
+	<script>
+
+		//모든 버튼
+		$("button").click(function () {
+			alert($(this).text() + "클릭뙴!");
+		})
+
+	</script>
+</body>
+</html>

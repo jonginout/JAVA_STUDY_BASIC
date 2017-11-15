@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+    선택자
+    innerHTML 대체 html()
+ -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>요소 찾기</title>
+        <!-- <script src="jquery.min.js" charset="utf-8"></script> -->
+        <script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+    </head>
+    <body>
+
+        <button id="btn1">설정하기</button>
+        <button id="btn2">가져오기</button>
+        <button id="btn3">설정 후 가져오기</button>
+        <div id="a">테스트1</div>
+
+        <div class="b">테스트2</div>
+        <div>테스트3</div>
+
+
+        <script type="text/javascript">
+            // var btn1 = document.querySelector("#btn1");
+            // var btn2 = document.querySelector("button:nth-child(2)");
+
+            var btn1 = $("#btn1")[0];
+            btn1.addEventListener("click", function (e) {
+                $("div").html("<strong>변경됨</strong>");
+            });
+
+            var btn2 = $("button:nth-child(2)")[0];
+            btn2.addEventListener("click", function (e) {
+                alert($("div").html()); //가져올때는 첫번째꺼 하나만
+            })
+
+            var btn2 = $("#btn3")[0];
+            btn2.addEventListener("click", function (e) {
+//                 var $div = $("div");
+//                 $div.html("<strong>변경됨</strong>");
+//                 alert($div.html);
+                alert($("div").html("<strong>변경됨</strong>").html());
+
+            })
+
+
+
+        </script>
+    </body>
+</html>

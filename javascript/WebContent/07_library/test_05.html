@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+
+	el.value = "";
+
+	jquery
+	el.val("rqkrwqklrwqlkr"); : 설정
+	el.val() : 추출
+
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="jquery.min.js" charset="utf-8"></script>
+</head>
+<body>
+	<button>설정하기</button>
+	<button>추출하기</button>
+
+
+	아이디 : <input type="text" name="id" size="20">
+	<script>
+
+		var $btn1 = $("button")[0];
+		$btn1.addEventListener("click", function () {
+			$("input[name='id']").val("설정,,");
+		});
+
+		var $btn2 = $("button")[1];
+		$btn2.addEventListener("click", function () {
+			alert($("input[name='id']").val());
+		});
+
+	</script>
+</body>
+</html>
