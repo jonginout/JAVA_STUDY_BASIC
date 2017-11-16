@@ -34,7 +34,7 @@
 							<c:otherwise>
 								<a href="${pageContext.request.contextPath}/login/logout.do">로그아웃</a>
 								<c:if test="${blog.memberNo == user.memberNo}">
-									<a href="${pageContext.request.contextPath}/blog/blogsetform.do?blogNo=${blog.blogNo}">블로그관리</a>
+									<a href="javascript:blogSet();">블로그관리</a>
 								</c:if>
 							</c:otherwise>
 						</c:choose>
@@ -72,7 +72,9 @@
 		
 		
 <script type="text/javascript">
-
+	function blogSet() {
+		location.href = "/jongin-blog/jsp/blog/blogsetform.html?blogNo=${blog.blogNo}";
+	}
 </script>	
 </body>
 </html>

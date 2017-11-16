@@ -6,12 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/jsp/include/basicInclude.jsp" %>
 <style>
-	#regMsg, #dupMsg{
-		color : red;
-	}
-	#chkMsg{
-		color : green;
-	}
+	#msg1{color:green}
+	#msg2{color:blue}
+	#msg3{color:red}
 </style>
 </head>
 <body>
@@ -21,9 +18,7 @@
 		<p>
 			id 입력 : <input type="text" name="id" id="id"/>
 			<br />
-			<span id="chkMsg">중복체크 완료!</span>
-			<span id="regMsg">Id는 영대소문자로 2~10자 입니다.</span>
-			<span id="dupMsg">이미 존재하는 아이디 입니다.</span>
+			<span id="msg"></span>
 		</p>
 		<p>
 			pw 입력: <input type="password" name="pw"/>
@@ -43,9 +38,6 @@
 </html>
 
 <script type="text/javascript">
-
-	$("#chkMsg").hide();
-	$("#dupMsg").hide();
 
 	var pattern = /^([a-zA-Z]){3,10}$/;
 	function signin() {
@@ -77,7 +69,7 @@
 		if(pattern.test(recId)){
 	        $.ajax({
 	            type : "POST",
-	            url : "${pageContext.request.contextPath}/signin/idchk.do",
+	            url : "${pageContext.request.contextPath}/signin/idchk.json",
 	            data : {
 	            	id : recId
 	            	},
@@ -87,19 +79,14 @@
 	//             		alert(data.msg);
 	// 	                $("#id").attr("readonly", "readonly");
 		                $("#submit").show(200);
-		                $("#chkMsg").show(200);
-		                $("#regMsg").hide(200);
-		                $("#dupMsg").hide(200);
+		                $("#msg").html("<span id='msg1'>사용가능한 아이디 입니다.<span>");
 					}else {
-		                $("#regMsg").hide(200);
-	            		$("#dupMsg").show(200);
+		                $("#msg").html("<span id='msg2'>이미 존재하는 아이디 입니다.<span>");
 					}
 	            }
 	        });
 		}else {
-            $("#chkMsg").hide(200);
-            $("#regMsg").show(200);
-    		$("#dupMsg").hide(200);
+            $("#msg").html("<span id='msg3'>아이디는 영대소문자로 3~10자 입니다.<span>");
 		}
 	})
 	

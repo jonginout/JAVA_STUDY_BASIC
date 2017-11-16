@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jongin.staff.StaffMapper">
+
+	<resultMap id="staffMap" type="staff"> 
+		<result column="staff_no" property="staffNo"/>
+		<result column="staff_name" property="staffName"/>
+		<result column="jumin_no" property="juminNo"/>
+		<result column="school_code" property="schoolCode"/>
+		<result column="religion_code" property="religionCode"/>
+		<result column="graduate_day" property="graduateDay"/>
+	</resultMap>
+
+	<sql id="whereCommon">	  
+		<where>
+			<if test="staffName != null">
+				staff_name like '%' || #{staffName} || '%'
+			</if>
+			<if test="juminNoSt != null">
+				and SUBSTR(JUMIN_NO, 8, 1) = #{juminNoSt}
+			</if>
+			<if test="schoolCode != null and schoolCode != 0">
+				and school_code = #{schoolCode}
+			</if>
+			<if test="religionCode != null and religionCode != 0">
+				and religion_code = #{religionCode}
+			</if>
+			<if test="graduateDay1 != null || graduateDay2 != null">
+				and GRADUATE_DAY 
+				between 
+					to_date(#{graduateDay1}, 'YYYY-MM-DD') 
+				and 
+					to_date(#{graduateDay2}, 'YYYY-MM-DD')
+			</if>
+		</where>		
+	</sql>
+
+	<sql id="whereCommon2">
+		<where>
+			<if test="skillCodes != null">
+	    			SKILL_CODE in <foreach item="skillCode" collection="skillCodes" 
+    									open="(" separator="," close=")"> <!-- collection : List -->
+    									#{skillCode}
+    				  			</foreach>
+    		</if>
+		</where>	
+	</sql>
+	
+	
+	<select id="listStaff" parameterType="staff" resultMap="staffMap">
+	
+	select *
+	from
+	(
+		select rownum runum, RESULT_TABLE.*
+		from
+		(
+			select distinct
+			STAFF_TB.*, SKILL_TB.STAFF_NO as join_staff_no
+			from 
+			(
+				select *
+					from 
+				STAFF
+					<include refid="whereCommon" />
+			) STAFF_TB
+			, 
+			(
+				select STAFF_NO
+					from
+				STAFF_SKILL
+					<include refid="whereCommon2" />
+			) SKILL_TB
+			where STAFF_TB.STAFF_NO = SKILL_TB.STAFF_NO
+				order by STAFF_TB.STAFF_NO desc
+		) RESULT_TABLE
+	)
+	where runum between #{begin} and #{end}
+
+	</select>
+
+
+	<select id="listStaffCount" parameterType="staff" resultType="int">
+		select count(*)
+			from
+			(
+				select distinct
+				STAFF_TB.*, SKILL_TB.STAFF_NO as join_staff_no
+				from 
+				(
+					select *
+						from 
+					STAFF
+						<include refid="whereCommon" />
+				) STAFF_TB
+				, 
+				(
+					select STAFF_NO
+						from
+					STAFF_SKILL
+						<include refid="whereCommon2" />
+				) SKILL_TB
+				where STAFF_TB.STAFF_NO = SKILL_TB.STAFF_NO
+					order by STAFF_TB.STAFF_NO desc
+			) 
+	</select>
+
+
+	<select id="detailStaff" parameterType="int" resultMap="staffMap">
+		select *
+			from staff
+		where staff_no = #{staffNo}
+	</select>
+
+
+	<insert id="insertStaff" parameterType="staff">
+       INSERT INTO STAFF 
+	        (staff_no, 
+	        staff_name, 
+	        jumin_no, 
+	        school_code, 
+	        religion_code, 
+	        graduate_day) 
+       VALUES
+	        (#{staffNo}, 
+	        #{staffName}, 
+	        #{juminNo}, 
+	        #{schoolCode}, 
+	        #{religionCode}, 
+	        #{graduateDay})
+	</insert>
+
+	<insert id="modifyStaff" parameterType="staff">
+		update STAFF
+			set 
+				staff_name = #{staffName},
+				jumin_no = #{juminNo},
+				school_code = #{schoolCode},
+				religion_code = #{religionCode},
+				graduate_day = #{graduateDay}
+		where staff_no = #{staffNo}
+	</insert>
+
+	<delete id="deleteStaff" parameterType="int">
+		delete from staff where staff_no = #{staffNo}
+	</delete>	
+    
+	<select id="staffGetNextStaffNo" resultType="int">
+		select STAFF_SEQ.nextval from dual
+	</select>
+    
+</mapper>

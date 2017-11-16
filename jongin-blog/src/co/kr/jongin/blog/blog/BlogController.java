@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,14 +55,16 @@ public class BlogController {
 		BlogDomain blog = blogDAO.myBlogDetail(memberNo);
 		return "redirect:/blog/blog.do?blogNo="+blog.getBlogNo();
 	}
-
-	@RequestMapping("/blog/blogsetform.do")
-	public ModelAndView blogSetForm(int blogNo) throws Exception {
-		ModelAndView mav = new ModelAndView("/jsp/blog/blogsetform.jsp");
+	
+	@RequestMapping("/blog/blogsetform.json")
+	public Map<String, Object> blogSetForm(int blogNo) throws Exception {
 		BlogMapper blogDAO = new BlogMapper();
-		mav.addAttribute("blog", blogDAO.blogDetail(blogNo));
-		mav.addAttribute("logo", blogDAO.logoDetail(blogNo));
-		return mav;
+//		mav.addAttribute("blog", blogDAO.blogDetail(blogNo));
+//		mav.addAttribute("logo", blogDAO.logoDetail(blogNo));
+		Map<String, Object> obj = new HashMap<>();
+		obj.put("blog", blogDAO.blogDetail(blogNo));
+		obj.put("logo", blogDAO.logoDetail(blogNo));
+		return obj;
 	}
 	
 	@RequestMapping("/blog/modifyblog.do")

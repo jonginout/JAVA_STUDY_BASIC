@@ -1,8 +1,6 @@
 package com.jongin.search;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,19 +27,15 @@ import com.jongin.staffSkill.StaffSkillMapper;
 public class SearchController {
 
 	//검색 메인
-	@RequestMapping(value="/search/main.json")
-	public Map<String, Object> main(
+	@RequestMapping(value="/search/main.do")
+	public ModelAndView main(
 			@RequestParam(name="pageNo", defaultValue="1") int pageNo,
 			HttpServletRequest request, StaffDomain staff)
 					throws Exception {
 		
 		//스태프를 페이지에 상속
 		
-		System.out.println(staff);
-		
 		String [] skillCodes = request.getParameterValues("skillCode");
-		System.out.println("skillCodesQ : "+request.getParameter("skillCode"));
-		System.out.println("skillCodes : "+skillCodes);
 
 		int listPerPage = 5; // 페이지 당 리스트
 		int pagePerBlock = 3;	// 블록당 페이지 수
@@ -52,25 +46,32 @@ public class SearchController {
 		SchoolMapper schoolDao = new SchoolMapper();
 		ReligionMapper religionDao = new ReligionMapper();
 		StaffMapper staffDao = new StaffMapper();
+
+		List<SkillDomain> skillList = skillDao.listSkill();
+		List<SchoolDomain> schoolList = schoolDao.listSchool();
+		List<ReligionDomain> religionList = religionDao.listReligion();
 		
 		staff.setSkillCodes(skillCodes);
+		List<StaffDomain> staffList = staffDao.listStaff(staff);
 		int staffListCount = staffDao.listStaffCount(staff);
 		
 		
 		PageResult pageResult = new PageResult(pageNo, staffListCount, pagePerBlock, listPerPage);
 		
+		ModelAndView mav = new ModelAndView("/search/main.jsp");
 		
-		Map<String, Object> obj = new HashMap<>();
+		Gson gson = new Gson();
+        String result = gson.toJson(staff.getSkillCodes());
 		
-        obj.put("skillCodes", staff.getSkillCodes());
-		obj.put("skillList", skillDao.listSkill());
-		obj.put("schoolList", schoolDao.listSchool());
-		obj.put("religionList", religionDao.listReligion());
-		obj.put("staffList", staffDao.listStaff(staff));
-		obj.put("staffListCount", staffListCount);
-		obj.put("pageResult", pageResult);
+        mav.addAttribute("skillCodes", result);
+		mav.addAttribute("skillList", skillList);
+		mav.addAttribute("schoolList", schoolList);
+		mav.addAttribute("religionList", religionList);
+		mav.addAttribute("staffList", staffList);
+		mav.addAttribute("staffListCount", staffListCount);
+		mav.addAttribute("pageResult", pageResult);
 		
-		return obj;
+		return mav;
 
 	}
 	

@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="import" href="../include/basicInclude.html">
+<title>Insert title here</title>
+<style type="text/css">
+	.btn:hover{
+		cursor : pointer;
+		background: skyblue;
+	}
+	.btn{
+		padding: 2px !important;
+    	border-radius: 25px;
+	}
+</style>
+</head>
+<body>
+	<span id="content"></span>
+</body>
+</html>
+
+<script type="text/javascript">
+
+	var formData = {};
+
+	ajaxFunc(formData);
+	function ajaxFunc(formData) {
+		$.ajax({
+			type : "post",
+			url : contextPath+"/search/main.json",
+			data : formData,
+			dataType : "json",
+			success : function (d) {
+				console.log(d);
+				handlebarsFunc(d);
+			}
+		})
+	}
+
+
+	function handlebarsFunc(d) {
+		var source = $("#entry-template").html();
+
+		Handlebars.registerHelper('year', function(type) {
+			var ret = "";
+			if(type){
+				for(var i=1920; i<=2018; i++) {
+					ret += "<option value='"+i+"'>"+i+"</option>";
+				}
+			}else {
+				for(var i=2018; i>=1920; i--) {
+					ret += "<option value='"+i+"'>"+i+"</option>";
+				}
+			}
+			return ret;
+		});
+
+		Handlebars.registerHelper('month', function () {
+			var ret = "";
+			for(var i=1; i<=12; i++) {
+				ret += "<option value='"+i+"'>"+i+"</option>";
+			}
+			return ret;
+		})
+
+		Handlebars.registerHelper('day', function () {
+			var ret = "";
+			for(var i=1; i<=31; i++) {
+				ret += "<option value='"+i+"'>"+i+"</option>";
+			}
+			return ret;
+		})
+
+		var template = Handlebars.compile(source);
+		var html = template(d);
+
+		$('#content').html("");
+		$('#content').append(html);
+
+	}
+	//부모태그는 언제든지 있어야 하는태그
+	$("#content").on("click", "#searchBtn", function (e) {
+		var f = document.searchFrom;
+
+		var data = ""
+		var formData = {
+				staffName : $("input[name='staffName']").val(),
+				juminNoSt : f.juminNoSt.value ? f.juminNoSt.value : undefined,
+				religionCode : f.religionCode.value,
+				schoolCode : f.schoolCode.value ? f.schoolCode.value : undefined
+		};
+		for (let key in formData) {
+			if(formData[key]){
+				data += key+"="+formData[key]+"&"
+			}
+		}
+		$("input[name='skillCode']:checked").map(function(){
+			return data += this.name+"="+this.value+"&";
+		})
+		console.log(data);
+		ajaxFunc(data);
+	})
+
+</script>
+
+<script id="entry-template" type="text/x-handlebars-template">
+
+	<form name="searchFrom" action="" onsubmit="return false;">
+		<table border="1">
+			<tr>
+				<td colspan="6">사원 정보 검색</td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td>
+					<input type="text" name="staffName" id="staffName" value=""/>
+				</td>
+				<td>성별</td>
+				<td>
+					<label for="m">남자</label>
+					<input type="radio" name="juminNoSt" id="m" value="1"/>
+					<label for="f">여자</label>
+					<input type="radio" name="juminNoSt" id="f" value="2"/>
+				</td>
+				<td>종교</td>
+				<td>
+					<select name="religionCode">
+							<option value="0" selected>종교선택</option>
+						{{#religionList}}
+							<option value="{{religionCode}}">{{religionName}}</option>
+						{{/religionList}}
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>학력</td>
+				<td>
+					{{#schoolList}}
+						<label for="{{schoolName}}">{{schoolName}}</label>
+						<input type="radio" name="schoolCode" value="{{schoolCode}}" id="{{schoolName}}" />
+						|
+					{{/schoolList}}
+				</td>
+				<td>기술</td>
+				<td colspan="3">
+					{{#skillList}}
+						<label for="{{skillName}}">{{skillName}}</label>
+						<input type="checkbox" name="skillCode" value="{{skillCode}}" id="{{skillName}}"/>
+						|
+					{{/skillList}}
+				</td>
+			</tr>
+			<tr>
+				<td>졸업일</td>
+				<td colspan="5">
+
+					<select name="year">
+						{{{year true}}}
+					</select>
+					년
+					<select name="month">
+						{{{month}}}
+					</select>
+					월
+					<select name="day">
+						{{{day}}}
+					</select>
+					일~
+
+					<select name="year2">
+						{{{year false}}}
+					</select>
+					 년
+					<select name="month2">
+						{{{month}}}
+					</select>
+					월
+					<select name="day2">
+						{{{day}}}
+					</select>
+					일
+				</td>
+			</tr>
+		</table>
+		<span id="btnBox">
+			<button type="button" name="searchBtn" id="searchBtn">검색</button>
+			<button type="button">전부검색</button>
+			<button type="button" onclick="clean()">초기화</button>
+			<button type="button" onclick="insert()">등록</button>
+		</span>
+
+
+		<input type="hidden" name="graduateDay1" value=""/>
+		<input type="hidden" name="graduateDay2" value=""/>
+	</form>
+
+
+		<span>검색건수 ---> {{staffListCount}} 건</span>
+			<table border="1" style="margin-top: 50px">
+				<tr>
+					<th>번호</td>
+					<th>이름</td>
+					<th>성별</td>
+					<th>종교</td>
+					<th>졸업일</td>
+					<th>수정/삭제</td>
+				</tr>
+				{{#staffList}}
+					<tr>
+						<th>{{staffNo}}</td>
+						<th>{{staffName}}</td>
+						<th>{{juminNo}}</td>
+						<th>{{religionCode}}</td>
+						<th>{{graduateDay}}</td>
+						<th>
+							<a class="btn" onclick="modifyStaff({{staffNo}})">수정</a>
+							/
+							<a class="btn" onclick="deleteStaff('{{staffName}}',{{staffNo}})">삭제</a>
+						</td>
+					</tr>
+				{{/staffList}}
+			</table>
+	<!-- <navi:page data="${pageResult}" url="main.do"/> -->
+
+</script>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 설정파일에서 사용할 프로퍼티의 파일의 경로 지정: classpath -->
+	<properties resource="config/mybatis/db.properties"/>
+	
+	<!-- 
+		SQL의 결과를 담을 VO 객체들의 별칭을 설정하여 사용의 편의를 도모  
+		SQL이 작성되는 mapper xml 파일에서 참조할 때 사용	
+	-->
+	<typeAliases>
+		<typeAlias alias="skill" type="com.jongin.skill.SkillDomain" />
+		<typeAlias alias="school" type="com.jongin.school.SchoolDomain" />
+		<typeAlias alias="religion" type="com.jongin.religion.ReligionDomain" />
+		<typeAlias alias="staff" type="com.jongin.staff.StaffDomain" />
+		<typeAlias alias="staffSkill" type="com.jongin.staffSkill.StaffSkillDomain" />
+	</typeAliases>
+	
+	<!-- 
+		설정된 정보를 이용해서 자동으로 데이터베이스의 정보를 로딩하고 연결함...
+	 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${username}"/>
+				<property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+
+	<!-- 
+		사용자가 작성한 xml 파일들의 위치
+	 -->
+	<mappers>
+		<mapper resource="config/sqlmap/oracle/skill.xml"/>
+		<mapper resource="config/sqlmap/oracle/school.xml"/>
+		<mapper resource="config/sqlmap/oracle/religion.xml"/>
+		<mapper resource="config/sqlmap/oracle/staff.xml"/>
+		<mapper resource="config/sqlmap/oracle/staffSkill.xml"/>
+	</mappers>
+</configuration>
+
+
+
+
+

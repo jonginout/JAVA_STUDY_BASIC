@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jongin.religion.ReligionMapper">
+
+
+	<resultMap id="religionMap" type="religion"> 
+		<result column="religion_code" property="religionCode"/>
+		<result column="religion_name" property="religionName"/>
+	</resultMap>
+
+	<select id="listReligion" resultMap="religionMap">
+		select * 
+		  from code_religion
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

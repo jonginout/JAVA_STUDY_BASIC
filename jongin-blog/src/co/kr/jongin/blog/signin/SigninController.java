@@ -25,11 +25,10 @@ public class SigninController {
 		return "redirect:/main/main.do";
 	}
 	
-	@RequestMapping("/signin/idchk.do")
-	public String idchk(String id) throws Exception{
+	@RequestMapping("/signin/idchk.json")
+	public Map<String, Object> idchk(String id) throws Exception{
 		
 		Map<String, Object> obj = new HashMap<>();
-		ModelAndView mav= new ModelAndView();
 		SigninMapper signinDAO = new SigninMapper();		 
 		
 		if (signinDAO.signinIdChk(id)<1) {
@@ -43,7 +42,7 @@ public class SigninController {
 			obj.put("msg", "이미 존재하는 아이디 입니다.");
 		}
 		
-		return "jsonView:"+new Gson().toJson(obj);	
+		return obj;	
 	}
 	
 }
