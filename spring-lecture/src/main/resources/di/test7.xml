@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<!-- xmlns는 네임스페이스 이다. default 네임을 정해준다.  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<bean id="ham" class="di.test07.HamSand" />
+	<bean id="egg" class="di.test07.EggSand" />
+	<bean id="cheese" class="di.test07.CheeseSand" />
+	
+	<bean id="menu" class="di.test07.Menu" >
+		<!-- 메소드랑 똑같이 하되 set 쓰지말고 소문자로 -->
+		<property name="sandList">
+			<!-- 리스트 객체를 매개변수로 -->
+			<list>
+				<ref bean="ham"/>
+				<ref bean="cheese"/>
+				<ref bean="egg"/>
+			</list>
+		</property>
+		<property name="sandSet">
+			<set>
+				<ref bean="ham"/>
+				<ref bean="cheese"/>
+				<ref bean="egg"/>
+			</set>
+		</property>
+		<property name="sandMap">
+			<map>
+				<entry key="isHam" value-ref="ham" />
+				<entry key="isCheese" value-ref="cheese" />
+				<entry key="isEgg" value-ref="egg" />
+			</map>
+		</property>
+		<property name="sandProp">
+			<props>
+				<prop key="isHam">햄 샌드위치</prop>
+				<prop key="isCheese">치즈 샌드위치</prop>
+				<prop key="isEgg">계란 샌드위치</prop>
+			</props>
+		</property>
+	</bean>
+	
+
+</beans>	

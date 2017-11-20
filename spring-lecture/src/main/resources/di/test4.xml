@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<!-- 관리하려고 하는 대상 클래스 하나 bean -->
+	<!-- 즉 스프링 컨테이너에 의해서 관리되는 클래스 -->
+	<!-- id는 찾을때 이름 -->
+	<!-- name은 별칭 // JAVA 변수 네이밍 룰에 어긋나는것을 사용가능 -->
+	<bean id="ham" name="ham2,ham3" class="di.test04.HamSand"/>
+
+</beans>	

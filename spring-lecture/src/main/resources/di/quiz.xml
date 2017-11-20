@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="animal" class="di.quiz.Animal" p:msg="성공"/>
+	<bean id="user" class="di.quiz.Person" 
+		p:animal-ref ="animal"
+	/>
+	<!-- 위에 animal을 가져온다 -->
+	<!-- 그 animal은 msg가 이미 주입되어 있는 상태 -->
+		
+</beans>	

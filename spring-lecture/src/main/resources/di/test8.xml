@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+                           
+    
+    <!-- 클래스에 어노테이션 된걸 활용하겠다. -->                       
+	<context:annotation-config />           
+	<!-- bean들을 메모리에 올릴때 context:annotation-config
+	이게 있으면 추가 작업을 한다. 이 클래스 안에 @어노테이션이 있는지 확인한다.
+	없으면 그냥 무시된다. 하지만 있다면 @어노테이션 을 활용해 객체 주입을 한다.-->
+	
+	<!-- 생성자 사용가능 -->
+	
+	
+	<bean id="isham" class="di.test08.HamSand"/>
+	<bean id="ischeese" class="di.test08.CheeseSand">
+		<qualifier value="ch"/>
+	</bean>
+	<bean id="isegg" class="di.test08.EggSand"/>
+	<bean id="menu" class="di.test08.Menu"/>
+	               
+</beans>	
