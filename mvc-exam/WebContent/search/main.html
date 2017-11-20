@@ -42,32 +42,16 @@
 	function handlebarsFunc(d) {
 		var source = $("#entry-template").html();
 
-		Handlebars.registerHelper('year', function(type) {
+		Handlebars.registerHelper('graduFunc', function(st,end,type=true) {
 			var ret = "";
 			if(type){
-				for(var i=1920; i<=2018; i++) {
+				for(var i=st; i<=end; i++) {
 					ret += "<option value='"+i+"'>"+i+"</option>";
 				}
 			}else {
-				for(var i=2018; i>=1920; i--) {
+				for(var i=st; i>=end; i--) {
 					ret += "<option value='"+i+"'>"+i+"</option>";
 				}
-			}
-			return ret;
-		});
-
-		Handlebars.registerHelper('month', function () {
-			var ret = "";
-			for(var i=1; i<=12; i++) {
-				ret += "<option value='"+i+"'>"+i+"</option>";
-			}
-			return ret;
-		})
-
-		Handlebars.registerHelper('day', function () {
-			var ret = "";
-			for(var i=1; i<=31; i++) {
-				ret += "<option value='"+i+"'>"+i+"</option>";
 			}
 			return ret;
 		})
@@ -88,7 +72,9 @@
 				staffName : $("input[name='staffName']").val(),
 				juminNoSt : f.juminNoSt.value ? f.juminNoSt.value : undefined,
 				religionCode : f.religionCode.value,
-				schoolCode : f.schoolCode.value ? f.schoolCode.value : undefined
+				schoolCode : f.schoolCode.value ? f.schoolCode.value : undefined,
+				graduateDay1 : f.year.value+"-"+f.month.value+"-"+f.day.value,
+				graduateDay2 : f.year2.value+"-"+f.month2.value+"-"+f.day2.value
 		};
 		for (let key in formData) {
 			if(formData[key]){
@@ -156,28 +142,28 @@
 				<td colspan="5">
 
 					<select name="year">
-						{{{year true}}}
+						{{{graduFunc 1920 2018}}}
 					</select>
 					년
 					<select name="month">
-						{{{month}}}
+						{{{graduFunc 1 12}}}
 					</select>
 					월
 					<select name="day">
-						{{{day}}}
+						{{{graduFunc 1 31}}}
 					</select>
 					일~
 
 					<select name="year2">
-						{{{year false}}}
+						{{{graduFunc 2018 1920 false}}}
 					</select>
 					 년
 					<select name="month2">
-						{{{month}}}
+						{{{graduFunc 1 12}}}
 					</select>
 					월
 					<select name="day2">
-						{{{day}}}
+						{{{graduFunc 1 31}}}
 					</select>
 					일
 				</td>
