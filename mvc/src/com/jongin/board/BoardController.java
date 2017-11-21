@@ -2,33 +2,27 @@ package com.jongin.board;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.web.mvc.Controller;
 import org.springframework.web.mvc.ModelAndView;
 import org.springframework.web.mvc.RequestMapping;
 import org.springframework.web.mvc.RequestParam;
 
-import com.jongin.common.MyAppSqlConfig;
 
 //이것을 붙혀준 클래스만 디스패쳐가 처리한당
 @Controller
 public class BoardController{
 	
-	private SqlSession session = null;
-	private BoardMapper dao = null;
+	private BoardService service = null;
+	
 	public BoardController() {
-		session = MyAppSqlConfig.getSqlSessionInstance();
-		dao = session.getMapper(BoardMapper.class);
+		service = new BoardServiceImpl();
 	}
 	
 	
 	@RequestMapping(value="/board/delete.do")
 	public String delete(int no) throws Exception {
-		
-		
 //		BoardMapper dao = dao.deleteBoard(no);
-		dao.deleteBoard(no);
-
+		service.delete(no);
 		return "redirect:/board/list.do";	
 	}
 	
@@ -36,7 +30,7 @@ public class BoardController{
 	@RequestMapping(value="/board/detail.do")
 	public ModelAndView detail(int no) throws Exception {
 
-		BoardDomain board = dao.detailBoard(no);
+		BoardDomain board = service.detail(no);
 
 		ModelAndView mav = new ModelAndView("/board/detail.jsp");
 		mav.addAttribute("board", board);
@@ -52,7 +46,7 @@ public class BoardController{
 			// 만약에 pageNo 파라미터에 값이 없다면 기본값은 1이다. 라고 정의한 어노테이션 사용
 			) throws Exception {
 
-		List<BoardDomain> list = dao.listBoard();
+		List<BoardDomain> list = service.list(no);
 		
 		ModelAndView mav = new ModelAndView("/board/list.jsp");
 		mav.addAttribute("list", list);
@@ -65,8 +59,7 @@ public class BoardController{
 	@RequestMapping(value="/board/modify.do")
 	public String modify(BoardDomain board) throws Exception {
 
-		dao.modifyBoard(board);
-
+		service.modify(board);
 		return "redirect:/board/list.do";
 	}
 	
@@ -74,7 +67,7 @@ public class BoardController{
 	@RequestMapping(value="/board/modifyform.do")
 	public ModelAndView modifyForm(int no) throws Exception {
 
-		BoardDomain board = dao.detailBoard(no);
+		BoardDomain board = service.modifyForm(no);
 		
 		String view = "/board/modifyForm.jsp";
 		ModelAndView mav = new ModelAndView(view);
@@ -86,7 +79,7 @@ public class BoardController{
 	@RequestMapping(value="/board/write.do")
 	public String write(BoardDomain board) throws Exception {
 
-		dao.insertBoard(board);
+		service.write(board);
 
 		return "redirect:/board/list.do";
 	}

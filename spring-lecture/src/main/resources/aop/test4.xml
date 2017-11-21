@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop 
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
+                      
+                      
+    <!-- 핵심기능 클래스 -->
+    <bean id="board" class="aop.test04.BoardController" />                  
+    <bean id="member" class="aop.test04.MemberController" />                  
+                   
+    <!-- 공통 기능 클래스 -->
+    <bean id="log" class="aop.test04.LogAspect"/>               
+    <bean id="time" class="aop.test04.TimeAspect"/>               
+                           
+    <!-- aop를 적용하겠습니다. (aop 네임스페이스 추가 필수) -->                   
+	<aop:config proxy-target-class="true"> <!-- true를 주면 구현 클래스도 사용가능해 진다. -->
+	<!-- 공통기능 클래스를 board나 member의 어떤 메소드에 연결할지 명시해야 한다. !!메소드 단위 연결!! -->
+		<aop:pointcut id="pCut" expression="execution(* execute(..))"/>
+<!-- 	expression="execution(public * aop.test04.*.execute(..))" test04 밑 모든 클래스 중 execute 메소드-->
+<!-- 	expression="execution(public * aop.test04.Controller+.execute(..))" Controller 타입인것들 -->
+<!-- 	expression="execution(public * aop.test04..*Controller.execute(..))" Controller로 끝나는 클래스-->
+
+		<!-- Pointcut 과 advice 설정 -->
+		<aop:aspect ref="log"> <!-- ref는 공통기능 클래스 id의 log -->
+			<aop:before method="showLog" pointcut-ref="pCut"/> <!-- pointcut-ref은 pCut 과 연결 -->
+			<!-- pCut을 통해 execute()라는 핵심기능이 동작될떄 수행된다~ -->
+			<!-- method는 실제 연결할 메소드 이름 -->
+		</aop:aspect>
+
+		<aop:aspect ref="time">
+			<aop:around method="exeTime" pointcut-ref="pCut"/>
+<!-- 		<aop:around method="exeTime" pointcut="execution(* execute(..))"/>  위랑 똑같은 태그-->
+		</aop:aspect>
+		
+	</aop:config>
+	
+
+</beans>	
