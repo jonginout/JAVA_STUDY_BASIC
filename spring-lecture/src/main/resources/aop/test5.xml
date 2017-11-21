@@ -18,7 +18,5 @@
 
 	<!-- XML 문서에 어노테이션을 활용하기 위한 선언 필요   -->
     <aop:aspectj-autoproxy/>         
-                      
-
 
 </beans>	
