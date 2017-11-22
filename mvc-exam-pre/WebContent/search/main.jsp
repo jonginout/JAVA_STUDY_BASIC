@@ -97,9 +97,9 @@
 					
 					<select name="year2">
 						<c:forEach var="i" begin="0" end="${2018-1900}">
-						<c:set var="yearOption" value="${2018-i}" />
-						<option value="${yearOption}">${yearOption}</option>
-					</c:forEach>
+							<c:set var="yearOption" value="${2018-i}" />
+							<option value="${yearOption}">${yearOption}</option>
+						</c:forEach>
 					</select>
 					 년 
 					<select name="month2">
