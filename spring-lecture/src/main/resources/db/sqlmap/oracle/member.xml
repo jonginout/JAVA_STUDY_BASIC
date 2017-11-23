@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 매퍼 연결 -->
+<mapper namespace="db.repository.mapper.MemberMapper">
+
+    <select id="selectMemberById" parameterType="string" resultType="member">
+        select *
+          from mybatis_member 
+         where id = #{value}
+    </select>
+    
+    <select id="selectMember" resultType="member">
+        select id,
+               name,
+               email,
+               addr
+          from mybatis_member 
+    </select>
+    
+    <insert id="insertMember" parameterType="member">
+        insert into mybatis_member (
+            id, 
+            name, 
+            addr, 
+            email
+        ) values (
+            #{id}, 
+            #{name}, 
+            #{addr}, 
+            #{email}
+        )
+    </insert>
+    
+    <update id="updateMember" parameterType="member">
+        update mybatis_member
+           set addr = #{addr}
+         where id   = #{id}  
+         <!-- 오류나면 앞에께 모두 실행 취소되어야 한다. (트랜잭션) -->
+    </update>
+    <update id="deleteMember" parameterType="string">
+        delete mybatis_member
+         where id = #{id}  
+    </update>
+</mapper>
+
+
+
+

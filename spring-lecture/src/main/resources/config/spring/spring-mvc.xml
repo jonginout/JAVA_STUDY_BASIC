@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans   
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context   
     http://www.springframework.org/schema/context/spring-context.xsd
@@ -16,6 +15,7 @@
 
 	<!-- mvc 관련 객체 등록 작업 진행 : @RequestMapping 애노테이션을 처리등.. -->
 	<mvc:annotation-driven>
+
 		<mvc:message-converters> <!-- 메세지들 컨버팅 (서블릿에서 에이젝스 화면 출력 사용시 한글 인코딩) -->
 			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 				<property name="supportedMediaTypes">
@@ -36,24 +36,41 @@
 					</list>
 				</property>
 			</bean>
-			
+
 		</mvc:message-converters>
-	</mvc:annotation-driven>    
-	
+	</mvc:annotation-driven>
+
 	<!-- 스프링을 통해 파일을 업로드 하고 싶다면 추가 -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 최대 업로드 파일 사이즈 : 10MB -->
 		<property name="maxUploadSize" value="10485760" />
 	</bean>
-	
+
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 이 하위에 있는 모든것들을 인터셉트 하겠다. -->
+			<mvc:mapping path="/interceptor/**" />
+			<!-- 위에 매핑한 url중 제외할 대상을 정한다 // login으로 시작된 모든 것들을 제외한다. -->
+			<mvc:exclude-mapping path="/interceptor/login*.do" />
+			<!-- 인터셉터 내용이 들어가 있는 클래스 -->
+			<bean class="kr.co.mlec.interceptor.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+
+
+
 	<!-- 컨트롤러 없이 서블릿이 별다른 기능없이 단순한 페이지 이동만 -->
 	<!-- path 호출된 주소 일떄/ view-name 여기로 이동만 해준다. -->
-	<mvc:view-controller path="/file/uploadForm.do" view-name="file/fileUploadForm"/>
-	
-	
-	<!-- WEB의 정적 페이지 처리 등을 위해 사용 -->	
+	<mvc:view-controller path="/file/uploadForm.do"
+		view-name="file/fileUploadForm" />
+
+
+	<!-- WEB의 정적 페이지 처리 등을 위해 사용 -->
 	<mvc:default-servlet-handler />
-	
+
 	<!-- JSP 페이지로 이동 시 아래의 설정 내용을 참고 -->
 	<!-- 컨트롤러에서 설정한 경로 앞에 무조건 붙는게 prefix -->
 	<!-- 컨트롤러에서 설정한 경로 뒤에 무조건 붙는게 suffix -->
@@ -64,6 +81,6 @@
 
 </beans>
 
-    <!-- 이것을 처리하는 주체는 Dispatcher 서블릿이다. -->
-    <!-- 디스패쳐 서블릿 등록은 web.xml 에서 -->
+<!-- 이것을 처리하는 주체는 Dispatcher 서블릿이다. -->
+<!-- 디스패쳐 서블릿 등록은 web.xml 에서 -->
     

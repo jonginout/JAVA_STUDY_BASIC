@@ -32,5 +32,15 @@
 	<a href="${pageContext.request.contextPath}/file/uploadForm.do">VO_List 응답</a>
 	<!-- 서블릿 없이 spring-mvc.xml 설정만으로 페이지 이동가능 -->
 
+	<br /><br />
+	<h3>login</h3>
+	<a href="${pageContext.request.contextPath}/interceptor/loginForm.do">로구인</a>
+	
+	<br /><br />
+	<h3>path</h3>
+	<a href="${pageContext.request.contextPath}/path/memberInfo.do?id=a">패스</a>
+	<a href="${pageContext.request.contextPath}/path/a/pathMemberInfo.do">패스</a>
+	
+
 </body>
 </html>
