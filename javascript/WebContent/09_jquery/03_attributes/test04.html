@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+  <style>
+  div {
+    border: 3px solid #666;
+    margin: 5px;
+    padding: 5px;
+    width: 200px;
+    height: 300px;
+    overflow: auto;
+  }
+  </style>
+  <script src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+	<button>스크롤 위로 올리기</button>
+	<div>
+		<h2>테스트1</h2>
+		<h2>테스트2</h2>
+		<h2>테스트3</h2>
+		<h2>테스트4</h2>
+		<h2>테스트5</h2>
+		<h2>테스트6</h2>
+		<h2>테스트7</h2>
+		<h2>테스트8</h2>
+		<h2>테스트9</h2>
+		<h2>테스트1</h2>
+		<h2>테스트2</h2>
+		<h2>테스트3</h2>
+		<h2>테스트4</h2>
+		<h2>테스트5</h2>
+		<h2>테스트6</h2>
+		<h2>테스트7</h2>
+		<h2>테스트8</h2>
+		<h2>테스트9</h2>
+	</div>
+
+	<script>
+
+        $("div").on("scroll", function () {
+            console.log( $(this).scrollTop() );
+        })
+
+        $("button").click(function () {
+            // $("div").scrollTop(0);
+
+            var id = setInterval(function () {
+                if($("div").scrollTop()>0){
+                    $("div").scrollTop($("div").scrollTop()-10);
+                }else {
+                    clearInterval(id);
+                }
+            }, 10)
+        })
+	</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+필터링 메서드
+first()
+last()
+eq()       :  0부터 인덱스 시작
+filter(선택자) : 엘리먼트 집합에서 선택자에 해당하는 엘리먼트 선택
+not(선택자) : 엘리먼트 집합에서 선택자에 해당하는 엘리먼트를 제외한 엘리먼트 선택
+has(선택자) : 선택자를 포함하는 엘리먼트 선택
+slice(숫자, 숫자)
+is(선택자)
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<title>css selectors</title>
+<style type="text/css">
+    div, h1 {
+        font-size: 16px;
+        font-weight: normal;
+        padding: 5px;
+    }
+    h1 { display: inline; }
+
+    .choice {
+		border : 2px solid #000000;
+        background: tomato;
+    }
+	.fs {
+		font-size: 30px;
+        color: white;
+	}
+</style>
+<script src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+	<div id="d1">div<h1>1</h1></div>
+	<div id="d2">div<span>2</span></div>
+	<div id="d3">div<h1>3</h1></div>
+	<div id="d4">div<span>4</span></div>
+	<div id="d5">div<h1>5</h1></div>
+	<div id="d6">div<span>6</span></div>
+	<script>
+        // $("div").addClass("choice");
+        // $("div:first").addClass("fs");
+        // 이미 선택되어있는 집합에서
+        // 또 전체문서에서 또 찾는다
+        // 뭔가 비효율적,,,
+
+
+
+        // 그래서
+        // 이렇게 찾은거에서 재활용
+        // $("div").addClass("choice").first().addClass("fs");
+        // $("div").addClass("choice").last().addClass("fs");
+        // $("div").addClass("choice").not("#d1").addClass("fs");
+        // $("div").addClass("choice").has(":contains('4')").addClass("fs");
+        // $("div").addClass("choice").filter(":gt('4')").addClass("fs");
+        // $("div").addClass("choice").slice(0, 3).addClass("fs");
+        // console.log( $("div").is("#d3") ); // 있으면 true
+
+	</script>
+</body>
+</html>

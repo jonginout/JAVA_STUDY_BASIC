@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+필터 선택자 :   ":"로 시작
+
+폼과 연관된 선택자들
+:disabled
+:checked   -> checkbox, select, radio
+:selected  -> select
+-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>css selectors</title>
+    <style type="text/css">
+        .choice {
+            margin: 5px;
+            padding: 5px;
+            border: solid #000000 thick;
+            background: orange;
+        }
+
+    </style>
+    <script src="../js/jquery-3.2.1.js"></script>
+</head>
+
+<body>
+    <div>
+        <input type="text" name="name" value="name" /><br />
+        <input type="text" name="id" disabled="disabled" value="id" /><br />
+    </div>
+    <div>
+        <input type="radio" name="gender" value="male" />남
+        <input type="radio" name="gender" value="female" checked="checked" />여
+    </div>
+    <div>
+        <input type="checkbox" name="hobby" value="movie" />영화
+        <input type="checkbox" name="hobby" value="book" checked="checked" />책
+        <input type="checkbox" name="hobby" value="music" checked="checked" />음악
+    </div>
+
+    <select name="selBox">
+		<option value="1">1번</option>
+		<option value="2" selected="selected">2번</option>
+		<option value="3">3번</option>
+	</select>
+
+    <script>
+        // 필터 선택자 :   ":"로 시작
+        //
+        // 폼과 연관된 선택자들
+        // :disabled
+        // :checked   -> checkbox, select, radio
+        // :selected  -> select
+        console.log(":disabled 항목의 값", $(":disabled").val());
+        console.log(":checked 항목의 값", $(":checked").val());
+        // val()은 제일 첫번재꺼 하나만 준다.
+
+        $("input:checked").each(function () {
+            console.log($(this).val());
+        });
+        // each();
+        // 체크된 모든걸 가져오고싶다
+
+        console.log(":selected 항목의 값", $(":selected").val());
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+필터링 메서드
+add()       :  선택된 요소와 새로이 선택한 요소의 합집합
+// addBack, end는 prevObject 속성을 활용
+addBack()   :  이전 요소 집합을 추가
+end()       :  이전 집합으로 이동
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>css selectors</title>
+    <style type="text/css">
+        div {
+            font-size: 16px;
+            font-weight: normal;
+            padding: 5px;
+        }
+
+        .choice {
+            border: 2px solid #000000;
+            background: tomato;
+        }
+
+        .fs {
+            font-size: 30px;
+            color: yellowgreen;
+        }
+    </style>
+    <script src="../js/jquery-3.2.1.js"></script>
+</head>
+
+<body>
+    <div id="d1">div1</div>
+    <div id="d2">div2</div>
+    <div id="d3">div3</div>
+    <div id="d4">div4</div>
+    <div id="d5">div5</div>
+    <div id="d6">div6</div>
+    <script>
+        // 필터링 메서드
+        // add()       :  선택된 요소와 새로이 선택한 요소의 합집합
+        // // addBack, end는 prevObject 속성을 활용
+        // addBack()   :  이전 요소 집합을 추가
+        // end()       :  이전 집합으로 이동
+
+        var $obj = $("div").filter("#d3").next();
+        console.dir($obj);
+        $obj.addClass("choice");
+
+        // addBack(), end() 함수들은 prevObject를 참조한다
+        // 이전 확장집합으로 이동
+        $obj.end().addClass("fs");
+
+        // 이전 확장집합을 추가하기
+        $obj.addBack().addClass("fs");
+
+        // 집합체 추가하기
+        $obj.add("#5").addClass("fs");
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+* {
+	margin: 0px; padding: 0px;
+}
+html, body {
+	height: 100%;
+}
+#stickyContainer {
+	width: 100%; height: 100%;
+	background-color: #ccdcfb;
+	position: absolute;
+}
+#stickyContainer button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 4px;
+    padding: 0px 5px 0px 20px;
+    font-weight: bold;
+    background: #9cd664 url('../images/icon_add_stickynote.gif') no-repeat 4px 4px;
+    color: #275035;
+    border: 1px solid #5ca630;
+    height: 22px;
+    vertical-align: middle;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+}
+.stickyNote {
+	width: 160px; height: 180px;	
+	background: #ffff9d;
+	box-shadow: 4px 4px 4px -1px #666;
+	position: absolute;
+	top: 10px; left: 10px;
+	padding: 5px;
+	overflow: auto;
+}
+.stickyNote:ACTIVE {
+	z-index: 1000;
+}
