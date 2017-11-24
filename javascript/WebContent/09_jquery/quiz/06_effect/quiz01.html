@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style>
+	div {
+		width: 200px;
+		height: 200px;
+		border: 5px solid black;
+		font-size: 20px;
+		margin-bottom: 10px;
+	}
+	button {
+		margin: 5px;
+		font-size: 20px;
+		height: 50px;
+		background: tomato;
+		color: white;
+		border: 5px solid black;
+	}
+	</style>
+	<script src="../../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+    <button>콜백</button>
+    <div id="effDiv1"><h1>효과1</h1></div>
+    <div id="effDiv2"><h1>효과2</h1></div>
+    <div id="effDiv3"><h1>효과3</h1></div>
+    <script>
+		$("button").click(function () {
+			var id = $("div:first").attr("id");
+			
+			if ($("div").is(":visible")) {
+				id = $("div:last").attr("id");
+			}
+			
+			$("#" + id).slideToggle(2000, function outer() {
+				var div;
+				if ($(this).is(":visible")) {
+					div = $(this).next();
+				} 
+				else {
+					div = $(this).prev();
+				}
+				
+				if (div[0].nodeName == 'DIV') {
+					div.slideToggle(2000, outer);
+				}
+			});
+		});
+    </script>
+</body>
+</html>

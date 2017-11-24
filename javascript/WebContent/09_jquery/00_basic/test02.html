@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
+    <script src="../js/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+        $.noConflict();  // 제이쿼리에서 더이상 $ 함수를 안쓰겠다.
+        console.log($); // prototype의 $가 된다.
+
+
+        console.log(jQuery); // 이 함수를 쓴다.
+        // 하지만 너무 길다
+
+        //문서가 로딩되었을때
+        jQuery(document).ready(function ($) {
+            console.log($); // 여기서 $ 또 jQuery의 $
+        });
+
+        // ()()는 즉시 실행 함수
+        // 정의 호출
+        (function ($) {
+            console.log($);
+        })(jQuery); //매개변수 jQuery를 주고 $로 받는다.
+
+        var j = jQuery; // 단순히 이렇게도 사용가능
+
+    </script>
+</head>
+
+<body>
+    <div>
+
+
+    </div>
+</body>
+
+</html>

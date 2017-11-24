@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+data(name, value)  :  jQuery  내부 캐시에 저장
+data(name)         :  jQuery  내부 캐시에 이쓴 데이터를 조회 없다면 data-*의 값을 참조
+data(object)       :  한번에 여러개의 데이터를 저장
+-->
+<html>
+<head>
+<title>Home</title>
+<meta charset="utf-8">
+<style>
+	div {
+		margin: 10px 0px;
+		height: 222px;
+		border: 5px solid skyblue;
+        white-space: nowrap;
+        overflow: auto;
+	}
+	input[type=button] {
+		font-size: 20px;
+		font-weight: bold;
+		width: 150px;
+		height: 40px;
+	}
+</style>
+<script src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+	<button>데이터 설정-1</button>
+	<button>데이터 추출-1</button>
+	<button>데이터 설정-2</button>
+	<button>데이터 추출-2</button>
+
+    <div>
+	    <img src="images/pic1.jpg" width="150" height="200" data-who="고아라" />
+    </div>
+	<script>
+		// data(name, value)  :  jQuery  내부 캐시에 저장
+		// data(name)         :  jQuery  내부 캐시에 이쓴 데이터를 조회 없다면 data-*의 값을 참조
+		// data(object)       :  한번에 여러개의 데이터를 저장
+
+		$("button:eq(0)").click(function () {
+			$("img").data("msg", "고아라 이미지 입니다.");
+		})
+		$("button:eq(1)").click(function () {
+			console.log($("img").data("msg"))
+			console.log($("img").data("who")) //data-who="고아라"
+		})
+		$("button:eq(2)").click(function () {
+			$("img").data({
+				msg1 : "메시지1",
+				msg2 : "메시지2",
+				who : "김종인"
+			});
+		})
+		$("button:eq(3)").click(function () {
+			console.log($("img").data("msg1"))
+			console.log($("img").data("msg2"))
+			console.log($("img").data("who")) //data-who="고아라"
+		})
+
+	</script>
+</body>
+</html>
