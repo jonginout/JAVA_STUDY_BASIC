@@ -6,5 +6,8 @@ public class Snippet {
 		content = #{content},
 		writer = #{writer}
 	where no = #{no}
-}
+
+	public static void main(String[] args) {
+		dataType
+	}}
 
