@@ -21,23 +21,26 @@
 		}
     </style>
     <script src="../js/jquery-3.2.1.js"></script>
+	<title>Home</title>
 </head>
 <body>
 	<button>one click</button>
 	<button>one event</button>
 	<br /><br />
     <p>이벤트 연습</p>
-    <script>
+	<script>
+	      $("button:eq(0)").on("click",function(){
+	         alert("클릭됨");
 
-     </script>
+	         $(this).off("click");
+	      });
+
+		  // 위랑 똑같은 기능
+	      $("button:eq(1)").one("click",function(){ //한번밖에 못 누름
+
+	         alert("클릭됨");
+	      });
+
+	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-

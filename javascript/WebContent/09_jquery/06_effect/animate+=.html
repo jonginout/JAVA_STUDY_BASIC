@@ -1,7 +1,7 @@
-<!-- 
-	상대값 적용 : +=, -=   (*=, /= 은 허용하지 않는다)
- -->
 <!DOCTYPE html>
+<!--
+상대값 적용 : +=, -=   (*=, /= 은 허용하지 않는다)
+-->
 <html>
 <head>
 	<meta charset="utf-8">
@@ -12,29 +12,17 @@
         }
     </style>
     <script src="../js/jquery-3.2.1.js"></script>
+	<title>Home</title>
 </head>
 <body>
     <div></div>
 	<script>
-
-	</script>    
+		$("div").click(function () {
+			$(this).animate({
+				width : "+=50", //기존에 값을 가져와서 += 해준다.
+				height : "+=50"
+			}, "slow");
+		})
+	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

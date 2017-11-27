@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+이벤트 제거 : off
+off(event type) : 해당 이벤트 타입만 제거
+off() : 전체 이벤트를 제거
+-->
+<html>
+<head>
+	<meta charset="utf-8">
+    <style>
+		p {
+			font-size: 20px;
+			font-weight: bold;
+			height: 40px;
+			background: tomato;
+			color: white;
+			text-align: center;
+			line-height: 40px;
+		}
+		div {
+			height: 600px;
+			overflow: auto;
+			background: yellow;
+		}
+		input[type=button] {
+			font-size: 20px;
+			font-weight: bold;
+			width: 150px;
+			height: 40px;
+		}
+    </style>
+    <script src="../js/jquery-3.2.1.js"></script>
+	<title>Home</title>
+</head>
+<body>
+	<button>click off</button>
+	<button>mouseenter off</button>
+	<button>off</button>
+	<br /><br />
+    <p>이벤트 연습</p>
+    <div></div>
+	<script type="text/javascript">
+
+		$('p').click(function () {
+			$("div").append("클릭됨 ..<br>");
+		}).mouseenter(function () {
+			$("div").append("마우스 들어옴<br>");
+
+		})
+
+		$('button:eq(0)').click(function () {
+			$("p").off("click"); // 클릭이벤트를 제거하겠다
+		})
+		$('button:eq(1)').click(function () {
+			$("p").off("mouseenter"); //  mouseenter 이벤트를 제거하겠다
+
+		})
+		$('button:eq(2)').click(function () {
+			$("p").off(); // 모든이벤트를 제거하겠다
+
+		})
+
+	</script>
+</body>
+</html>

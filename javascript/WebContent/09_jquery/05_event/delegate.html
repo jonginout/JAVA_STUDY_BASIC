@@ -10,6 +10,7 @@
 	}
 	</style>
 	<script src="../js/jquery-3.2.1.js"></script>
+	<title>Home</title>
 </head>
 <body>
 	<button>추가</button>
@@ -18,16 +19,16 @@
     </div>
     <script>
 
+		// delegate 
+		$("#content").on("click", "input:checkbox" ,function () {
+			alert($(this).val())
+		})
+		$("button").click(function () {
+			var len = $("input:checkbox").length + 1;
+			$("#content").append(`
+				<input type="checkbox" name="ck" value="${len}" />
+				`);
+		})
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

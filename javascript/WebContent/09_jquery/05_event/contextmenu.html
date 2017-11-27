@@ -8,7 +8,7 @@
             border: 3px solid black;
             height: 200px;
         }
-        
+
         a {
             margin: 10px; padding: 5px;
             border: 3px solid black;
@@ -18,29 +18,20 @@
         }
     </style>
     <script src="../js/jquery-3.2.1.js"></script>
+	<title>Home</title>
 </head>
 <body>
     <div>
-        <a href="http://www.naver.com">Naver 이동하기</a>
+        <a href="#">Naver 이동하기</a>
     </div>
     <script>
+		// 오른쪽 마우스 메뉴 이벤트
+		$(document).on("contextmenu", function (e) {
+			alert("마우스 오른쪽 클릭");
 
+			// e.preventDefault(); // 기본 오른쪽 마우스 막기
+            return false; // 위랑 똑같은
+		})
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
