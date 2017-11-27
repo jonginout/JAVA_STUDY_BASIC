@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="../js/jquery-3.2.1.js"></script>
+	<title>Home</title>
+</head>
+<body>
+	<div id="imglist">
+		<div>
+			<img src="images/pic1.jpg" width="200" height="200" />
+		</div>
+		<div>
+			<img src="images/pic1.jpg" width="200" height="200" />
+		</div>
+		<div>
+			<img src="images/pic1.jpg" width="200" height="200" />
+		</div>
+		<div>
+			<img src="images/pic1.jpg" width="200" height="200" />
+		</div>
+		<div>
+			<img src="images/pic1.jpg" width="200" height="200" />
+		</div>
+	</div>
+    <script>
+		$(window).scroll(function () {
+			console.log(
+				$(window).scrollTop(), //현재 스크롤의 위치
+				$(window).height(), // 현재 보이는 윈도우의 높이
+				$(document).height(), // 문서자체의 안보이는 부분까지의 높이
+
+			);
+
+			var st = $(window).scrollTop(); //현재 스크롤의 위치;
+			var wh = $(window).height(); // 현재 보이는 윈도우의 높이
+			var dh = $(document).height(); // 문서자체의 안보이는 부분까지의 높이
+
+			if(st + wh >= dh - 10){
+				for (var i = 0; i < 5; i++) {
+					$("#imglist").append(
+						$("#imglist>div:first-child").clone()
+					);
+				}
+			}
+
+		})
+    </script>
+</body>
+</html>

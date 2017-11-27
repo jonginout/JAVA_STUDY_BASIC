@@ -1,7 +1,7 @@
-<!-- 
+<!--
 	효과가 적용될 시간 설정
 	----------------------------
-	show(시간)    
+	show(시간)
 	hide(시간)
 	toggle(시간)
 
@@ -38,8 +38,27 @@
         <h1>애니메이션 효과</h1>
         <p>애니메이션 효과</p>
     </div>
-    <script>
+	<script>
+		$("button:eq(0)").click(function () {
+			// $("#effDiv1").hide();
+			// $("#effDiv2").show();
 
+			// 기존에 보이던건 숨기고
+			// 안보이던건 보이고 반복
+			$("#effDiv").toggle(1000);
+		});
+		$("button:eq(1)").click(function () {
+			// $("#effDiv1").fadeOut();
+			// $("#effDiv2").fadeIn();
+
+			$("#effDiv").fadeToggle(1000);
+		});
+		$("button:eq(2)").click(function () {
+			// $("#effDiv1").slideUp();
+			// $("#effDiv2").slideDown();
+
+			$("#effDiv").slideToggle(1000);
+		});
     </script>
 </body>
 </html>

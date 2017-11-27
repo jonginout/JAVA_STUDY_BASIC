@@ -1,17 +1,17 @@
-<!-- 
-	show
-	hide
-	toggle
-
-	fadeOut
-	fadeIn
-	fadeToggle
-
-	slideUp
-	slideDown
-	slideToggle
- -->
 <!DOCTYPE html>
+<!--
+show
+hide
+toggle
+
+fadeOut
+fadeIn
+fadeToggle
+
+slideUp
+slideDown
+slideToggle
+-->
 <html>
 <head>
 	<meta charset="utf-8">
@@ -26,6 +26,7 @@
 	}
 	</style>
 	<script src="../js/jquery-3.2.1.js"></script>
+	<title>Home</title>
 </head>
 <body>
     <button>toggle</button>
@@ -40,21 +41,26 @@
         <p>숨겨져 있는 영역</p>
     </div>
     <script>
+		$("button:eq(0)").click(function () {
+			// $("#effDiv1").hide();
+			// $("#effDiv2").show();
 
+			// 기존에 보이던건 숨기고
+			// 안보이던건 보이고 반복
+			$("#effDiv1, #effDiv2").toggle();
+		});
+		$("button:eq(1)").click(function () {
+			// $("#effDiv1").fadeOut();
+			// $("#effDiv2").fadeIn();
+
+			$("#effDiv1, #effDiv2").fadeToggle(100);
+		});
+		$("button:eq(2)").click(function () {
+			// $("#effDiv1").slideUp();
+			// $("#effDiv2").slideDown();
+
+			$("#effDiv1, #effDiv2").slideToggle(100);
+		});
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

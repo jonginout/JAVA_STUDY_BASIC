@@ -20,25 +20,23 @@
 	}
 </style>
 <script src="../js/jquery-3.2.1.js"></script>
+<title>Home</title>
 </head>
 <body>
     <p>이벤트 <span>연습</span></p>
     <div></div>
     <script>
-
+		$("div").mousedown(function (e) {
+			var pos = $(this).offset(); // 좌표정보 객체 반환
+			console.log(
+				pos.left,
+				pos.top,
+				e.offsetX,
+				e.offsetY,
+				e.clientX,
+				e.clientY
+			)
+		})
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

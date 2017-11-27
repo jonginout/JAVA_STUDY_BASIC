@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>그림그리기</title>
+	</head>
+	<style media="screen">
+		/*
+			선(line), 사각형(Rect), 호(Arx), 글자(Text), 이미지(Image) ...
+		*/
+		#canvas{
+			position: relative;
+			top: 100px;
+			left: 100px;
+			border: 3px solid black;
+		}
+	</style>
+	<script src="../js/jquery-3.2.1.js"></script>
+
+	<body>
+		<canvas id="canvas" width="700" height="400"></canvas>
+
+		<script type="text/javascript">
+			// 그림 그리기
+			// canvas에 그림을 그리기위해서 context라는 객체가 필요하다.
+			var canvas = document.querySelector("#canvas");
+			var context = canvas.getContext("2d");
+
+			var isPress = false; // 마우스 클릭 여부
+			$("#canvas").on({
+				mousedown : function (e) {
+					isPress = true;
+					// 패스 시작
+					context.beginPath();
+					// 여기가 시작점이다 라고 알려준다.
+					context.moveTo(e.offsetX, e.offsetY);
+				},
+				mouseup : function (e) {
+					isPress = false;
+				},
+				mousemove : function (e) {
+					isPress = true;
+					if(isPress){
+						// 다음점의 좌표를 입력한다.
+						context.lineTo(e.offsetX, e.offsetY);
+						// 점과 점사이에 선을 그어라
+						context.stroke();
+					}
+				}
+			})
+
+		</script>
+	</body>
+</html>

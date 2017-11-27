@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <style>
+        * { margin:0px; padding:0px; }
+        button {
+			margin: 5px;
+			font-size: 20px;
+			height: 50px;
+		}
+        .container  {
+            overflow:hidden; /*영역밖으로 나가는거 숨긴다*/
+            position:relative; /* 자기 자식이 나를 기준으로 위치 변경하라고 */
+            width:600px; height:400px;
+        }
+        .slider_panel { width:3000px; position:relative; }
+        .slider_image { float:left; width:600px; height:400px; }
+    </style>
+    <script src="../js/jquery-3.2.1.js"></script>
+	<title>Home</title>
+</head>
+<body>
+    <h1>이미지 슬라이더</h1>
+    <div class="container">
+        <div class="slider_panel">
+            <img src="Desert.jpg" class="slider_image"/>
+            <img src="Hydrangeas.jpg" class="slider_image"/>
+            <img src="Jellyfish.jpg" class="slider_image"/>
+            <img src="Koala.jpg" class="slider_image"/>
+            <img src="Lighthouse.jpg" class="slider_image"/>
+        </div>
+    </div>
+    <div>
+	    <button>이전</button>
+	    <button>다음</button>
+    </div>
+    <script>
+		var index = 0;
+		function moveSlider() {
+			var move = -(index*600);
+			$(".slider_panel").animate({
+				left : move
+			}, 500)
+		}
+
+		$("button:eq(0)").click(function () {
+			if(index==0) index = 4;
+			else index--;
+			moveSlider();
+		})
+		$("button:eq(1)").click(function () {
+			if(index==4) index = 0;
+			else index++;
+			moveSlider();
+
+		})
+    </script>
+</body>
+</html>
