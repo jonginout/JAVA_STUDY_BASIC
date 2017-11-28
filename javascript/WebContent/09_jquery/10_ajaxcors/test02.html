@@ -1,8 +1,8 @@
-<!-- 
-	해결책 1.
-	프록시 서버 활용하기
- -->
 <!DOCTYPE html>
+<!--
+해결책 1.
+프록시 서버 활용하기
+-->
 <html>
 <head>
 <meta charset="UTF-8">
@@ -13,11 +13,18 @@
 	<button>요청</button>
 	<div id="result"></div>
 	<script>
+
+		$("button").click(function () {
+
+			console.log("location.origin", location.origin);
+
+			$.ajax({
+				url : "/javascript/crossdomain/test02"
+			})
+			.done(function (data) {
+				$("#result").html(data)
+			})
+		})
 	</script>
 </body>
 </html>
-
-
-
-
-

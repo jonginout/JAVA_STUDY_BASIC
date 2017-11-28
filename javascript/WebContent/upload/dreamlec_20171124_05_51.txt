@@ -1,0 +1,953 @@
+﻿-- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
+
+-- curris Table Create SQL
+CREATE TABLE curris
+(
+    curri_no       NUMBER(30)        NOT NULL, 
+    name           VARCHAR(45)       NOT NULL, 
+    start_date     DATE              NOT NULL, 
+    end_date       DATE              NOT NULL, 
+    description    VARCHAR2(4000)    NOT NULL, 
+    status         VARCHAR2(10)      DEFAULT 'T', 
+    member_no      NUMBER(30)        NULL, 
+    CONSTRAINT CURRIS_PK PRIMARY KEY (curri_no)
+)
+/
+
+CREATE SEQUENCE curris_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER curris_curri_no_AI_TRG
+BEFORE INSERT ON curris 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT curris_SEQ.NEXTVAL
+    INTO: NEW.curri_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE curris IS 'T 수업중 / F 수업종료'
+/
+
+COMMENT ON COLUMN curris.curri_no IS '커리큘럼시퀀스'
+/
+
+COMMENT ON COLUMN curris.name IS '커리큘럼이름'
+/
+
+COMMENT ON COLUMN curris.start_date IS '시작날짜'
+/
+
+COMMENT ON COLUMN curris.end_date IS '마지막날짜'
+/
+
+COMMENT ON COLUMN curris.description IS '설명'
+/
+
+COMMENT ON COLUMN curris.status IS 'F'
+/
+
+COMMENT ON COLUMN curris.member_no IS '반장'
+/
+
+
+-- author_tockens Table Create SQL
+CREATE TABLE author_tockens
+(
+    author_tocken_number    VARCHAR2(30)    NOT NULL, 
+    id                      VARCHAR(30)     NOT NULL, 
+    delete_date             DATE            NOT NULL, 
+    CONSTRAINT AUTHOR_TOCKENS_PK PRIMARY KEY (author_tocken_number)
+)
+/
+
+COMMENT ON TABLE author_tockens IS '인증토큰'
+/
+
+COMMENT ON COLUMN author_tockens.author_tocken_number IS '인증토큰시퀀스'
+/
+
+COMMENT ON COLUMN author_tockens.id IS '아이디'
+/
+
+COMMENT ON COLUMN author_tockens.delete_date IS '자동삭제날짜'
+/
+
+
+-- members Table Create SQL
+CREATE TABLE members
+(
+    member_no               NUMBER(30)        NOT NULL, 
+    id                      VARCHAR2(30)      NOT NULL, 
+    pass                    VARCHAR2(45)      NOT NULL, 
+    name                    VARCHAR2(45)      NOT NULL, 
+    email                   VARCHAR2(45)      NOT NULL, 
+    reg_date                DATE              NOT NULL, 
+    address                 VARCHAR2(100)     NOT NULL, 
+    introduce               VARCHAR2(4000)    NOT NULL, 
+    status                  VARCHAR2(10)      DEFAULT 'WAIT', 
+    author_tocken_number    VARCHAR2(30)      NULL, 
+    curri_no                NUMBER(30)        NULL, 
+    gender                  CHAR(1)           NOT NULL, 
+    CONSTRAINT MEMBERS_PK PRIMARY KEY (member_no)
+)
+/
+
+CREATE SEQUENCE members_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER members_member_no_AI_TRG
+BEFORE INSERT ON members 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT members_SEQ.NEXTVAL
+    INTO: NEW.member_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE members IS 'status의 경우의 수는 대문자로 WAIT, ACTIVE,DELETE,BLOCK'
+/
+
+COMMENT ON COLUMN members.member_no IS '회원시퀀스'
+/
+
+COMMENT ON COLUMN members.id IS '아이디'
+/
+
+COMMENT ON COLUMN members.pass IS '비밀번호'
+/
+
+COMMENT ON COLUMN members.name IS '이름'
+/
+
+COMMENT ON COLUMN members.email IS '이메일'
+/
+
+COMMENT ON COLUMN members.reg_date IS '가입날짜'
+/
+
+COMMENT ON COLUMN members.address IS '주소'
+/
+
+COMMENT ON COLUMN members.introduce IS '자기소개'
+/
+
+COMMENT ON COLUMN members.status IS '상태'
+/
+
+COMMENT ON COLUMN members.author_tocken_number IS '인증토큰시퀀스'
+/
+
+COMMENT ON COLUMN members.curri_no IS '커리큘럼시퀀스'
+/
+
+COMMENT ON COLUMN members.gender IS '성별 F / M'
+/
+
+ALTER TABLE members
+    ADD CONSTRAINT FK_members_curri_no_curris_cur FOREIGN KEY (curri_no)
+        REFERENCES curris (curri_no)
+/
+
+ALTER TABLE members
+    ADD CONSTRAINT FK_members_author_tocken_numbe FOREIGN KEY (author_tocken_number)
+        REFERENCES author_tockens (author_tocken_number)
+/
+
+
+-- projects Table Create SQL
+CREATE TABLE projects
+(
+    curri_no        NUMBER(30)      NOT NULL, 
+    project_no      NUMBER(30)      NOT NULL, 
+    project_name    VARCHAR2(45)    NOT NULL, 
+    start_date      DATE            NOT NULL, 
+    end_date        DATE            NOT NULL, 
+    auth            VARCHAR2(10)    DEFAULT 'TEAM', 
+    CONSTRAINT PROJECTS_PK PRIMARY KEY (project_no)
+)
+/
+
+CREATE SEQUENCE projects_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER projects_project_no_AI_TRG
+BEFORE INSERT ON projects 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT projects_SEQ.NEXTVAL
+    INTO: NEW.project_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE projects IS '프로젝트'
+/
+
+COMMENT ON COLUMN projects.curri_no IS '커리큘럼시퀀스'
+/
+
+COMMENT ON COLUMN projects.project_no IS '프로젝트시퀀스'
+/
+
+COMMENT ON COLUMN projects.project_name IS '프로젝트명'
+/
+
+COMMENT ON COLUMN projects.start_date IS '시작날짜'
+/
+
+COMMENT ON COLUMN projects.end_date IS '마지막날짜'
+/
+
+COMMENT ON COLUMN projects.auth IS 'ALL'
+/
+
+ALTER TABLE projects
+    ADD CONSTRAINT FK_projects_curri_no_curris_cu FOREIGN KEY (curri_no)
+        REFERENCES curris (curri_no)
+/
+
+
+-- boarders Table Create SQL
+CREATE TABLE boarders
+(
+    curri_no      NUMBER(30)      NOT NULL, 
+    board_no      NUMBER(30)      NOT NULL, 
+    category      VARCHAR2(20)    DEFAULT 'FREE', 
+    title         VARCHAR2(45)    NOT NULL, 
+    content       VARCHAR2(45)    NOT NULL, 
+    member_no     NUMBER(30)      NOT NULL, 
+    reg_date      DATE            DEFAULT sysdate, 
+    views         NUMBER(10)      DEFAULT 0, 
+    project_no    NUMBER(30)      NULL, 
+    is_notice     CHAR(1)         DEFAULT 'F', 
+    CONSTRAINT BOARDERS_PK PRIMARY KEY (board_no)
+)
+/
+
+CREATE SEQUENCE boarders_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER boarders_board_no_AI_TRG
+BEFORE INSERT ON boarders 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT boarders_SEQ.NEXTVAL
+    INTO: NEW.board_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE boarders IS '게시판'
+/
+
+COMMENT ON COLUMN boarders.curri_no IS '커리큘럼시퀀스'
+/
+
+COMMENT ON COLUMN boarders.board_no IS '게시판시퀀스'
+/
+
+COMMENT ON COLUMN boarders.category IS '카테고리'
+/
+
+COMMENT ON COLUMN boarders.title IS '제목'
+/
+
+COMMENT ON COLUMN boarders.content IS '내용'
+/
+
+COMMENT ON COLUMN boarders.member_no IS '회원시퀀스(작성자)'
+/
+
+COMMENT ON COLUMN boarders.reg_date IS '작성날짜'
+/
+
+COMMENT ON COLUMN boarders.views IS '조회수'
+/
+
+COMMENT ON COLUMN boarders.project_no IS '프로젝트시퀀스'
+/
+
+COMMENT ON COLUMN boarders.is_notice IS '공지여부'
+/
+
+ALTER TABLE boarders
+    ADD CONSTRAINT FK_boarders_project_no_project FOREIGN KEY (project_no)
+        REFERENCES projects (project_no)
+/
+
+ALTER TABLE boarders
+    ADD CONSTRAINT FK_boarders_member_no_members_ FOREIGN KEY (member_no)
+        REFERENCES members (member_no)
+/
+
+ALTER TABLE boarders
+    ADD CONSTRAINT FK_boarders_curri_no_curris_cu FOREIGN KEY (curri_no)
+        REFERENCES curris (curri_no)
+/
+
+
+-- turns Table Create SQL
+CREATE TABLE turns
+(
+    turn_no       NUMBER(30)      NOT NULL, 
+    curri_no      NUMBER(30)      NOT NULL, 
+    name          VARCHAR(45)     NOT NULL, 
+    time          NUMBER(30)      NOT NULL, 
+    test_date     VARCHAR2(10)    NOT NULL, 
+    understand    NUMBER(2)       NULL, 
+    status        VARCHAR2(10)    DEFAULT 'BEFORE', 
+    CONSTRAINT TURNS_PK PRIMARY KEY (turn_no)
+)
+/
+
+CREATE SEQUENCE turns_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER turns_turn_no_AI_TRG
+BEFORE INSERT ON turns 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT turns_SEQ.NEXTVAL
+    INTO: NEW.turn_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE turns IS 'status의 경우의 수는 대문자로 FIN(커리큘럼끝), ING(커리큘럼 진행중), BEFORE(커리큘럼 시작전)'
+/
+
+COMMENT ON COLUMN turns.turn_no IS '회차시퀀스'
+/
+
+COMMENT ON COLUMN turns.curri_no IS '커리큘럼시퀀스'
+/
+
+COMMENT ON COLUMN turns.name IS '회차수업명'
+/
+
+COMMENT ON COLUMN turns.time IS '총소요시간'
+/
+
+COMMENT ON COLUMN turns.test_date IS '평가일'
+/
+
+COMMENT ON COLUMN turns.understand IS '학생전반이해도'
+/
+
+COMMENT ON COLUMN turns.status IS '상태'
+/
+
+ALTER TABLE turns
+    ADD CONSTRAINT FK_turns_curri_no_curris_curri FOREIGN KEY (curri_no)
+        REFERENCES curris (curri_no)
+/
+
+
+-- votes Table Create SQL
+CREATE TABLE votes
+(
+    vote_no       NUMBER(30)      NOT NULL, 
+    board_no      NUMBER(30)      NOT NULL, 
+    name          VARCHAR2(45)    NOT NULL, 
+    start_date    DATE            NULL, 
+    end_date      DATE            NULL, 
+    CONSTRAINT VOTES_PK PRIMARY KEY (vote_no)
+)
+/
+
+CREATE SEQUENCE votes_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER votes_vote_no_AI_TRG
+BEFORE INSERT ON votes 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT votes_SEQ.NEXTVAL
+    INTO: NEW.vote_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE votes IS '투표'
+/
+
+COMMENT ON COLUMN votes.vote_no IS '투표시퀀스'
+/
+
+COMMENT ON COLUMN votes.board_no IS '게시판시퀀스'
+/
+
+COMMENT ON COLUMN votes.name IS '투표이름'
+/
+
+COMMENT ON COLUMN votes.start_date IS '시작날짜'
+/
+
+COMMENT ON COLUMN votes.end_date IS '종료날짜'
+/
+
+ALTER TABLE votes
+    ADD CONSTRAINT FK_votes_board_no_boarders_boa FOREIGN KEY (board_no)
+        REFERENCES boarders (board_no)
+/
+
+
+-- homeworks Table Create SQL
+CREATE TABLE homeworks
+(
+    board_no       NUMBER(30)    NOT NULL, 
+    homework_no    NUMBER(30)    NOT NULL, 
+    start_date     DATE          NOT NULL, 
+    end_date       DATE          NOT NULL, 
+    CONSTRAINT HOMEWORKS_PK PRIMARY KEY (homework_no)
+)
+/
+
+CREATE SEQUENCE homeworks_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER homeworks_homework_no_AI_TRG
+BEFORE INSERT ON homeworks 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT homeworks_SEQ.NEXTVAL
+    INTO: NEW.homework_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE homeworks IS '과제게시판'
+/
+
+COMMENT ON COLUMN homeworks.board_no IS '게시판시퀀스'
+/
+
+COMMENT ON COLUMN homeworks.homework_no IS '과제시퀀스'
+/
+
+COMMENT ON COLUMN homeworks.start_date IS '시작날짜'
+/
+
+COMMENT ON COLUMN homeworks.end_date IS '종료날짜'
+/
+
+ALTER TABLE homeworks
+    ADD CONSTRAINT FK_homeworks_board_no_boarders FOREIGN KEY (board_no)
+        REFERENCES boarders (board_no)
+/
+
+
+-- msgs Table Create SQL
+CREATE TABLE msgs
+(
+    msg_no         NUMBER(30)        NOT NULL, 
+    send_id        VARCHAR2(45)      NOT NULL, 
+    rec_id         VARCHAR2(45)      NOT NULL, 
+    content        VARCHAR2(4000)    NOT NULL, 
+    send_date      DATE              DEFAULT sysdate, 
+    is_read        CHAR(2)           DEFAULT 'F', 
+    rec_delete     CHAR(2)           DEFAULT 'F', 
+    send_delete    CHAR(2)           DEFAULT 'F', 
+    CONSTRAINT MSGS_PK PRIMARY KEY (msg_no)
+)
+/
+
+CREATE SEQUENCE msgs_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER msgs_msg_no_AI_TRG
+BEFORE INSERT ON msgs 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT msgs_SEQ.NEXTVAL
+    INTO: NEW.msg_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE msgs IS '쪽지'
+/
+
+COMMENT ON COLUMN msgs.msg_no IS '메세지시퀀스'
+/
+
+COMMENT ON COLUMN msgs.send_id IS '보내는사람'
+/
+
+COMMENT ON COLUMN msgs.rec_id IS '받는사람'
+/
+
+COMMENT ON COLUMN msgs.content IS '메세지내용'
+/
+
+COMMENT ON COLUMN msgs.send_date IS '보내는날짜'
+/
+
+COMMENT ON COLUMN msgs.is_read IS 'T'
+/
+
+COMMENT ON COLUMN msgs.rec_delete IS 'T'
+/
+
+COMMENT ON COLUMN msgs.send_delete IS 'T'
+/
+
+
+-- member_images Table Create SQL
+CREATE TABLE member_images
+(
+    file_no        NUMBER(30)        NOT NULL, 
+    member_no      NUMBER(30)        NOT NULL, 
+    file_path      VARCHAR2(4000)    NOT NULL, 
+    ori_name       VARCHAR2(100)     NOT NULL, 
+    system_name    VARCHAR2(100)     NOT NULL, 
+    file_size      NUMBER(30)        NOT NULL, 
+    CONSTRAINT MEMBER_IMAGES_PK PRIMARY KEY (file_no)
+)
+/
+
+CREATE SEQUENCE member_images_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER member_images_file_no_AI_TRG
+BEFORE INSERT ON member_images 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT member_images_SEQ.NEXTVAL
+    INTO: NEW.file_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE member_images IS '회원이미지'
+/
+
+COMMENT ON COLUMN member_images.file_no IS '파일시퀀스'
+/
+
+COMMENT ON COLUMN member_images.member_no IS '회원시퀀스'
+/
+
+COMMENT ON COLUMN member_images.file_path IS '파일경로'
+/
+
+COMMENT ON COLUMN member_images.ori_name IS '파일오리지날이름'
+/
+
+COMMENT ON COLUMN member_images.system_name IS '파일시스템이름'
+/
+
+COMMENT ON COLUMN member_images.file_size IS '파일사이즈'
+/
+
+ALTER TABLE member_images
+    ADD CONSTRAINT FK_member_images_member_no_mem FOREIGN KEY (member_no)
+        REFERENCES members (member_no)
+/
+
+
+-- project_members Table Create SQL
+CREATE TABLE project_members
+(
+    project_no    NUMBER(30)    NOT NULL, 
+    member_no     NUMBER(30)    NOT NULL, 
+    captain       CHAR(1)       DEFAULT 'F', 
+    CONSTRAINT PROJECT_MEMBERS_PK PRIMARY KEY (project_no, member_no)
+)
+/
+
+COMMENT ON TABLE project_members IS '프로젝트멤버'
+/
+
+COMMENT ON COLUMN project_members.project_no IS '프로젝트시퀀스'
+/
+
+COMMENT ON COLUMN project_members.member_no IS '회원시퀀스'
+/
+
+COMMENT ON COLUMN project_members.captain IS '프로젝트 조장 T / F'
+/
+
+ALTER TABLE project_members
+    ADD CONSTRAINT FK_project_members_project_no_ FOREIGN KEY (project_no)
+        REFERENCES projects (project_no)
+/
+
+ALTER TABLE project_members
+    ADD CONSTRAINT FK_project_members_member_no_m FOREIGN KEY (member_no)
+        REFERENCES members (member_no)
+/
+
+
+-- feedbacks Table Create SQL
+CREATE TABLE feedbacks
+(
+    turn_no        NUMBER(30)        NOT NULL, 
+    member_no      NUMBER(30)        NOT NULL, 
+    content        VARCHAR2(4000)    NOT NULL, 
+    is_read        VARCHAR2(2)       DEFAULT 'F', 
+    best_member    NUMBER(30)        NOT NULL, 
+    CONSTRAINT FEEDBACKS_PK PRIMARY KEY (turn_no, member_no)
+)
+/
+
+COMMENT ON TABLE feedbacks IS '피드백'
+/
+
+COMMENT ON COLUMN feedbacks.turn_no IS '회차시퀀스'
+/
+
+COMMENT ON COLUMN feedbacks.member_no IS '회원시퀀스'
+/
+
+COMMENT ON COLUMN feedbacks.content IS '피드백내용'
+/
+
+COMMENT ON COLUMN feedbacks.is_read IS 'T는 읽음'
+/
+
+COMMENT ON COLUMN feedbacks.best_member IS '이번 회차 가장 열심히 한 사람'
+/
+
+ALTER TABLE feedbacks
+    ADD CONSTRAINT FK_feedbacks_member_no_members FOREIGN KEY (member_no)
+        REFERENCES members (member_no)
+/
+
+ALTER TABLE feedbacks
+    ADD CONSTRAINT FK_feedbacks_turn_no_turns_tur FOREIGN KEY (turn_no)
+        REFERENCES turns (turn_no)
+/
+
+
+-- comments Table Create SQL
+CREATE TABLE comments
+(
+    comment_no    NUMBER(30)        NOT NULL, 
+    board_no      NUMBER(30)        NULL, 
+    writer        VARCHAR2(30)      NULL, 
+    content       VARCHAR2(4000)    NULL, 
+    reg_date      DATE              DEFAULT sysdate, 
+    CONSTRAINT COMMENTS_PK PRIMARY KEY (comment_no)
+)
+/
+
+CREATE SEQUENCE comments_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER comments_comment_no_AI_TRG
+BEFORE INSERT ON comments 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT comments_SEQ.NEXTVAL
+    INTO: NEW.comment_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE comments IS '댓글'
+/
+
+COMMENT ON COLUMN comments.comment_no IS '댓글시퀀스'
+/
+
+COMMENT ON COLUMN comments.board_no IS '게시판시퀀스'
+/
+
+COMMENT ON COLUMN comments.writer IS '작성자'
+/
+
+COMMENT ON COLUMN comments.content IS '내용'
+/
+
+COMMENT ON COLUMN comments.reg_date IS '작성일자'
+/
+
+ALTER TABLE comments
+    ADD CONSTRAINT FK_comments_board_no_boarders_ FOREIGN KEY (board_no)
+        REFERENCES boarders (board_no)
+/
+
+
+-- attendances Table Create SQL
+CREATE TABLE attendances
+(
+    turn_no      NUMBER(30)      NOT NULL, 
+    member_no    NUMBER(30)      NOT NULL, 
+    status       VARCHAR2(10)    DEFAULT 'F'
+)
+/
+
+COMMENT ON TABLE attendances IS '출석체크'
+/
+
+COMMENT ON COLUMN attendances.turn_no IS '회차시퀀스'
+/
+
+COMMENT ON COLUMN attendances.member_no IS '회원시퀀스'
+/
+
+COMMENT ON COLUMN attendances.status IS 'T'
+/
+
+ALTER TABLE attendances
+    ADD CONSTRAINT FK_attendances_turn_no_turns_t FOREIGN KEY (turn_no)
+        REFERENCES turns (turn_no)
+/
+
+ALTER TABLE attendances
+    ADD CONSTRAINT FK_attendances_member_no_membe FOREIGN KEY (member_no)
+        REFERENCES members (member_no)
+/
+
+
+-- fies Table Create SQL
+CREATE TABLE fies
+(
+    file_no        NUMBER(30)        NOT NULL, 
+    board_no       NUMBER(30)        NOT NULL, 
+    file_path      VARCHAR2(4000)    NOT NULL, 
+    ori_name       VARCHAR2(100)     NOT NULL, 
+    system_name    VARCHAR2(100)     NOT NULL, 
+    file_size      NUMBER(30)        NOT NULL, 
+    CONSTRAINT FIES_PK PRIMARY KEY (file_no)
+)
+/
+
+CREATE SEQUENCE fies_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER fies_file_no_AI_TRG
+BEFORE INSERT ON fies 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT fies_SEQ.NEXTVAL
+    INTO: NEW.file_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE fies IS '파일'
+/
+
+COMMENT ON COLUMN fies.file_no IS '파일시퀀스'
+/
+
+COMMENT ON COLUMN fies.board_no IS '게시판시퀀스'
+/
+
+COMMENT ON COLUMN fies.file_path IS '파일경로'
+/
+
+COMMENT ON COLUMN fies.ori_name IS '파일오리지날이름'
+/
+
+COMMENT ON COLUMN fies.system_name IS '파일시스템이름'
+/
+
+COMMENT ON COLUMN fies.file_size IS '파일사이즈'
+/
+
+ALTER TABLE fies
+    ADD CONSTRAINT FK_fies_board_no_boarders_boar FOREIGN KEY (board_no)
+        REFERENCES boarders (board_no)
+/
+
+
+-- vote_lists Table Create SQL
+CREATE TABLE vote_lists
+(
+    vote_list_no    NUMBER(30)       NOT NULL, 
+    vote_no         NUMBER(30)       NOT NULL, 
+    name            VARCHAR2(100)    NOT NULL, 
+    count           NUMBER(10)       DEFAULT 0, 
+    CONSTRAINT VOTE_LISTS_PK PRIMARY KEY (vote_list_no, count)
+)
+/
+
+CREATE SEQUENCE vote_lists_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER vote_lists_vote_list_no_AI_TRG
+BEFORE INSERT ON vote_lists 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT vote_lists_SEQ.NEXTVAL
+    INTO: NEW.vote_list_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE vote_lists IS '투표항목'
+/
+
+COMMENT ON COLUMN vote_lists.vote_list_no IS '투표항목스퀀스'
+/
+
+COMMENT ON COLUMN vote_lists.vote_no IS '투표시퀀스'
+/
+
+COMMENT ON COLUMN vote_lists.name IS '투표항목이름'
+/
+
+COMMENT ON COLUMN vote_lists.count IS '득표수'
+/
+
+ALTER TABLE vote_lists
+    ADD CONSTRAINT FK_vote_lists_vote_no_votes_vo FOREIGN KEY (vote_no)
+        REFERENCES votes (vote_no)
+/
+
+
+-- likes Table Create SQL
+CREATE TABLE likes
+(
+    board_no     NUMBER(30)    NOT NULL, 
+    member_no    NUMBER(30)    NOT NULL, 
+    type         CHAR(1)       NOT NULL, 
+    CONSTRAINT LIKES_PK PRIMARY KEY (board_no, member_no)
+)
+/
+
+COMMENT ON TABLE likes IS '게시글 추천'
+/
+
+COMMENT ON COLUMN likes.board_no IS '게시판시퀀스'
+/
+
+COMMENT ON COLUMN likes.member_no IS '회원시퀀스'
+/
+
+COMMENT ON COLUMN likes.type IS '추천T 비추천F'
+/
+
+ALTER TABLE likes
+    ADD CONSTRAINT FK_likes_board_no_boarders_boa FOREIGN KEY (board_no)
+        REFERENCES boarders (board_no)
+/
+
+ALTER TABLE likes
+    ADD CONSTRAINT FK_likes_member_no_members_mem FOREIGN KEY (member_no)
+        REFERENCES members (member_no)
+/
+
+
+-- homework_members Table Create SQL
+CREATE TABLE homework_members
+(
+    homework_members_no    NUMBER(30)        NOT NULL, 
+    homework_no            NUMBER(30)        NOT NULL, 
+    member_no              NUMBER(30)        NOT NULL, 
+    file_no                NUMBER(30)        NOT NULL, 
+    comments               VARCHAR2(4000)    NOT NULL, 
+    reg_date               DATE              DEFAULT sysdate, 
+    score                  NUMBER(30)        DEFAULT -1, 
+    CONSTRAINT HOMEWORK_MEMBERS_PK PRIMARY KEY (homework_members_no)
+)
+/
+
+CREATE SEQUENCE homework_members_SEQ
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER homework_members_homewo_AI_TRG
+BEFORE INSERT ON homework_members 
+REFERENCING NEW AS NEW FOR EACH ROW 
+BEGIN 
+    SELECT homework_members_SEQ.NEXTVAL
+    INTO: NEW.homework_members_no
+    FROM DUAL;
+END;
+/
+
+COMMENT ON TABLE homework_members IS '과제 제출자 명단'
+/
+
+COMMENT ON COLUMN homework_members.homework_members_no IS '과제 제출자 명단시퀀스'
+/
+
+COMMENT ON COLUMN homework_members.homework_no IS '과제시퀀스'
+/
+
+COMMENT ON COLUMN homework_members.member_no IS '회원시퀀스(제출자)'
+/
+
+COMMENT ON COLUMN homework_members.file_no IS '학생제출파일'
+/
+
+COMMENT ON COLUMN homework_members.comments IS '학생제출코멘트'
+/
+
+COMMENT ON COLUMN homework_members.reg_date IS '제출일'
+/
+
+COMMENT ON COLUMN homework_members.score IS '-1 일땐 미채점'
+/
+
+ALTER TABLE homework_members
+    ADD CONSTRAINT FK_homework_members_homework_n FOREIGN KEY (homework_no)
+        REFERENCES homeworks (homework_no)
+/
+
+ALTER TABLE homework_members
+    ADD CONSTRAINT FK_homework_members_member_no_ FOREIGN KEY (member_no)
+        REFERENCES members (member_no)
+/
+
+
+-- member_curris Table Create SQL
+CREATE TABLE member_curris
+(
+    member_no    NUMBER(30)    NOT NULL, 
+    curri_no     NUMBER(30)    NOT NULL
+)
+/
+
+COMMENT ON TABLE member_curris IS '멤버가 포함된 커리큘럼'
+/
+
+COMMENT ON COLUMN member_curris.member_no IS '회원시퀀스'
+/
+
+COMMENT ON COLUMN member_curris.curri_no IS '커리큘럼시퀀스'
+/
+
+ALTER TABLE member_curris
+    ADD CONSTRAINT FK_member_curris_member_no_mem FOREIGN KEY (member_no)
+        REFERENCES members (member_no)
+/
+
+ALTER TABLE member_curris
+    ADD CONSTRAINT FK_member_curris_curri_no_curr FOREIGN KEY (curri_no)
+        REFERENCES curris (curri_no)
+/
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+전역  Ajax 함수
+ajaxStart // ajax가 시작할때 실행
+ajaxStop // ajax가 종료할때 실행
+
+ajaxSend // ajax가 send될때 마다 실행
+ajaxSuccess // ajax가 성공했을때 실행
+ajaxComplete // ajax가 실패하든 성공하든 실행
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+	<button>호출</button>
+	<div id="result"></div>
+	<script>
+		$("button").click(function () {
+
+			$(document).ajaxStart(function () {console.log("ajaxStart");})
+						.ajaxSend(function () {console.log("ajaxSend");})
+						.ajaxSuccess(function () {console.log("ajaxSuccess");})
+						.ajaxComplete(function () {console.log("ajaxComplete");})
+						.ajaxStop(function () {console.log("ajaxStop");})
+
+			$.ajax({
+				url : "/javascript/jquery/ajax/test01",
+				success : function (data) {
+					$("#result").append(data);
+					console.log("test01-done")
+				}
+			});
+			$.ajax({
+				url : "/javascript/jquery/ajax/test02",
+				success : function (data) {
+					$("#result").append(data);
+					console.log("test02-done")
+				}
+			});
+		})
+	</script>
+</body>
+</html>

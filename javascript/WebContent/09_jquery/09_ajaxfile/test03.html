@@ -4,35 +4,34 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../js/jquery-3.2.1.js"></script>
-<script src="../js/jquery.form.js"></script> 
+<script src="../js/jquery.form.js"></script>
 </head>
 <body>
-	<form id="ajaxForm" action="/09_jquery/ajaxfile/exam01"
+	<form id="ajaxForm" action="/javascript/jquery/ajaxfile/test01"
 	      method="post"
 	      enctype="multipart/form-data">
 		<input type="text" name="msg" /><br>
 		<input type="file" name="attachFile" multiple="multiple" />
-		<button>업로드</button>	      
+		<button>업로드</button>
 	</form>
 	<script>
+		//하나의 화일의 여러가지 파일을 처리하는거?
+		// 저장은 되지만
+		// 정보는 뽑기가 힘들다
+
+		
+		$("#ajaxForm").ajaxForm({
+			beforeSubmit : function () {
+				alert("서브밋 전 호출");
+			},
+			success : function (responseText) {
+				alert("업로드 성공..");
+			},
+			error : function () {
+				alert("업로드시 에러발생..");
+			}
+		});
+
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

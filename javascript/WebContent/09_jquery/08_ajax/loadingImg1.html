@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+http://www.jqueryscript.net/loading/jQuery-Plugin-For-Creating-Loading-Overlay-with-CSS3-Animations-waitMe.html
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="waitme/waitMe.css">
+<script src="../js/jquery-3.2.1.js"></script>
+<script src="waitme/waitMe.js"></script>
+</head>
+<body>
+	<button>호출</button>
+	<div id="result"></div>
+	<script>
+
+		function run_waitMe() {
+			$("body").waitMe({
+				effect: 'bounce',
+				text : '좀 쳐 기다려 세끼야',
+				bg: 'rgba(255,255,255,0.7)', //바탕화면 약간 어둡
+				color: '#000',
+
+			});
+
+		}
+		$("button").click(function () {
+			run_waitMe();
+		})
+
+	</script>
+</body>
+</html>
