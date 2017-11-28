@@ -1,4 +1,4 @@
-package ajax;
+/*package ajax;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,3 +25,4 @@ public class Test11 extends HttpServlet {
 		out.close();
 	}
 }
+*/

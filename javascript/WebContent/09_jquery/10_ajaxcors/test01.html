@@ -1,8 +1,8 @@
-<!-- 
-	cors 에러 확인하기
-	- sop : same origin policy
- -->
 <!DOCTYPE html>
+<!--
+cors 에러 확인하기
+- sop : same origin policy
+-->
 <html>
 <head>
 <meta charset="UTF-8">
@@ -13,11 +13,26 @@
 	<button>요청</button>
 	<div id="result"></div>
 	<script>
+
+		/*
+			test01.html:1 Failed to load
+			http://localhost:9080/apiserver/crossdomain/test01:
+			No 'Access-Control-Allow-Origin' header is present on the requested resource.
+			Origin 'http://localhost:8080' is therefore not allowed access.
+		*/
+
+		$("button").click(function () {
+
+			console.log("location.origin", location.origin);
+			// 오리진 포트가 9080이 아니라 8080이다.
+
+			$.ajax({
+				url : "http://localhost:9080/apiserver/crossdomain/test01"
+			})
+			.done(function (data) {
+				$("#result").html(data)
+			})
+		})
 	</script>
 </body>
 </html>
-
-
-
-
-

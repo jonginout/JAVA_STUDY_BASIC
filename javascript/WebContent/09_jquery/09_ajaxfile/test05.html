@@ -6,32 +6,39 @@
 <script src="../js/jquery-3.2.1.js"></script>
 </head>
 <body>
-	<form id="ajaxForm" action="/09_jquery/ajaxfile/exam01"
+	<form id="ajaxForm" action="/javascript/jquery/ajaxfile/test01"
 	      method="post"
 	      enctype="multipart/form-data">
 		<input type="text" name="msg" /><br>
 		<input type="file" name="attachFile" multiple="multiple" />
-		<button type="button">업로드</button>	      
+		<button type="button">업로드</button>
 	</form>
 	<script>
+	  $("button").click(function(){
+
+	  // form의 데이터를 추가하기 위한 객체
+	  var fd = new FormData();
+	  fd.append("msg", $("input[name='msg']").val());
+	  var files = $("input[name='attachFile']")[0].files;
+
+	  for(var i = 0; i<files.length;i++){
+		 fd.append("attachFile"+i, files[i]);
+		 console.log(files[i]);
+	  }
+
+
+	  //formData를 통한 파일 업로드시에 속성을 추가해서 설정해야 한다.
+	  $.ajax({
+		 url : "/javascript/jquery/ajaxfile/test01",
+		 data: fd,
+		 type: "POST",
+		 processData: false,
+		 contentType: false,
+		 success: function(){
+			alert("업로드 성공");
+		 }
+	  });
+	});
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

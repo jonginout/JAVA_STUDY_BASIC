@@ -1,7 +1,7 @@
-<!-- 
-	http://www.jqueryscript.net/loading/jQuery-Plugin-For-Creating-Loading-Overlay-with-CSS3-Animations-waitMe.html
- -->
 <!DOCTYPE html>
+<!--
+http://www.jqueryscript.net/loading/jQuery-Plugin-For-Creating-Loading-Overlay-with-CSS3-Animations-waitMe.html
+-->
 <html>
 <head>
 <meta charset="UTF-8">
@@ -9,19 +9,21 @@
 <link rel="stylesheet" href="waitme/waitMe.css">
 <script src="../js/jquery-3.2.1.js"></script>
 <script src="waitme/waitMe.js"></script>
+<script src="common.js"></script>
 </head>
 <body>
 	<button>호출</button>
 	<div id="result"></div>
 	<script>
+
+		$("button").click(function () {
+			$.ajax({
+				url : "/javascript/jquery/ajax/test02"
+			}).done(function (d) {
+				$("#result").append(d);
+			})
+		})
+
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-

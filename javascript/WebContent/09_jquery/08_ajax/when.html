@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+$.ajax(url, options);
+$.ajax(options);
+
+//Ajax의 다중 호출시 사용
+$.when()
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="../js/jquery-3.2.1.js"></script>
+</head>
+<body>
+	<button>호출</button>
+	<div id="result"></div>
+	<script>
+
+		$("button").click(function () {
+			var $ajax1 = $.ajax("/javascript/jquery/ajax/test02");
+			var $ajax2 = $.ajax("/javascript/jquery/ajax/test02");
+			// 위 두개가 끝났을때 작업을 하고싶다 (비동기 없애기)
+
+			$.when($ajax1, $ajax2).done(function (result1Data, result2Data) {
+					alert("1,2가 호출된 뒤 실행");
+					console.log(result1Data, result2Data); //$ajax1, $ajax2 Data
+				}
+			);
+		})
+
+	</script>
+</body>
+</html>
