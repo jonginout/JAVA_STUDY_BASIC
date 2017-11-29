@@ -96,6 +96,7 @@ public class UploadController {
 	public ModelAndView fileUpload2(FileVO fileVO) throws Exception {
 		
 			// 실행되는 웹어플리케이션의 실제 경로 가져오기
+			// c드라이브 기준으로 가져와준다.
 			String uploadDir = servletContext.getRealPath("/upload");
 			System.out.println(uploadDir);
 			

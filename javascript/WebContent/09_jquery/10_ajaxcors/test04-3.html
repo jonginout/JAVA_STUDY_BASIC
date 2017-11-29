@@ -15,6 +15,27 @@ GET 방식만이 가능함
 	<button>요청</button>
 	<div id="result"></div>
 	<script>
+		function test(msg) {
+			$("#result").html(msg);
+		}
+		$("button").click(function () {
+			//스크립트 태그를 만들어주는 jquery 함수
+// 			$.getScript(
+// 					"http://localhost:9080/apiserver/crossdomain/test04?callback=test"
+// 							);
+
+			$.ajax({
+				url : "http://localhost:9080/apiserver/crossdomain/test04?callback=test",
+				type : "GET",
+				dataType : "jsonp",
+				jsonp : "callback",
+				success : function (msg) {
+					$("result").html(msg)
+					//이렇게 쓰게되면 별도의 test() 함수가 없어도 된다.
+				}
+			});
+							
+		});
 	</script>
 </body>
 </html>

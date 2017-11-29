@@ -15,6 +15,15 @@ SOP(Same Oring Policy)의 영향을 받지 않는 것을 이용
 	<button>요청</button>
 	<div id="result"></div>
 	<script>
+		function test(msg) {
+			$("#result").html(msg);
+		}
+		$("button").click(function () {
+			$(document.body).append(
+			'<script src="http://localhost:9080/apiserver/crossdomain/test04?callback=test">&lt;/script>'
+																			//콜백이란 파라미터를 꺼내서 그 함수가 있으면 불러준다
+			);
+		});
 	</script>
 </body>
 </html>
