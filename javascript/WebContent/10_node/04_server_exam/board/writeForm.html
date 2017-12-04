@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>글쓰기</title>
+    </head>
+    <body>
+        <form action="/write.do" method="post">
+            <p>
+                제목 : <input type="text" name="title">
+            </p>
+            <p>
+                글쓴이 : <input type="text" name="writer">
+            </p>
+            <p>
+                내용 : <textarea name="content" rows="8" cols="80"></textarea>
+            </p>
+            <button>제출</button>
+        </form>
+
+        <a href="/">홈으로</a>
+        <a href="/list.do">뒤로</a>
+    </body>
+</html>
