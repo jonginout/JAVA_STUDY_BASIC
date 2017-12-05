@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title><%= title %></title>
+    </head>
+    <body>
+        <h1>노드 게시판</h1>
+        <table>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+            </tr>
+            <%
+            for(var i = 0; i < data.length; i++){
+            %>
+                <tr>
+                    <td><%=data[i]%></td>
+                    <td>제목<%=data[i]%></td>
+                    <td>내용<%=data[i]%></td>
+                </tr>
+            <%
+            }
+            %>
+            <tr>
+                <td>2</td>
+                <td>제목2</td>
+                <td>내용2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>제목3</td>
+                <td>내용3</td>
+            </tr>
+        </table>
+    </body>
+</html>

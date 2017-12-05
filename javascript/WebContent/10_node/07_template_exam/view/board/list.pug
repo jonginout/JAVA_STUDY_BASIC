@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title 노드 게시판
+  body
+    h1 노드 게시판
+    table(border="1")
+      tr
+        th 번호
+        th 제목
+        th 내용
+      each b in boards 
+        tr
+          td #{b.no}
+          td 
+            a(href="detail.do?no="+b.no) #{b.title}
+          td #{b.content}
+    a(href='writeForm.do') 글쓰기
