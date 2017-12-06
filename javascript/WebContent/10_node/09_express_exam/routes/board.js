@@ -18,7 +18,7 @@ router.get("/list", function (req, res, next) {
 router.get("/detail/:no", function (req, res, next) {
 
     boardService.detail(req.params.no, function(err, result){
-        if (err) {
+        if (err) {            
             next(err);
             return;
         }
@@ -27,9 +27,16 @@ router.get("/detail/:no", function (req, res, next) {
 
 });
 
-router.get("/write", function (req, res) {
-    mysql
-    res.render("board/list")
+router.get("/delete/:no", function (req, res) {
+
+    boardService.delete(req.params.no, function(err, result){
+        if (err) {
+            next(err);
+            return;
+        }
+        res.redirect("/board/list");
+    })
+
 });
 
 
