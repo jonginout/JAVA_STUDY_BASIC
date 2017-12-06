@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+        title #{title}
+        meta(charset="utf-8")
+        link(rel="stylesheet", href="/test.css")
+        script(src="/test.js")
+    body
+        p
+            a(href=url) 사이트 이동
+            //- 문자열 안에는 #{} 쓰면 안되고 그냥 바로 써라
+        div
+            //-
+                - for(var i = 1; i < arr.length; i++){ // 스크립트 코드내에선 #{} 안해도 된다.
+                h1  test #{i}
+                - }
+            each val, index in arr 
+                h3 #{index} - #{val}
+                //- 여기는 #이 아니다.
