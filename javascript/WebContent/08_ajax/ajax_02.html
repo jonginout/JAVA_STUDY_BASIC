@@ -12,7 +12,6 @@
         <button>Ajax 호출</button>
 
 
-
         <script type="text/javascript">
 
             $("button").on("click", function () {
@@ -23,7 +22,7 @@
 
                 // readyState가 체인지 될때마다 콜백이 실행되는 함수
                 xhr.onreadystatechange = function () {
-                    if(xhr.readyState==4){
+                    if(xhr.readyState==4){  //데이터 전송이 성공헀을때 4
                         if (xhr.status==200) {
                             console.log("ajax 호출 결과 : "+xhr.responseText);
                             $("#result").html(xhr.responseText);
