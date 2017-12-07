@@ -43,17 +43,25 @@
         $("div").on("scroll", function () {
             console.log( $(this).scrollTop() );
         })
+        // 스크롤 이벤트가 발생때 스크롤top 값을 찍어준다.
 
         $("button").click(function () {
             // $("div").scrollTop(0);
 
             var id = setInterval(function () {
                 if($("div").scrollTop()>0){
+
                     $("div").scrollTop($("div").scrollTop()-10);
+                    // 스크롤top 이 0 이 아닐때 즉, 맨 위가 아닐때
+                    // 스크롤 값을 -10씩 줄여준다.
+
                 }else {
+
                     clearInterval(id);
+
                 }
             }, 10)
+
         })
 	</script>
 </body>

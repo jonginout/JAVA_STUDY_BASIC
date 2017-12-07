@@ -56,9 +56,23 @@ children(선택자)  :  선택된 요소의 직계중에서 선택자에 해당�
     <div id="d6">div<span>6</span></div>
     <div>
         <span>
-            <span>123</span>
+            <span>
+                123
+                <div>asdas</div>
+            </span>
         </span>
         <p>456</p>
+    </div>
+
+    <div>
+        <span>김종인</span>
+        <span>김종인1</span>
+        <span>김종인2</span>
+        <span>
+            <span>
+                <span>김종손자</span>
+            </span>
+        </span>
     </div>
     <script>
         // prev()      :  선택된 요소의 형제중에서 이전 요소
@@ -83,8 +97,9 @@ children(선택자)  :  선택된 요소의 직계중에서 선택자에 해당�
         // $("div").addClass("choice").find("span").addClass("fs");
         // find()는 현재 엘리먼트의 자식들 중에서 찾는거임
         // $("div").addClass("choice").children("span").addClass("fs");
-        $("div").addClass("choice").children().addClass("fs");
+        // $("div").addClass("choice").children().addClass("fs");
         // children()는 바로 밑 자식만 찾는것
+
 
     </script>
 </body>
