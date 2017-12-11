@@ -11,16 +11,19 @@ console.log("__filename", __filename);
 
 
 var msg = "hello , node JS";
-console.log("%s", msg); // %s 는 문자열 출력
+console.log("%s", msg); //hello , node JS
+// %s 는 문자열 출력 즉, 문자열로 출력해라
 
 var person = {
         name : "홍길동",
         age : 22,
         addr : "서울특별시"
 };
-console.log("%j", person); // %j 는 json 출력
+console.log("%j", person); //{name : "홍길동",age : 22,addr : "서울특별시"}
+// %j 는 json 출력
 
-console.log("나이 : %d", 24); // %d 는 숫자
+console.log("나이 : %d", 24); //나이 : 24
+// %d 는 숫자
 
 /*
 시간 측정
@@ -34,3 +37,4 @@ for (var i = 0; i < 10000000; i++) {
     sum += i;
 }
 console.timeEnd("루프");
+// 루프 : 14.240ms

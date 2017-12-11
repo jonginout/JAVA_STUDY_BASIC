@@ -10,7 +10,7 @@ console.log(path.join("c:/test", "/aa/bb", "/index.js"));
 
 
 console.log(path.join("c:/test/", "/aa/bb/", "index.js/"));
-// 이렇게  / 가 중복되어도 혹은 없어도 알아서 처리해준다.
+// 이렇게  '/' 가 중복되어도 혹은 없어도 알아서 처리해준다.
 
 
 var fileName = "c:/test/aa/bb/index.js";
