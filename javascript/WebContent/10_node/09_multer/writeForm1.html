@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>자유게시판</h1>
+	<form action="write1.do" method="post" enctype="multipart/form-data">
+		<table border="1">
+		<tr>
+			<th>제목</th>
+			<td><input type="text" name="title" /></td>
+		</tr>
+		<tr>
+			<th>글쓴이</th>
+			<td><input type="text" name="writer" /></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td><textarea name="content" rows="8" cols="60"></textarea></td>
+		</tr>
+		<tr>
+			<th>첨부파일</th>
+			<td><input type="file" name="attach" /></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" value="등록" />
+				<a href="list.do">목록</a>
+			</td>
+		</tr>
+		</table>
+	</form>
+</body>
+</html>
