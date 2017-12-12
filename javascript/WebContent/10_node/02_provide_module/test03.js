@@ -12,5 +12,5 @@ var urlObj = url.parse(
 console.log(urlObj);
 
 
-console.log(urlObj.query);
-console.log(urlObj.query.id);
+console.log(urlObj.query); // { id: 'aaa', pass: '1234' }
+console.log(urlObj.query.id); // aaa

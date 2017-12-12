@@ -9,5 +9,5 @@ require에 찾는 파일의  확장자가 없는 경우 기본적으로 .js 파�
 
 var cal = require("./test05_module");
 
-console.log(cal.add(1,2));
-console.log(cal.sub(1,2));
+console.log(cal.add(1,2)); //3
+console.log(cal.sub(1,2)); //-1

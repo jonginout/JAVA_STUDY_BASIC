@@ -17,5 +17,5 @@ sha1.update(msg);
 // var output = sha1.digest("hex"); // hex는 16진수
 var output = sha1.digest("base64"); // base64
 
-console.log("원본 %s", msg);
-console.log("해쉬  %s", output);
+console.log("원본 %s", msg); //원본 ch1212126
+console.log("해쉬  %s", output); // 해쉬  2ddwDfAdiE9oJq33W2P0scf9Smw=

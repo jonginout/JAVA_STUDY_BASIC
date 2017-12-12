@@ -11,5 +11,4 @@ var cal = require("./test01_module.js"); // .js 생략 가능
 
 console.log(cal.add(100,200));
 
-
 console.log(cal.sub(100,200));
