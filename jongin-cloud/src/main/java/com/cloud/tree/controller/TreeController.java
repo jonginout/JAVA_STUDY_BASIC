@@ -1,5 +1,6 @@
 package com.cloud.tree.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cloud.repository.vo.Tree;
-import com.cloud.repository.vo.Trees;
 import com.cloud.tree.service.TreeService;
 
 @Controller
@@ -36,29 +36,62 @@ public class TreeController {
 //		return mav;
 //
 //	}
-//
+	
+    //ff 폴더 안 모든 파일 및 폴더 검색
+	List<Tree> pullFile(String path) {
+        File[] list = new File(path).listFiles(); 
+        List<Tree> trees = new ArrayList<>();
+        
+        try{
+            for (File ff : list) {
+            	Tree tree = new Tree();
+                if (ff.isFile()) {
+                	tree.setTitle(ff.getName());
+                	System.out.println("파일 : "+ff.getName());
+                }else if (ff.isDirectory()) {
+                	tree.setTitle(ff.getName());
+                	tree.setIsFolder(true);
+                	System.out.println("폴더 : "+ff.getName());
+                    //pullFile(ff.toString());
+                }
+                trees.add(tree);
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+		return trees;
+    }
+    
 	@RequestMapping("/list.json")
 	@ResponseBody
-	public List<Tree> detail(/*회원아이디*/) throws Exception {
-		List<Tree> trees = new ArrayList<>();
+	public List<Tree> detail(String dir) throws Exception {
 		
-		for (int i = 0; i < 2; i++) {	
-			Tree tree = new Tree();
-			tree.setTitle(i+"번째 폴더");
-			tree.setIsFolder(true);
-			trees.add(tree);
-		}
-		//폴더속 폴더는??
-		List<Tree> trees2 = new ArrayList<>();
-		Tree tree2 = new Tree();
-		tree2.setTitle("종인짱");
-		trees2.add(tree2);
+		String root = "C:\\jongin\\tree";
 		
-		trees.get(0).setChildren(trees2);
+		return pullFile(root);
 		
-		return trees;
+//		
+//		for (int i = 0; i < 2; i++) {	
+//			Tree tree = new Tree();
+//			tree.setTitle(i+"번째 폴더");
+//			tree.setIsFolder(true);
+//			trees.add(tree);
+//		}
+//		//폴더속 폴더는??
+//		List<Tree> trees2 = new ArrayList<>();
+//		Tree tree2 = new Tree();
+//		tree2.setTitle("종인짱");
+//		trees2.add(tree2);
+//		
+//		trees.get(0).setChildren(trees2);
+//		
+//		return trees;
+		
+		
 	}
-//
+
+	
 //	@RequestMapping("/turninsert.do")
 //	@ResponseBody
 //	public void add(Turn turn) throws Exception {
