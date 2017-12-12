@@ -15,14 +15,18 @@ GET 방식만이 가능함
 	<button>요청</button>
 	<div id="result"></div>
 	<script>
+
+		// test 함수를 ajax가 실행시켜 준다.
 		function test(msg) {
 			$("#result").html(msg);
 		}
+
+
 		$("button").click(function () {
-			//스크립트 태그를 만들어주는 jquery 함수
-// 			$.getScript(
-// 					"http://localhost:9080/apiserver/crossdomain/test04?callback=test"
-// 							);
+			// 스크립트 태그를 만들어주는 jquery 함수
+			// $.getScript(
+			// 		"http://localhost:9080/apiserver/crossdomain/test04?callback=test"
+			// 				);
 
 			$.ajax({
 				url : "http://localhost:9080/apiserver/crossdomain/test04?callback=test",
@@ -31,7 +35,8 @@ GET 방식만이 가능함
 				jsonp : "callback",
 				success : function (msg) {
 					$("result").html(msg)
-					//이렇게 쓰게되면 별도의 test() 함수가 없어도 된다.
+					// 이렇게 쓰게되면 별도의 test() 함수가 없어도 된다.
+					// callback 파리미터의 test 함수를 호출한다.
 				}
 			});
 							

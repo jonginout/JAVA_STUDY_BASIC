@@ -16,12 +16,13 @@ app.get("/", function (req, res) {
 });
 
 
+// error 처리...
 app.use(function (err, req, res, next) {
 	res.writeHead(200, {"Content-Type" : "text/html; charset=utf-8"})
 	console.error(err);
 	res.end("<h1>오류!</h1>")
-})
+});
 
 app.listen(3000, function () {
 	console.log("서버 구동 중....");
-})
+});

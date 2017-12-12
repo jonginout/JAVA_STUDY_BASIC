@@ -26,7 +26,7 @@ public class Test01 extends HttpServlet{
 			
 			MultipartRequest mRequest = new MultipartRequest(
 						request,
-						"C:\\jongin\\git\\BIT_CAMP_JONGIN\\javascript\\WebContent\\upload",
+						"C:\\Dev\\git\\BIT_CAMP_JONGIN\\javascript\\WebContent\\upload",
 						1024 * 1204 * 100,
 						"utf-8",
 						new DefaultFileRenamePolicy()

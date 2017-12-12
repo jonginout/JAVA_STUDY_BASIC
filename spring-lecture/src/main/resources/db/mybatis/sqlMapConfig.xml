@@ -5,9 +5,3 @@
 <configuration>
 	<!-- 여기서 하던걸 스프링에서 해준다. context-repository.xml// 직접해도 상관없긴 하다  -->
 </configuration>
-
-
-
-
-
-
