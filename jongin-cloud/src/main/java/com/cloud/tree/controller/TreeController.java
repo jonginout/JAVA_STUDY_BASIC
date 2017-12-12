@@ -20,22 +20,7 @@ public class TreeController {
 
 	@Autowired
 	TreeService service;
-	
-//	@RequestMapping("/turnlist.do")
-//	public ModelAndView list(Turn turn) throws Exception {
-//		ModelAndView mav = new ModelAndView("turn/turnlist");
-//		
-//		System.out.println(turn.toString());
-//
-//		Curri curri = curriService.curriDetail(turn.getCurriNo());
-//		List<Turn> turns = service.turnList(turn);
-//
-//		mav.addObject("turns", turns);
-//		mav.addObject("turnsJson", new Gson().toJson(turns));
-//		mav.addObject("curri", curri);
-//		return mav;
-//
-//	}
+
 	
     //ff 폴더 안 모든 파일 및 폴더 검색
 	List<Tree> pullFile(String path) {
@@ -51,6 +36,8 @@ public class TreeController {
                 }else if (ff.isDirectory()) {
                 	tree.setTitle(ff.getName());
                 	tree.setIsFolder(true);
+                	tree.setIsLazy(true);
+                	tree.setPath(ff.toString());
                 	System.out.println("폴더 : "+ff.getName());
                     //pullFile(ff.toString());
                 }
@@ -63,113 +50,41 @@ public class TreeController {
 		return trees;
     }
     
+	@RequestMapping("/sublist.json")
+	@ResponseBody
+	public List<Tree> subDetail(String path) throws Exception {
+		
+		String root = "C:\\tree";
+		if(path==null) {
+			path=root;
+		}
+		
+		System.out.println(path);
+		
+		List<Tree> trees = pullFile(path);
+		System.out.println(trees.toString());
+		
+		return trees;
+				
+	}
+	
+
 	@RequestMapping("/list.json")
 	@ResponseBody
-	public List<Tree> detail(String dir) throws Exception {
+	public Tree detail() throws Exception {
 		
-		String root = "C:\\jongin\\tree";
+		String root = "C:\\tree";
 		
-		return pullFile(root);
+		List<Tree> trees = pullFile(root);
+		Tree tree = new Tree();
 		
-//		
-//		for (int i = 0; i < 2; i++) {	
-//			Tree tree = new Tree();
-//			tree.setTitle(i+"번째 폴더");
-//			tree.setIsFolder(true);
-//			trees.add(tree);
-//		}
-//		//폴더속 폴더는??
-//		List<Tree> trees2 = new ArrayList<>();
-//		Tree tree2 = new Tree();
-//		tree2.setTitle("종인짱");
-//		trees2.add(tree2);
-//		
-//		trees.get(0).setChildren(trees2);
-//		
-//		return trees;
+		System.out.println(trees.toString());
+		tree.setTitle("김종인님 폴더");
+		tree.setIsFolder(true);
+		tree.setChildren(trees);
 		
-		
+		return tree;
+				
 	}
-
-	
-//	@RequestMapping("/turninsert.do")
-//	@ResponseBody
-//	public void add(Turn turn) throws Exception {
-//		System.out.println(turn.toString());
-//		service.turnAdd(turn);
-//	}
-//
-//	@RequestMapping("/turndelete.do")
-//	public String delete(int curriNo, int turnNo) throws Exception {
-//		service.turnRemove(turnNo);
-//		return "redirect:/turn/turnlist.do?curriNo=" + curriNo;
-//	}
-//
-//	@RequestMapping("/turnupdate.do")
-//	@ResponseBody
-//	public void update(Turn turn) throws Exception {
-//		System.out.println(turn.toString());
-//		if (turn.getDescription() != null) {
-//			service.turnEdit(turn); // 내용바꾸기
-//		} else if (turn.getStatus() != null) {
-//			service.turnEditStatus(turn); // 상태 바꾸기
-//		} else if (turn.getYear() != null) {
-//			service.turnEditDate(turn); // 평가일 바꾸기
-//		} else if (turn.getUnderstand() != null) {
-//			service.turnEditUnderstand(turn); // 이해도 바꾸기
-//		}
-//	}
-//	
-//	//////////////////////////////////////////////////////////
-//	// 통계
-//	//////////////////////////////////////////////////////////
-//	@RequestMapping("/turnsummary.do")
-//	@ResponseBody
-//	public Map<String, Object> sum(Turn turn) throws Exception {
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("statusSummary", service.statusSummary(turn));
-//		map.put("understandSummary", service.understandSummary(turn));
-//		return map;
-//	}
-//
-//	@RequestMapping("/studentsummary.do")
-//	@ResponseBody
-//	public Map<String, Object> sumStudent(Turn turn) throws Exception {
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("attendanceSummary", service.attendanceSummary(turn));
-//		map.put("feedbackSummary", service.feedbackSummary(turn));
-//		return map;
-//	}
-//	
-//	//////////////////////////////////////////////////////////
-//	// 피드백 & 출첵
-//	//////////////////////////////////////////////////////////
-//
-//	@RequestMapping("/student.do")
-//	public ModelAndView studentList(Turn turn) throws Exception {
-//		ModelAndView mav = new ModelAndView("turn/student");
-//
-//		Curri curri = curriService.curriDetail(turn.getCurriNo());
-//		Turn t = service.turnDetail(turn);;
-//		List<Student> students = service.StudentList(turn);
-//		
-//		mav.addObject("students", students);
-//		mav.addObject("studentsJson", new Gson().toJson(students));
-//		mav.addObject("turn", t);
-//		mav.addObject("curri", curri);
-//		return mav;
-//
-//	}
-//
-//	@RequestMapping("/studentdetail.do")
-//	@ResponseBody
-//	public Student stDetail(Student student) throws Exception {
-//		System.out.println(service.studentDetail(student).toString());
-//	
-//		Student s = service.studentDetail(student);
-//		s.setBestMemberName(service.bestMemberName(s.getBestMember()));
-//		return s;
-//	}
-	
 	
 }

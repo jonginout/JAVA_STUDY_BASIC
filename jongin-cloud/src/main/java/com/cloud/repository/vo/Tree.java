@@ -7,9 +7,22 @@ public class Tree {
 	private Boolean isFolder;
 	private Boolean isLazy;
 	private String key;
+	private String upperFolder;
 	private List<Tree> children;
 	
+	//////////////////////////
 	
+	private String path;
+	
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	///////////////////////////
+	
+
 	public String getTitle() {
 		return title;
 	}
@@ -40,11 +53,18 @@ public class Tree {
 	public void setChildren(List<Tree> children) {
 		this.children = children;
 	}
+	public String getUpperFolder() {
+		return upperFolder;
+	}
+	public void setUpperFolder(String upperFolder) {
+		this.upperFolder = upperFolder;
+	}
 	@Override
 	public String toString() {
-		return "Tree [title=" + title + ", isFolder=" + isFolder + ", isLazy=" + isLazy + ", key=" + key + ", children="
-				+ children + "]";
+		return "Tree [title=" + title + ", isFolder=" + isFolder + ", isLazy=" + isLazy + ", key=" + key
+				+ ", upperFolder=" + upperFolder + ", children=" + children + "]";
 	}
+	
 
 	
 	
