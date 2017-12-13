@@ -13,7 +13,14 @@ public class Tree {
 	//////////////////////////
 	
 	private String path;
+	private String ext;
 	
+	public String getExt() {
+		return ext;
+	}
+	public void setExt(String ext) {
+		this.ext = ext;
+	}
 	public String getPath() {
 		return path;
 	}
@@ -62,10 +69,11 @@ public class Tree {
 	@Override
 	public String toString() {
 		return "Tree [title=" + title + ", isFolder=" + isFolder + ", isLazy=" + isLazy + ", key=" + key
-				+ ", upperFolder=" + upperFolder + ", children=" + children + "]";
+				+ ", upperFolder=" + upperFolder + ", children=" + children + ", path=" + path + ", ext=" + ext + "]";
 	}
-	
 
+
+	
 	
 	
 	

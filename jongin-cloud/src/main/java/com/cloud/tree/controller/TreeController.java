@@ -33,12 +33,17 @@ public class TreeController {
                 if (ff.isFile()) {
                 	tree.setTitle(ff.getName());
                 	System.out.println("파일 : "+ff.getName());
+                	if(ff.getName().lastIndexOf(".")!=-1) {
+                		tree.setExt(ff.getName().substring(ff.getName().lastIndexOf(".")+1));
+                		System.out.println("확장자 : "+ff.getName().substring(ff.getName().lastIndexOf(".")+1));
+                	}
                 }else if (ff.isDirectory()) {
                 	tree.setTitle(ff.getName());
                 	tree.setIsFolder(true);
                 	tree.setIsLazy(true);
                 	tree.setPath(ff.toString());
                 	System.out.println("폴더 : "+ff.getName());
+                	
                     //pullFile(ff.toString());
                 }
                 trees.add(tree);
@@ -52,12 +57,7 @@ public class TreeController {
     
 	@RequestMapping("/sublist.json")
 	@ResponseBody
-	public List<Tree> subDetail(String path) throws Exception {
-		
-		String root = "C:\\tree";
-		if(path==null) {
-			path=root;
-		}
+	public List<Tree> subTree(String path) throws Exception {
 		
 		System.out.println(path);
 		
@@ -71,20 +71,44 @@ public class TreeController {
 
 	@RequestMapping("/list.json")
 	@ResponseBody
-	public Tree detail() throws Exception {
+	public Tree rootTree(String user) throws Exception {
 		
-		String root = "C:\\tree";
+		String path = "C:\\tree\\"+user;
 		
-		List<Tree> trees = pullFile(root);
+		File f = new File(path);
+		if(!f.exists()) {
+			f.mkdirs();
+		}
+		//폴더 만들기
+		
+		List<Tree> trees = pullFile(path);
 		Tree tree = new Tree();
 		
 		System.out.println(trees.toString());
-		tree.setTitle("김종인님 폴더");
+		tree.setTitle(user);
 		tree.setIsFolder(true);
+		tree.setPath(path);
+		tree.setIsLazy(true);
 		tree.setChildren(trees);
 		
 		return tree;
 				
+	}
+	
+	
+	@RequestMapping("/newfolder.json")
+	@ResponseBody
+	public Map<String, Object> newfolder(String path, String name) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dup", true);
+		
+		File f = new File(path+"\\"+name);
+		if(!f.exists()) {
+			map.put("dup", false);
+			f.mkdirs();
+		}
+		
+		return map;
 	}
 	
 }
