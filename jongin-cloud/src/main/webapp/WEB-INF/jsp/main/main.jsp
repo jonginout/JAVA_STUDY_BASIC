@@ -26,15 +26,30 @@
 	.selected{
 		color:tomato;
 	}
+	.button-box{
+		margin: 20px; 
+	}
+	input[type=file]{
+		width : 200px;
+		display: inline-block;
+	}
 </style>
 
 <script type="text/javascript">
 	
 	//현재 active된 경로
-	var nowPath = "";
+	var nowNode = "";
 	var rename = "";
 
 	function showChildList(node) {
+		var activeNode = node;
+		
+		if(node.data.isFolder){
+			$("#detailFile").html("");
+		}else {
+			node = node.parent;
+		}
+		
 		var childs = node.childList;
 				
 		var html = "<h1 class='file' data-key='"+node.data.key+"'>\
@@ -62,8 +77,8 @@
 			html += "<h3><i class='fa fa-exclamation-circle' aria-hidden='true'></i> 파일이 없습니다.</h3>";
 		}
 		$("#nowList").html(html);
-		nowPath = node.data.path;
-		console.log(nowPath)
+		nowNode = activeNode.data;
+		console.log("활성화된 노드 nowNode",nowNode)
 	}
 
 	function dirTree() {
@@ -81,14 +96,8 @@
 // 	        },
 	      onActivate: function(node) {
 	    	console.log(node)
-	    	  if(!node.data.isFolder){	    	
-	    		  	showChildList(node.parent);
-	    		  	showFileDetail(node.data.key);
-		    	  }else {
-		    		$("#detailFile").html("");
-					showChildList(node);
-					showFileDetail(node.data.key);
-				}
+	    	showChildList(node);
+	    	showFileDetail(node.data.key);
 			focusFile($(".file[data-key="+node.data.key+"]"));
 	    	},
 	      onLazyRead: function(node){
@@ -99,12 +108,12 @@
 	          success : function (node) {
 	        	  console.log(node)
 	        	  showChildList(node)
+	        	  showFileDetail(node.data.key)
 	        	  focusFile($(".file[data-key="+node.data.key+"]"));
 	        	  
 	        	  ///////////////////////////파일명수정
 	        	  if(node.childList){	        		  
 		        	  for (let ch of node.childList) {
-		        		  	console.log(ch.data)
 		        		  	var ext = "";
 		        		  	if(ch.data.ext){
 		        		  		ext = "."+ch.data.ext;
@@ -146,11 +155,26 @@
 	          },
 	          onDrop: function(node, sourceNode, hitMode, ui, draggable) {
 	            //노드 실게 그곳에 두어서 옮기기
+	            
+	            // 힛모드 이동인지 체크
+	            var hitModeChk = false;
+	            
+	            if(hitMode=="before" || hitMode=="after"){
+	            	if(node.data.title=="종인"){
+	            		alert("루트 폴더 밖으로는 옮길 수 없습니다.")
+	            		return false;
+	            	}
+	            	hitModeChk = true;
+// 	            	node.data.path = node.data.path.substring(0, node.data.path.lastIndexOf("\\"));
+	            }
+	            
+	            //노드 (겉모습만 이동)
 	            sourceNode.move(node, hitMode);
 	            
-	            console.log("옮길 노드",sourceNode.data.path);
-	            console.log("옮길 곳",node.data.path);
-	            moveFile(sourceNode.data, node.data.path)
+	            console.log("옮길 것",sourceNode.data.path);
+	            console.log("옮겨질 곳",node.data.path);
+
+	            moveFile(sourceNode.data, node.data, hitModeChk)
 	            
 	          }
 	        },
@@ -165,19 +189,29 @@
 	}
 
 	// 파일 드래그 앤 드롭 이동
-	function moveFile(moveNode, recFilePath) {
+	function moveFile(moveNode, recNode, hitModeChk) {
+		
+		// hitMode 였을때는 path를 부모경로로 잠시 바꿔준다.
+		var recPath = recNode.path;
+		if(hitModeChk){
+			recPath = recNode.path.substring(0, recNode.path.lastIndexOf("\\"));
+		}
+		
 		$.ajax({
 			type : "POST",
 			url : "${pageContext.request.contextPath}/tree/filemove.json",
 			data : {
 				moveFilePath : moveNode.path,
-				recFilePath : recFilePath
+				recFilePath : recPath
 			},
 			success : function (data) {
 				if(data.result){
 					var node =  $("#tree").dynatree("getTree").getNodeByKey(moveNode.key);
-					// path 값 한번 초기화
+					// path 값을 한번 초기화
 					node.data.path = data.path;
+					
+					// 옮겨진 곳을 한번 리로드
+					lazyReloadParent(recNode.key)
 				}else {
 					alert("파일이동 실패!!");					
 				}
@@ -198,10 +232,16 @@
 	<div class="container">
 
 		<h1>뭐먹지조 클라우드</h1>
-		<p>
+		<div class="button-box">
 			<button id="reload">클라우드 새로고침</button>
 			<button id="newFolder">현재위치에 새폴더</button>
-		</p>
+		</div>
+		<form id="uploadForm" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="uploadPath" value=""/>
+			<label>현재위치에 파일 업로드</label>
+			<input type="file" name="files" multiple="multiple">
+			<button type="button">업로드</button>
+		</form>
 		
 		<div id="tree"></div>
 
@@ -241,9 +281,10 @@
 			dirTree();
 		})
 		
+		// 새폴더
 		$("#newFolder").click(function () {
-			if(!nowPath){
-				alert("선택된 폴더가 없습니다.");
+			if(!nowNode || !nowNode.isFolder){
+				alert("폴더를 선택하지 않았거나, 선택하신 폴더가 없습니다.");
 				return false;
 			}
 			var newFolderName = prompt("새폴더 이름을 작성하세요.");
@@ -254,7 +295,7 @@
 				type : "POST",
 				url : "${pageContext.request.contextPath}/tree/newfolder.json",
 				data : {
-					path : nowPath,
+					path : nowNode.path,
 					name : newFolderName
 				},
 				dataType : "json",
@@ -280,6 +321,7 @@
 			}
 			
 		};
+		
 		//부모 노드를 리로드
 		function lazyReloadParent(parentKey) {
 			var node =  $("#tree").dynatree("getTree").getNodeByKey(parentKey);
@@ -301,20 +343,20 @@
 			var html = "";
 			
 			if(selectNode.title!="종인"){
-				html = '<div class="btn-group btn-group-justified" role="group">\
-				  			  <div class="btn-group file-delete" role="group">\
+				html = '<div class="btn-group btn-group-justified">\
+				  			  <div class="btn-group file-delete">\
 						    	<button type="button" class="btn btn-default">\
 						    		<i class="fa fa-trash" aria-hidden="true"></i> 삭제\
 				  			    </button>\
 						  	  </div>\
-							  <div class="btn-group file-rename" role="group">\
+							  <div class="btn-group file-rename">\
 							    <button type="button" class="btn btn-default">\
 							    	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 이름 바꾸기\
 								</button>\
 							  </div>\
-							  <div class="btn-group file-move" role="group" data-toggle="modal" data-target="#moveFile">\
+							  <div class="btn-group file-upload">\
 							    <button type="button" class="btn btn-default">\
-							    	<i class="fa fa-arrows" aria-hidden="true"></i> 이동\
+							    <i class="fa fa-paperclip" aria-hidden="true"></i></i> 파일 업로드\
 								</button>\
 							  </div>\
 							 </div>';
@@ -388,29 +430,57 @@
 			})
 		})
 		
-		//파일 이동
-		$("body").on("click", ".file-move", function () {
+		//파일 업로드
+		$("body").on("click", ".file-upload", function () {
 			var key = $(this).parents("#detailFile").attr("data-key");
 			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
+			if(!node.data || !node.data.isFolder){
+				alert("폴더를 선택하지 않았거나, 선택하신 폴더가 없습니다.");
+				return false;
+			}
+			$("#uploadForm>input[type=file]").trigger("click");
+		})
+		
+		$("#uploadForm>input[type=file]").click(function () {
+			$("#uploadForm>input[name=uploadPath]").val("");
+			if(!nowNode || !nowNode.isFolder){
+				alert("폴더를 선택하지 않았거나, 선택하신 폴더가 없습니다.");
+				return false;
+			}
+			$("#uploadForm>input[name=uploadPath]").val(nowNode.path)			
+		})
+		
+		$("#uploadForm>button").click(function () {
+			if(!$("#uploadForm>input[name=uploadPath]").val()){
+				alert("파일을 선택하세요.")
+				return false;
+			}
+			var fd = new FormData($("#uploadForm")[0]);
+			console.log(fd)
 			
-// 			$.ajax({
-// 				type : "POST",
-// 				url : "${pageContext.request.contextPath}/tree/filerename.json",
-// 				data : {
-// 					path : path,
-// 					rename : rename.trim()
-// 					},
-// 				success : function (data) {
-// 					if(data.result){
-// 						alert("파일명 변경 성공");
-// 						lazyReloadParent(parentKey)
-// 					}else {
-// 						alert("파일명 변경 실패!!");
-// 					}
-// 				}
-// 			})
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/tree/fileupload.json",
+				data : fd,
+				processData : false,
+				contentType : false,
+				success : function (data) {
+					var msg = "파일 업로드 성공!";
+					if(data.dup){
+						msg = "파일 업로드 성공!\n※ 중복된 파일명은 자동 변경되어 업로드 되었습니다. ※"
+					}
+					alert(msg);
+					$("#uploadForm")[0].reset();
+					$("#uploadForm>input[name=uploadPath]").val("");
+					lazyReload();
+				},
+				error : function () {
+					alert("파일 업로드 실패!!");
+				}
+			})
 			
 		})
+
 	</script>
 	
 

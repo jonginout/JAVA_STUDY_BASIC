@@ -4,17 +4,20 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cloud.repository.vo.Tree;
 import com.cloud.tree.service.TreeService;
@@ -193,6 +196,7 @@ public class TreeController {
 			return map;
 		}
 		
+		System.out.println(recFilePath);
 		Path recPath = Paths.get(recFilePath+"\\"+moveF.getFileName());
 		System.out.println("옮겨질 곳 : "+recPath);
 		
@@ -208,4 +212,55 @@ public class TreeController {
 		return map;
 		
 	}
+	
+	@RequestMapping("/fileupload.json")
+	@ResponseBody
+	public Map<String, Object> fileUpload(
+			String uploadPath, MultipartFile[] files
+			) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		
+		System.out.println("업로드 할 경로 : "+uploadPath);
+		
+		
+        File[] list = new File(uploadPath).listFiles(); 
+        List<String> fileNameList = new ArrayList<>(); 
+        
+        for (File f : list) {
+        	fileNameList.add(f.getName());
+        }
+		
+        
+		for (MultipartFile f : files) {
+			if(f.isEmpty()) continue;
+			
+			String oriFileName = f.getOriginalFilename();
+			String saveFileName = oriFileName;
+			
+			if(fileNameList.indexOf(oriFileName)!=-1) {
+				String ori = oriFileName.substring(0, oriFileName.lastIndexOf("."));
+				SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd-hh-mm-ss");
+				String hash = "("+sdf.format(new Date())+")";
+				String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+				
+				saveFileName = ori+hash+ext;
+				
+				map.put("dup", true);
+			}
+			
+			System.out.println("업로드한 파일 명 : "+oriFileName);
+			
+			if(oriFileName != null && !oriFileName.equals("")) {
+				long fileSize = f.getSize();
+				System.out.println("파일 사이즈 : " + fileSize);
+				
+				f.transferTo(new File(uploadPath+"\\"+saveFileName));
+			}
+			
+		}
+		
+		return map;
+		
+	}
+	
 }
