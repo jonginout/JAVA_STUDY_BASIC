@@ -1,8 +1,15 @@
 package com.cloud.repository.vo;
 
+import java.util.Date;
 import java.util.List;
 
 public class Tree {
+	
+//	public static void main(String[] args) {
+//		File f = new File("C:\\a");
+//		f.renameTo(new File("C:\\tree\\a"));
+//	}
+	
 	private String title;
 	private Boolean isFolder;
 	private Boolean isLazy;
@@ -14,7 +21,15 @@ public class Tree {
 	
 	private String path;
 	private String ext;
+	private Date updateDate;
 	
+	
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 	public String getExt() {
 		return ext;
 	}
@@ -71,11 +86,5 @@ public class Tree {
 		return "Tree [title=" + title + ", isFolder=" + isFolder + ", isLazy=" + isLazy + ", key=" + key
 				+ ", upperFolder=" + upperFolder + ", children=" + children + ", path=" + path + ", ext=" + ext + "]";
 	}
-
-
-	
-	
-	
-	
 	
 }

@@ -1,11 +1,16 @@
 package com.cloud.tree.controller;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +35,13 @@ public class TreeController {
         try{
             for (File ff : list) {
             	Tree tree = new Tree();
+            	
+            	Date updateDate = new Date(ff.lastModified());
+            	tree.setUpdateDate(updateDate);
+            	
                 if (ff.isFile()) {
                 	tree.setTitle(ff.getName());
+                	tree.setPath(ff.toString());
                 	System.out.println("파일 : "+ff.getName());
                 	if(ff.getName().lastIndexOf(".")!=-1) {
                 		tree.setExt(ff.getName().substring(ff.getName().lastIndexOf(".")+1));
@@ -54,6 +64,23 @@ public class TreeController {
         }
 		return trees;
     }
+	
+	void deleteFile(String path) {
+		
+		File file = new File(path);
+		File [] fList = file.listFiles();
+
+		for (File f : fList) {			
+			if(!f.isDirectory()) {
+				f.delete();
+			}else {
+				deleteFile(f.toString());
+			}
+		}
+		
+		file.delete();
+		
+	}
     
 	@RequestMapping("/sublist.json")
 	@ResponseBody
@@ -84,12 +111,15 @@ public class TreeController {
 		List<Tree> trees = pullFile(path);
 		Tree tree = new Tree();
 		
+		Date updateDate = new Date(f.lastModified());
+		
 		System.out.println(trees.toString());
 		tree.setTitle(user);
 		tree.setIsFolder(true);
 		tree.setPath(path);
 		tree.setIsLazy(true);
 		tree.setChildren(trees);
+		tree.setUpdateDate(updateDate);
 		
 		return tree;
 				
@@ -111,4 +141,71 @@ public class TreeController {
 		return map;
 	}
 	
+	@RequestMapping("/filedelete.json")
+	@ResponseBody
+	public void fileDelete(String path) throws Exception {
+
+		deleteFile(path);
+	}
+	
+	@RequestMapping("/filerename.json")
+	@ResponseBody
+	public Map<String, Object> fileRename(String path, String rename) throws Exception {
+		
+		Map<String, Object> map = new HashMap<>();
+		File f = new File(path);
+		Path file = Paths.get(path);
+
+		String ext = "";
+		
+		if(f.isDirectory()) {
+			path = path.substring(0, path.lastIndexOf("\\")+1)+rename;
+		}else {
+			ext = f.getName().substring(f.getName().lastIndexOf("."));
+			path = path.substring(0, path.lastIndexOf("\\")+1)+rename+ext;
+		}
+		
+		System.out.println("S : "+path);
+		
+		try {
+			Files.move(file , Paths.get(path));
+			map.put("result", true);
+		} catch (Exception e) {
+			System.out.println(e);
+			map.put("result", false);
+		}
+		return map;
+	}
+	
+	
+	@RequestMapping("/filemove.json")
+	@ResponseBody
+	public Map<String, Object> fileMove(String moveFilePath, String recFilePath) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		
+		System.out.println("옮길 것 : "+moveFilePath);
+		
+		Path moveF = Paths.get(moveFilePath);
+		File recF = new File(recFilePath);
+		
+		if(!recF.isDirectory()) {
+			map.put("result", false);
+			return map;
+		}
+		
+		Path recPath = Paths.get(recFilePath+"\\"+moveF.getFileName());
+		System.out.println("옮겨질 곳 : "+recPath);
+		
+		try {
+			Files.move(moveF , recPath);
+			map.put("result", true);
+			map.put("path", ""+recPath);
+		} catch (Exception e) {
+			System.out.println(e);
+			map.put("result", false);
+		}
+		
+		return map;
+		
+	}
 }
