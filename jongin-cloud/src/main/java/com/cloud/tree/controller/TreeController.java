@@ -2,8 +2,10 @@ package com.cloud.tree.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Files;
@@ -36,6 +38,7 @@ public class TreeController {
 	
     //ff 폴더 안 모든 파일 및 폴더 검색
 	List<Tree> pullFile(String path) {
+		
         File[] list = new File(path).listFiles(); 
         List<Tree> trees = new ArrayList<>();
         
@@ -45,19 +48,16 @@ public class TreeController {
             	
             	Date updateDate = new Date(ff.lastModified());
             	tree.setUpdateDate(updateDate);
+            	tree.setTitle(ff.getName());
+            	tree.setPath(ff.toString());
             	
                 if (ff.isFile()) {
-                	tree.setTitle(ff.getName());
-                	tree.setPath(ff.toString());
                 	System.out.println("파일 : "+ff.getName());
-
             		tree.setExt(FilenameUtils.getExtension(ff.getName()));
                 	
                 }else if (ff.isDirectory()) {
-                	tree.setTitle(ff.getName());
                 	tree.setIsFolder(true);
                 	tree.setIsLazy(true);
-                	tree.setPath(ff.toString());
                 	System.out.println("폴더 : "+ff.getName());
                 	
                     //pullFile(ff.toString());
@@ -171,8 +171,6 @@ public class TreeController {
 			path = path.substring(0, path.lastIndexOf("\\")+1)+rename+ext;
 		}
 		
-		System.out.println("S : "+path);
-		
 		try {
 			Files.move(file , Paths.get(path));
 			map.put("result", true);
@@ -236,19 +234,15 @@ public class TreeController {
 	
 	@RequestMapping("/codechange.json")
 	@ResponseBody
-	public Map<String, Object> codeChange(String path, String changeCode) throws Exception {
-		Map<String, Object> map = new HashMap<>();
+	public void codeChange(String path, String changeCode) throws Exception {
 		
 		deleteFile(path);
+
+		File file = new File(path);
+		FileWriter fw = new FileWriter(file);
+		fw.write(changeCode);
+		fw.close();
 		
-//        FileWriter fw = new FileWriter(path);
-//        BufferedWriter bw = new BufferedWriter(fw);
-//        changeCode.reea
-//		while () {
-//			
-//		}
-		
-		return map;
 	}
 	
 	@RequestMapping("/fileupload.json")

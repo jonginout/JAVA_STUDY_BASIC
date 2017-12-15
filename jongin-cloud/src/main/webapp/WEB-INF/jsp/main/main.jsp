@@ -387,9 +387,9 @@
 			
 						
 			html += "<h1>\
-						파일명 : "+selectNode.title+"\
+						파일명 : <span id='fileName'>"+selectNode.title+"</span>\
 					</h1>\
-						수정한 날짜 : "+dateFormat(selectNode.updateDate)+"";
+						수정한 날짜 : <span id='updateDate'>"+dateFormat(selectNode.updateDate)+"</span>";
 			
 			if(codeFileArr.indexOf(selectNode.ext)!=-1){		
 				html += `
@@ -533,13 +533,11 @@
 				data : {path : node.data.path},
 				success : function (data) {
 
-					$(".code-content").html(data.code)
-
 					var html ='<form class="CodeMirror">\
-								<textarea id="code" name="code">'+data.code+'</textarea>\
+								<textarea id="code" name="code"></textarea>\
 							  </form>';
 					$(".code-content").html(html);
-					loadEditor();
+					loadEditor(data.code);
 
 					var buttonHtml = '<button type="button" id="codeEidtBtn" data-key="'+key+'">\
 										<i class="fa fa-floppy-o" aria-hidden="true"></i> 수정하기\
@@ -555,15 +553,27 @@
 		})
 
 		// 코드 에디터 로드하기
-		function loadEditor(){
+		function loadEditor(code){
+			$("#plzSave").remove();
 			editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 						lineNumbers: true,
 						styleActiveLine: true,
-						matchBrackets: true,
-						theme : "ambiance"	
+						matchBrackets: true, 
+						theme : "ambiance",
 					  });
+			editor.setValue(code)
+
+			editor.on("change", function(){
+				var plzSave = `
+					<span id="plzSave" style='color:red'> 
+						<i class='fa fa-dot-circle-o' aria-hidden='true'></i>
+					</span>
+				`;
+				$("#fileName").html(nowNode.title+plzSave);
+			})
 		}
 
+		// 코드 새로고침
 		$("body").on("click", ".code-refresh", function(){
 			$(".code-view").trigger("click");
 		})
@@ -581,7 +591,9 @@
 					path : node.data.path
 					},
 				success : function(data){
-
+					alert("코드 저장 성공!");
+					$(".code-view").trigger("click");
+					$("#updateDate").html(dateFormat(Date.now()))
 				},
 				error : function(){
 					alert("코드 수정 실패!!");
@@ -590,6 +602,8 @@
 			
 		})
 		
+
+
 	</script>
 	
 
