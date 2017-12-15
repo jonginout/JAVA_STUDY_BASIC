@@ -158,6 +158,18 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>5.0.1.RELEASE</version>
 		</dependency>
+
+		<!-- contentType 확인 -->
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-core</artifactId>
+			<version>1.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tika</groupId>
+			<artifactId>tika-parsers</artifactId>
+			<version>1.17</version>
+		</dependency>
 	</dependencies>
 
 	<build>

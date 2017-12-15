@@ -1,13 +1,15 @@
 package com.cloud.repository.vo;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
+
 public class Tree {
 	
-//	public static void main(String[] args) {
-//		File f = new File("C:\\a");
-//		f.renameTo(new File("C:\\tree\\a"));
+//	public static void main(String[] args) throws IOException {
+//		System.out.println(FilenameUtils.getExtension("C:\\asdas.asd"));
 //	}
 	
 	private String title;
@@ -21,9 +23,16 @@ public class Tree {
 	
 	private String path;
 	private String ext;
+	private String contentType;
 	private Date updateDate;
 	
 	
+	public String getContentType() {
+		return contentType;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
 	public Date getUpdateDate() {
 		return updateDate;
 	}

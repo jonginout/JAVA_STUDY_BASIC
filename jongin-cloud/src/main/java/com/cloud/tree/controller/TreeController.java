@@ -1,6 +1,11 @@
 package com.cloud.tree.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,9 +15,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +32,7 @@ public class TreeController {
 
 	@Autowired
 	TreeService service;
-
+	
 	
     //ff 폴더 안 모든 파일 및 폴더 검색
 	List<Tree> pullFile(String path) {
@@ -46,10 +50,9 @@ public class TreeController {
                 	tree.setTitle(ff.getName());
                 	tree.setPath(ff.toString());
                 	System.out.println("파일 : "+ff.getName());
-                	if(ff.getName().lastIndexOf(".")!=-1) {
-                		tree.setExt(ff.getName().substring(ff.getName().lastIndexOf(".")+1));
-                		System.out.println("확장자 : "+ff.getName().substring(ff.getName().lastIndexOf(".")+1));
-                	}
+
+            		tree.setExt(FilenameUtils.getExtension(ff.getName()));
+                	
                 }else if (ff.isDirectory()) {
                 	tree.setTitle(ff.getName());
                 	tree.setIsFolder(true);
@@ -73,12 +76,12 @@ public class TreeController {
 		File file = new File(path);
 		File [] fList = file.listFiles();
 
-		for (File f : fList) {			
-			if(!f.isDirectory()) {
-				f.delete();
-			}else {
+		if(!file.isDirectory()) {
+			file.delete();
+		}else {
+			for (File f : fList) {
 				deleteFile(f.toString());
-			}
+			}			
 		}
 		
 		file.delete();
@@ -213,11 +216,49 @@ public class TreeController {
 		
 	}
 	
+	@RequestMapping("/codeview.json")
+	@ResponseBody
+	public Map<String, Object> codeView(String path) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		
+		FileReader fr = new FileReader(path);
+		BufferedReader br = new BufferedReader(fr);
+		
+		String line;
+		String code = "";
+		while((line=br.readLine())!=null){
+			code += line+"\n";
+		}
+		
+		map.put("code", code);
+		return map;
+	}
+	
+	@RequestMapping("/codechange.json")
+	@ResponseBody
+	public Map<String, Object> codeChange(String path, String changeCode) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		
+		deleteFile(path);
+		
+//        FileWriter fw = new FileWriter(path);
+//        BufferedWriter bw = new BufferedWriter(fw);
+//        changeCode.reea
+//		while () {
+//			
+//		}
+		
+		return map;
+	}
+	
 	@RequestMapping("/fileupload.json")
 	@ResponseBody
 	public Map<String, Object> fileUpload(
 			String uploadPath, MultipartFile[] files
 			) throws Exception {
+		
+		System.out.println("================");
+
 		Map<String, Object> map = new HashMap<>();
 		
 		System.out.println("업로드 할 경로 : "+uploadPath);
@@ -225,14 +266,15 @@ public class TreeController {
 		
         File[] list = new File(uploadPath).listFiles(); 
         List<String> fileNameList = new ArrayList<>(); 
-        
+
+        // 업로드할 경로에 존재하는 파일을 읽는다 (중복확인용)
         for (File f : list) {
         	fileNameList.add(f.getName());
         }
 		
         
 		for (MultipartFile f : files) {
-			if(f.isEmpty()) continue;
+			if(f.isEmpty()) {continue;}
 			
 			String oriFileName = f.getOriginalFilename();
 			String saveFileName = oriFileName;
@@ -259,6 +301,7 @@ public class TreeController {
 			
 		}
 		
+		System.out.println("================");
 		return map;
 		
 	}

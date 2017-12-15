@@ -12,6 +12,17 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/date.format.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/codemirror.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/theme/ambiance.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/mode/javascript/javascript.min.js"></script>
+
+
+
+
+
+
+
 <style>
 	.file-list, .file-detail{
 		min-height: 300px !important;
@@ -33,13 +44,25 @@
 		width : 200px;
 		display: inline-block;
 	}
+	.CodeMirror {
+		border: 1px solid #eee;
+		height: auto;
+	}
 </style>
 
 <script type="text/javascript">
 	
+	//코드 뷰 사용가능 확장자
+	var codeFileArr = ["java", "js", "html", "css", "jsp", "php", "txt"];
+	
+	
 	//현재 active된 경로
 	var nowNode = "";
+	//리네임 
 	var rename = "";
+
+	var editor;
+	
 
 	function showChildList(node) {
 		var activeNode = node;
@@ -367,6 +390,22 @@
 						파일명 : "+selectNode.title+"\
 					</h1>\
 						수정한 날짜 : "+dateFormat(selectNode.updateDate)+"";
+			
+			if(codeFileArr.indexOf(selectNode.ext)!=-1){		
+				html += `
+					<div class="codeBtn-box">
+						<button type="button" class="code-view">
+							<i class="fa fa-file-code-o" aria-hidden="true"></i> 코드 보기
+						</button>
+						<button type="button" class="code-refresh">
+							<i class="fa fa-refresh" aria-hidden="true"></i> 코드 새로고침
+						</button>
+					</div>
+					<div class="code-content">
+					</div>
+					`;
+			}
+			
 			$("#detailFile").html(html);
 		}
 		
@@ -430,7 +469,7 @@
 			})
 		})
 		
-		//파일 업로드
+		//파일 업로드 우측하단 버튼
 		$("body").on("click", ".file-upload", function () {
 			var key = $(this).parents("#detailFile").attr("data-key");
 			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
@@ -441,6 +480,7 @@
 			$("#uploadForm>input[type=file]").trigger("click");
 		})
 		
+		// 상단 파일 첨부 버튼
 		$("#uploadForm>input[type=file]").click(function () {
 			$("#uploadForm>input[name=uploadPath]").val("");
 			if(!nowNode || !nowNode.isFolder){
@@ -450,6 +490,7 @@
 			$("#uploadForm>input[name=uploadPath]").val(nowNode.path)			
 		})
 		
+		// 업로드 버튼
 		$("#uploadForm>button").click(function () {
 			if(!$("#uploadForm>input[name=uploadPath]").val()){
 				alert("파일을 선택하세요.")
@@ -481,6 +522,74 @@
 			
 		})
 
+		// 코드 보기
+		$("body").on("click", ".code-view", function(){
+			var key = $(this).parents("#detailFile").attr("data-key");
+			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
+
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/tree/codeview.json",
+				data : {path : node.data.path},
+				success : function (data) {
+
+					$(".code-content").html(data.code)
+
+					var html ='<form class="CodeMirror">\
+								<textarea id="code" name="code">'+data.code+'</textarea>\
+							  </form>';
+					$(".code-content").html(html);
+					loadEditor();
+
+					var buttonHtml = '<button type="button" id="codeEidtBtn" data-key="'+key+'">\
+										<i class="fa fa-floppy-o" aria-hidden="true"></i> 수정하기\
+									  </button>';
+					$("#codeEidtBtn").remove();
+					$(".codeBtn-box").append(buttonHtml);
+
+				},
+				error : function () {
+					alert("코드 보기 실패!!");
+				}
+			});
+		})
+
+		// 코드 에디터 로드하기
+		function loadEditor(){
+			editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+						lineNumbers: true,
+						styleActiveLine: true,
+						matchBrackets: true,
+						theme : "ambiance"	
+					  });
+		}
+
+		$("body").on("click", ".code-refresh", function(){
+			$(".code-view").trigger("click");
+		})
+		
+
+		// 코드 수정하기
+		$("body").on("click", "#codeEidtBtn", function(){
+			var node = $("#tree").dynatree("getTree").getNodeByKey($(this).attr("data-key"));
+
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/tree/codechange.json",
+				data : {
+					changeCode : editor.getValue(),
+					path : node.data.path
+					},
+				success : function(data){
+
+				},
+				error : function(){
+					alert("코드 수정 실패!!");
+				}
+			})
+			
+		})
+		
 	</script>
 	
 
@@ -501,6 +610,6 @@
 	    </div>
 	  </div>
 	</div>
-		
+
 </body>
 </html>
