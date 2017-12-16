@@ -4,6 +4,8 @@ const app = express();
 const pug = require("pug");
 const path = require('path');
 
+app.use(express.static("./publics"));
+
 var board = require("./routes/board");
 app.use("/board", board);
 
@@ -14,6 +16,7 @@ app.set('view engine', 'pug');
 app.get("/", function (req, res) {
 	res.render("index");
 });
+
 
 
 // error 처리...

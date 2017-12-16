@@ -53,7 +53,9 @@
 <script type="text/javascript">
 	
 	//코드 뷰 사용가능 확장자
-	var codeFileArr = ["java", "js", "html", "css", "jsp", "php", "txt"];
+	var codeFileArr = ["java","js","html","css","jsp","php","txt"];
+	//이미지 뷰 사용가능 확장자
+	var imgFileArr = ["png","jpg","jpeg","gif","png","bmp"];
 	
 	
 	//현재 active된 경로
@@ -377,9 +379,9 @@
 							    	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 이름 바꾸기\
 								</button>\
 							  </div>\
-							  <div class="btn-group file-upload">\
+							  <div class="btn-group file-down">\
 							    <button type="button" class="btn btn-default">\
-							    <i class="fa fa-paperclip" aria-hidden="true"></i></i> 파일 업로드\
+									<i class="fa fa-download" aria-hidden="true"></i> 파일 다운로드\
 								</button>\
 							  </div>\
 							 </div>';
@@ -391,19 +393,34 @@
 					</h1>\
 						수정한 날짜 : <span id='updateDate'>"+dateFormat(selectNode.updateDate)+"</span>";
 			
-			if(codeFileArr.indexOf(selectNode.ext)!=-1){		
-				html += `
-					<div class="codeBtn-box">
-						<button type="button" class="code-view">
-							<i class="fa fa-file-code-o" aria-hidden="true"></i> 코드 보기
-						</button>
-						<button type="button" class="code-refresh">
-							<i class="fa fa-refresh" aria-hidden="true"></i> 코드 새로고침
-						</button>
-					</div>
-					<div class="code-content">
-					</div>
-					`;
+			///확장자 구분
+			
+			if(!selectNode.isFolder){
+
+				var ext = selectNode.ext.toLowerCase();
+				if(codeFileArr.indexOf(ext)==0){		
+					html += `
+						<div class="codeBtn-box">
+							<button type="button" class="code-view">
+								<i class="fa fa-file-code-o" aria-hidden="true"></i> 코드 보기
+							</button>
+							<button type="button" class="code-refresh">
+								<i class="fa fa-refresh" aria-hidden="true"></i> 코드 새로고침
+							</button>
+						</div>
+						<div class="code-content">
+						</div>
+						`;
+				}else if(imgFileArr.indexOf(ext)==0){
+					html += `
+						<div class="imageBtn-box">
+							<button type="button" class="image-view" data-toggle='modal' data-target='#image'>
+								<i class="fa fa-file-image-o" aria-hidden="true"></i> 이미지 보기
+							</button>
+						</div>
+						`;
+				}
+				///확장자 구분
 			}
 			
 			$("#detailFile").html(html);
@@ -470,14 +487,13 @@
 		})
 		
 		//파일 업로드 우측하단 버튼
-		$("body").on("click", ".file-upload", function () {
+		$("body").on("click", ".file-down", function () {
 			var key = $(this).parents("#detailFile").attr("data-key");
 			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
-			if(!node.data || !node.data.isFolder){
-				alert("폴더를 선택하지 않았거나, 선택하신 폴더가 없습니다.");
-				return false;
-			}
-			$("#uploadForm>input[type=file]").trigger("click");
+
+			var path = (node.data.path).replace(/\\/gi, "/");
+
+			location.href = "${pageContext.request.contextPath}/common/img.do?path="+path+"&title="+node.data.title;
 		})
 		
 		// 상단 파일 첨부 버튼
@@ -602,27 +618,40 @@
 			
 		})
 		
+		// 이미지 보기
+		$("body").on("click",".image-view",function(){
 
+			var key = $(this).parents("#detailFile").attr("data-key");
+			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
+
+			var path = (node.data.path).replace(/\\/gi, "/");
+
+			var viewUrl = "${pageContext.request.contextPath}/common/img.do?path="+path;
+			var downUrl = viewUrl+"&title="+node.data.title;
+
+			$(".image-content>img").attr("src", viewUrl);
+			$("#image-down-link>a").attr("href", downUrl).html(node.data.title)
+
+		})
 
 	</script>
 	
 
 	<!-- Modal -->
-	<div class="modal fade" id="moveFile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h3 class="modal-title" id="modalLabel"></h3>
-	      </div>
-	      <div class="modal-body">
-	        ...
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">창닫기</button>
-	        <button type="button" class="btn btn-primary">이동하기</button>
-	      </div>
-	    </div>
-	  </div>
+	<div class="modal modal-middle fade scale-out" id="image" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body image-content">
+					<img style="width:100%;height:100%" src="" alt="" />
+				</div>
+				<div class="modal-footer">
+					<div class="pull-left" id="image-down-link">
+						<a style="font-size:22px" href=""></a>
+					</div>
+					<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </body>
