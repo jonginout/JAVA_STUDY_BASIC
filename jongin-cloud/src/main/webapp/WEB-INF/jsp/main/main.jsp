@@ -485,7 +485,7 @@
 			html += `<br>
 			<form id="form-comment">
 				<div class="form-group">
-					<label for="comment-file"><i class="fa fa-comments-o" aria-hidden="true"></i> 이 파일에 대한 커멘트</label>
+					<label for="comment-file"><i class="fa fa-comments-o" aria-hidden="true"></i> 이 파일에 대한 코멘트</label>
 					<textarea style="overflow:visible;" name="comment" class="form-control" id="comment-file"></textarea>
 				</div>
 				<button type="button" class="btn btn-block">코멘트 수정 완료</button>
