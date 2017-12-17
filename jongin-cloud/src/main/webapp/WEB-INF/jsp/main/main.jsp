@@ -3,6 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<title>종인 클라우드</title>
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <link href="${pageContext.request.contextPath}/dynatree-master/src/skin/ui.dynatree.css" rel="stylesheet" type="text/css" id="skinSheet">
@@ -278,9 +280,16 @@
 
 <body>
 
+	<!-- ========================================================================== -->	
+	<!-- ========================================================================== -->
+
 	<div class="container">
 
-		<h1>뭐먹지조 클라우드</h1>
+		<h1>
+			<a href="">
+				CLoud of Jongin <i class="fa fa-cloud-download" aria-hidden="true"></i>
+			</a>
+		</h1>
 		<div class="button-box">
 			<button id="reload">클라우드 새로고침</button>
 			<button id="newFolder">현재위치에 새폴더</button>
@@ -304,9 +313,11 @@
 			</div>
 		</div>
 
-		
 	</div>
 
+	<!-- ========================================================================== -->
+	<!-- ========================================================================== -->
+	
 
 	
 	<script type="text/javascript">
