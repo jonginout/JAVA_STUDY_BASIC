@@ -44,6 +44,10 @@ public class TreeController {
         
         try{
             for (File ff : list) {
+            	
+            	//jci 파일 제외
+            	if(FilenameUtils.getExtension(ff.getName()).equals("jci")) {continue;}
+            	
             	Tree tree = new Tree();
             	
             	Date updateDate = new Date(ff.lastModified());
@@ -147,11 +151,29 @@ public class TreeController {
 		return map;
 	}
 	
+	@RequestMapping("/newCode.json")
+	@ResponseBody
+	public Map<String, Object> newCode(String path, String name) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dup", true);
+		
+		File f = new File(path+"\\"+name);
+		if(!f.exists()) {
+			map.put("dup", false);
+			f.createNewFile();
+		}
+		
+		return map;
+	}
+	
 	@RequestMapping("/filedelete.json")
 	@ResponseBody
 	public void fileDelete(String path) throws Exception {
-
+		
+		String jci = path+".jci";
+		
 		deleteFile(path);
+		deleteFile(jci);
 	}
 	
 	@RequestMapping("/filerename.json")
@@ -299,5 +321,50 @@ public class TreeController {
 		return map;
 		
 	}
+	
+	
+	@RequestMapping("/filecomment.json")
+	@ResponseBody
+	public void fileComment(String comment, Tree tree) throws Exception {
+		
+		String commentPath = tree.getPath()+"\\"+tree.getTitle()+".jci";
+		
+		deleteFile(commentPath);
+		
+		File file = new File(commentPath);
+		if(!file.exists()) {
+			file.createNewFile();
+		}
+		
+		FileWriter fw = new FileWriter(file);
+		fw.write(comment);
+		fw.close();
+		
+		
+	}
+	
+	@RequestMapping("/commentview.json")
+	@ResponseBody
+	public String commentView(Tree tree) throws Exception {
+		
+		String commentPath = tree.getPath()+"\\"+tree.getTitle()+".jci";
+				
+		File file = new File(commentPath);
+		if(!file.exists()) {
+			return null;
+		}
+		
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		
+		String line;
+		String comment = "";
+		while((line=br.readLine())!=null){
+			comment += line+"\n";
+		}
+		
+		return comment;
+	}
+	
 	
 }

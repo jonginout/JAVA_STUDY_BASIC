@@ -26,15 +26,19 @@
 <style>
 	.file-list, .file-detail{
 		min-height: 300px !important;
+		overflow: hidden;
+		word-break: break-word;
 	}
 	.detail-box{
 		margin-top: 30px;
 	}
 	.file:hover {
+		font-weight: bold;
 		color:tomato;
 		cursor: pointer;
 	}
 	.selected{
+		font-weight: bold;
 		color:tomato;
 	}
 	.button-box{
@@ -47,6 +51,15 @@
 	.CodeMirror {
 		border: 1px solid #eee;
 		height: auto;
+	}
+	#image-down-link{
+		overflow: hidden;
+		word-break: break-word;
+	}
+	.drag-over{
+		font-weight: bold;
+		font-size: 30px;
+		color: cornflowerblue;
 	}
 </style>
 
@@ -65,7 +78,7 @@
 
 	var editor;
 	
-
+	// 왼쪽 파일 폴더 리스트
 	function showChildList(node) {
 		var activeNode = node;
 		
@@ -77,7 +90,11 @@
 		
 		var childs = node.childList;
 				
-		var html = "<h1 class='file' data-key='"+node.data.key+"'>\
+		var html = "<div class='alert alert-danger alert-dismissible' role='alert'>\
+						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>\
+						<strong>폴더에</strong> 파일을 드래그 앤 드롭으로 업로드 가능!\
+					</div>\
+					<h1 class='file' data-key='"+node.data.key+"'>\
 						<i class='fa fa-folder-open' aria-hidden='true'></i>\
 						"+node.data.title+"\
 					</h1>";
@@ -87,9 +104,16 @@
 		if(childs){	
 			for ( var key in childs) {
 		    	 if(!childs[key].data.isFolder){
+					var icon = '<i class="fa fa-file-o" aria-hidden="true"></i>';
+					
+					if(imgFileArr.indexOf(childs[key].data.ext)!=-1){
+						icon = '<i class="fa fa-file-image-o" aria-hidden="true"></i>';
+					}else if(codeFileArr.indexOf(childs[key].data.ext)!=-1){
+						icon = '<i class="fa fa-file-code-o" aria-hidden="true"></i>';
+					}
+
 					html += "<h3 class='file' data-key='"+childs[key].data.key+"'>\
-								<i class='fa fa-file-o' aria-hidden='true'></i>\
-								"+childs[key].data.title+"\
+								"+icon+" "+childs[key].data.title+"\
 							</h3>";
 			      }else {
 					html += "<h3 class='file' data-key='"+childs[key].data.key+"'>\
@@ -260,6 +284,7 @@
 		<div class="button-box">
 			<button id="reload">클라우드 새로고침</button>
 			<button id="newFolder">현재위치에 새폴더</button>
+			<button id="newCode">현재위치에 텍스트 파일</button>			
 		</div>
 		<form id="uploadForm" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="uploadPath" value=""/>
@@ -294,12 +319,15 @@
 		
 		// 파일 선택시 빨강 포커스
 		$("body").on("click", ".file", function () {
+			var key = $(this).attr("data-key");
+			$("#tree").dynatree("getTree").getNodeByKey(key).activate(); // 강제 엑티브
 			focusFile($(this));
-			showFileDetail($(this).attr("data-key"));
+			showFileDetail(key);
 		})
 	
 		//전체 새로고침
 		$("#reload").click(function () {
+			nowNode = null;
 			$("#nowList").html("");
 			$("#detailFile").html("");
 			$("#tree").dynatree("destroy");
@@ -327,6 +355,39 @@
 				success : function (data) {
 					if(data.dup){
 						alert("똑같은 이름의 폴더가 존재합니다.");
+						return false;
+					}
+					$("#nowList").html("");
+					lazyReload();
+				}
+			})
+		})
+
+				
+		// 새코드
+		$("#newCode").click(function () {
+			if(!nowNode || !nowNode.isFolder){
+				alert("폴더를 선택하지 않았거나, 선택하신 폴더가 없습니다.");
+				return false;
+			}
+			var newCodeFile = prompt("새 코드파일 이름을 작성하세요.(확장자 까지 포함)\n-권장 파일 형식 [java, js, html, css, jsp, php, txt]");
+			if(!newCodeFile){
+				alert("파일명을 입력하세요.");
+				return false;
+			}else{
+				var newExt = newCodeFile.substring(newCodeFile.lastIndexOf(".")+1);
+			}
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/tree/newCode.json",
+				data : {
+					path : nowNode.path,
+					name : newCodeFile
+				},
+				dataType : "json",
+				success : function (data) {
+					if(data.dup){
+						alert("똑같은 이름의 파일이 존재합니다.");
 						return false;
 					}
 					$("#nowList").html("");
@@ -386,19 +447,19 @@
 							  </div>\
 							 </div>';
 			};
-			
 						
 			html += "<h1>\
 						파일명 : <span id='fileName'>"+selectNode.title+"</span>\
 					</h1>\
-						수정한 날짜 : <span id='updateDate'>"+dateFormat(selectNode.updateDate)+"</span>";
+						<span>수정한 날짜 : <span id='updateDate'>"+dateFormat(selectNode.updateDate)+"</span></span>";
 			
 			///확장자 구분
 			
+			// 뷰어 버튼
 			if(!selectNode.isFolder){
 
 				var ext = selectNode.ext.toLowerCase();
-				if(codeFileArr.indexOf(ext)==0){		
+				if(codeFileArr.indexOf(ext)!=-1){		
 					html += `
 						<div class="codeBtn-box">
 							<button type="button" class="code-view">
@@ -411,7 +472,7 @@
 						<div class="code-content">
 						</div>
 						`;
-				}else if(imgFileArr.indexOf(ext)==0){
+				}else if(imgFileArr.indexOf(ext)!=-1){
 					html += `
 						<div class="imageBtn-box">
 							<button type="button" class="image-view" data-toggle='modal' data-target='#image'>
@@ -420,12 +481,59 @@
 						</div>
 						`;
 				}
-				///확장자 구분
 			}
+			html += `<br>
+			<form id="form-comment">
+				<div class="form-group">
+					<label for="comment-file"><i class="fa fa-comments-o" aria-hidden="true"></i> 이 파일에 대한 커멘트</label>
+					<textarea style="overflow:visible;" name="comment" class="form-control" id="comment-file"></textarea>
+				</div>
+				<button type="button" class="btn btn-block">코멘트 수정 완료</button>
+			</form>
+			`;
 			
 			$("#detailFile").html(html);
+
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/tree/commentview.json",
+				data : {
+					title : selectNode.title,
+					path : selectNode.path.substring(0,(selectNode.path.lastIndexOf(selectNode.title))-1)
+				},
+				success : function(data){
+					$("#comment-file").val(data);
+					$("#comment-file").height(1).height( $("#comment-file").prop('scrollHeight')+12 );
+				}
+			})
+
 		}
 		
+		$('body').on('keydown keyup', '#comment-file' , function () {
+			$(this).height(1).height( $(this).prop('scrollHeight')+12 );				
+		});
+
+		// 코멘트 저장하기
+		$("body").on("click", "#form-comment>button", function(){
+			console.log(nowNode.title)
+			var comment = $("#comment-file").val();
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/tree/filecomment.json",
+				data : {
+					comment: comment,
+					title : nowNode.title,
+					path : nowNode.path.substring(0,(nowNode.path.lastIndexOf(nowNode.title))-1)
+				},
+				success : function(){
+					alert("코멘트 저장 완료");
+				},
+				error : function(){
+					alert("코멘트 저장 실패");
+				}
+			})
+		})
+
 		// 파일 삭제
 		$("body").on("click", ".file-delete", function () {
 			if(!confirm("정말로 이 파일을 삭제하시겠습니까?\n※ 추후 복구불가")){
@@ -633,6 +741,69 @@
 			$("#image-down-link>a").attr("href", downUrl).html(node.data.title)
 
 		})
+
+		// 드래그 & 드롭으로 파일 업로드
+		$("body").on('dragover', '.file', function (e) {
+				e.stopPropagation();
+				e.preventDefault();
+				// console.log(e);
+				$(this).addClass("drag-over")
+		});
+		
+		$("body").on('dragleave', '.file', function (e) {
+				e.stopPropagation();
+				e.preventDefault();
+				// console.log(e);
+				$(this).removeClass("drag-over")
+		});
+		
+		$("body").on("drop", '.file', function (e){
+			e.stopPropagation();
+			e.preventDefault();
+			// console.log(e);
+
+			$(this).removeClass("drag-over")
+			var key = $(this).attr("data-key");
+			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
+
+			if(!node.data.isFolder){
+				alert("폴더에만 파일을 업로드 할 수 있습니다.");
+				return false;
+			}
+			console.log(node.data)
+
+			var files = e.originalEvent.dataTransfer.files;
+			if(files.length<1){
+				return false;
+			}else{
+				var fd = new FormData();
+				fd.append('uploadPath',node.data.path)
+        		for (var i = 0; i < files.length; i++) {
+            		fd.append('files', files[i]);
+         		}
+				$.ajax({
+					type : "post",
+					url : "${pageContext.request.contextPath}/tree/fileupload.json",
+					data : fd,
+					processData : false,
+					contentType : false,
+					success : function (data) {
+						var msg = "파일 업로드 성공!";
+						if(data.dup){
+							msg = "파일 업로드 성공!\n※ 중복된 파일명은 자동 변경되어 업로드 되었습니다. ※"
+						}
+						alert(msg);
+						lazyReload();
+					},
+					error : function () {
+						alert("파일 업로드 실패!!");
+					}
+				})
+			}
+
+
+			
+		});
 
 	</script>
 	
