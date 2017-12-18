@@ -26,6 +26,9 @@
 
 
 <style>
+	body{
+		background: whitesmoke;
+	}
 	.file-list, .file-detail{
 		min-height: 300px !important;
 		overflow: hidden;
@@ -44,7 +47,8 @@
 		color:tomato;
 	}
 	.button-box{
-		margin: 20px; 
+		margin-top : 20px; 
+		margin-bottom : 20px; 		
 	}
 	input[type=file]{
 		width : 200px;
@@ -294,9 +298,18 @@
 			</a>
 		</h1>
 		<div class="button-box">
-			<button id="reload">클라우드 새로고침</button>
-			<button id="newFolder">현재위치에 새폴더</button>
-			<button id="newCode">현재위치에 텍스트 파일</button>			
+			<button class="btn btn-default" id="reload">
+				<i class="fa fa-refresh" aria-hidden="true"></i> 
+				클라우드 새로고침
+			</button>
+			<button class="btn btn-default" id="newFolder">
+				<i class="fa fa-folder-o" aria-hidden="true"></i>
+				현재위치에 새폴더
+			</button>
+			<button class="btn btn-default" id="newCode">
+				<i class="fa fa-file-o" aria-hidden="true"></i>
+				현재위치에 텍스트 파일
+			</button>			
 		</div>
 		<form id="uploadForm" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="uploadPath" value=""/>
