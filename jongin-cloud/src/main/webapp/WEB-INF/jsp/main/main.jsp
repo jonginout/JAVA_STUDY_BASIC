@@ -63,6 +63,9 @@
 		font-size: 30px;
 		color: cornflowerblue;
 	}
+	.container{
+		margin: 30px !important;
+	}
 </style>
 
 <script type="text/javascript">
@@ -262,7 +265,7 @@
 					node.data.path = data.path;
 					
 					// 옮겨진 곳을 한번 리로드
-					lazyReloadParent(recNode.key)
+					lazyReloadTarget(recNode.key)
 				}else {
 					alert("파일이동 실패!!");					
 				}
@@ -287,7 +290,7 @@
 
 		<h1>
 			<a href="">
-				CLoud of Jongin <i class="fa fa-cloud-download" aria-hidden="true"></i>
+				CLOUD OF JONGIN <i class="fa fa-cloud-download" aria-hidden="true"></i>
 			</a>
 		</h1>
 		<div class="button-box">
@@ -319,7 +322,7 @@
 	<!-- ========================================================================== -->
 	
 
-	
+	 
 	<script type="text/javascript">
 		
 		//파일 선택시 빨강 포커스
@@ -331,7 +334,9 @@
 		// 파일 선택시 빨강 포커스
 		$("body").on("click", ".file", function () {
 			var key = $(this).attr("data-key");
-			$("#tree").dynatree("getTree").getNodeByKey(key).activate(); // 강제 엑티브
+			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
+			node.activate(); // 강제 엑티브
+			node.expand(); // 강제 오픈
 			focusFile($(this));
 			showFileDetail(key);
 		})
@@ -369,7 +374,7 @@
 						return false;
 					}
 					$("#nowList").html("");
-					lazyReload();
+					lazyReloadActive();
 				}
 			})
 		})
@@ -402,13 +407,13 @@
 						return false;
 					}
 					$("#nowList").html("");
-					lazyReload();
+					lazyReloadActive();
 				}
 			})
 		})
 
 		//액티브된 노드 레이지 리로드
-		function lazyReload() {
+		function lazyReloadActive() {
 			var node = $("#tree").dynatree("getActiveNode");
 			if (node && node.isLazy()) {
 				node.reloadChildren(function(node, isOk) {
@@ -419,9 +424,9 @@
 			
 		};
 		
-		//부모 노드를 리로드
-		function lazyReloadParent(parentKey) {
-			var node =  $("#tree").dynatree("getTree").getNodeByKey(parentKey);
+		//특정 노드를 리로드
+		function lazyReloadTarget(key) {
+			var node =  $("#tree").dynatree("getTree").getNodeByKey(key);
 			if (node && node.isLazy()) {
 				node.reloadChildren(function(node, isOk) {
 				});
@@ -559,7 +564,7 @@
 				data : {path:path},
 				success : function () {
 					alert("삭제 성공");
-					lazyReloadParent(parentKey);
+					lazyReloadTarget(parentKey);
 					showFileDetail(parentKey)
 				},
 				error : function () {
@@ -597,7 +602,7 @@
 				success : function (data) {
 					if(data.result){
 						alert("파일명 변경 성공");
-						lazyReloadParent(parentKey)
+						lazyReloadTarget(parentKey)
 					}else {
 						alert("파일명 변경 실패!!");
 					}
@@ -648,7 +653,7 @@
 					alert(msg);
 					$("#uploadForm")[0].reset();
 					$("#uploadForm>input[name=uploadPath]").val("");
-					lazyReload();
+					lazyReloadActive();
 				},
 				error : function () {
 					alert("파일 업로드 실패!!");
@@ -781,6 +786,7 @@
 				alert("폴더에만 파일을 업로드 할 수 있습니다.");
 				return false;
 			}
+
 			console.log(node.data)
 
 			var files = e.originalEvent.dataTransfer.files;
@@ -803,8 +809,14 @@
 						if(data.dup){
 							msg = "파일 업로드 성공!\n※ 중복된 파일명은 자동 변경되어 업로드 되었습니다. ※"
 						}
+						
+						node.activate(); // 강제 엑티브
+						node.expand(); // 강제 오픈
+						focusFile($(this));
+						showFileDetail(key);
+
 						alert(msg);
-						lazyReload();
+						lazyReloadTarget(key);
 					},
 					error : function () {
 						alert("파일 업로드 실패!!");
