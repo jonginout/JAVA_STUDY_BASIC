@@ -179,7 +179,7 @@
 	        node.appendAjax({
 	          url: "${pageContext.request.contextPath}/tree/sublist.json",
 	          data : { path : node.data.path },
-	          debugLazyDelay: 200,
+	          debugLazyDelay: 200, 
 	          success : function (node) {
 	        	  console.log(node)
 	        	  showChildList(node)

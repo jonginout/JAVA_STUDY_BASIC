@@ -4,10 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Tree {
-	
-//	public static void main(String[] args) throws IOException {
-//		System.out.println(FilenameUtils.getExtension("C:\\asdas.asd"));
-//	}
+
 	
 	private String title;
 	private Boolean isFolder;
