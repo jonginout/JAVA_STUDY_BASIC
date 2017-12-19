@@ -17,23 +17,28 @@ import com.cloud.repository.vo.Tree;
 
 
 @Controller
-public class DownController extends HttpServlet{
+public class CloudDownController extends HttpServlet{
 
-	@RequestMapping("/common/img.do")
+	@RequestMapping("/common/down.do")
 	@ResponseBody
 	public void down(
+			String pdf,
 			Tree file, HttpServletResponse response
 			) throws Exception {
 		
 		
-		System.out.println("읾"+file.getTitle());
-		System.out.println("ㅍ패스"+file.getPath());
+		System.out.println("파일"+file.getTitle());
+		System.out.println("패스"+file.getPath());
 
 		String dName = file.getTitle(); 
 		
 		File f = new File(file.getPath());
-		
-		if (dName == null) {
+		if (pdf != null) {
+			response.setHeader(
+					"Content-Disposition", 
+					"inline; filename=help.pdf"
+			);
+		}else if (dName == null) {
 			// dName 파라미터가 없을때
 			// 즉 다운로드 안받고 싶을때
 			response.setHeader(

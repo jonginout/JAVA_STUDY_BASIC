@@ -5,27 +5,34 @@
 <head>
 	<title>종인 클라우드</title>
 
+<!-- 제이쿼리, 제이쿼리-ui -->	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+<!-- dynatree -->
 <link href="${pageContext.request.contextPath}/dynatree-master/src/skin/ui.dynatree.css" rel="stylesheet" type="text/css" id="skinSheet">
 <script src="${pageContext.request.contextPath}/dynatree-master/src/jquery.dynatree.js"></script>
+
+<!-- 부트스트랩 -->
 <script src="https://use.fontawesome.com/0d0f160dde.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<!-- 김종인 데이트 라이브러리 -->
 <script src="${pageContext.request.contextPath}/js/date.format.js"></script>
 
+<!-- 코드미러 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/codemirror.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/codemirror.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/theme/ambiance.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.32.0/mode/javascript/javascript.min.js"></script>
 
 
-
-
-
+<script src="${pageContext.request.contextPath}/pdfobject/pdfobject.min.js"></script>
 
 
 <style>
+	
 	body{
 		background: whitesmoke;
 	}
@@ -37,10 +44,16 @@
 	.detail-box{
 		margin-top: 30px;
 	}
+	#fileName{
+		font-weight: bold;
+	}
 	.file:hover {
 		font-weight: bold;
 		color:tomato;
 		cursor: pointer;
+	}
+	#updateDate{
+		margin-bottom: 15px;
 	}
 	.selected{
 		font-weight: bold;
@@ -68,7 +81,9 @@
 		color: cornflowerblue;
 	}
 	.container{
-		margin: 30px !important;
+		margin: auto !important;
+		margin-top: 20px;
+		margin-bottom : 20px;
 	}
 </style>
 
@@ -103,10 +118,10 @@
 						<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>\
 						<strong>폴더에</strong> 파일을 드래그 앤 드롭으로 업로드 가능!\
 					</div>\
-					<h1 class='file' data-key='"+node.data.key+"'>\
+					<h2 class='file' data-key='"+node.data.key+"'>\
 						<i class='fa fa-folder-open' aria-hidden='true'></i>\
 						"+node.data.title+"\
-					</h1>";
+					</h2>";
 		
 		
 		childs && (childs = childs.length < 1 ? null : childs);
@@ -119,6 +134,8 @@
 						icon = '<i class="fa fa-file-image-o" aria-hidden="true"></i>';
 					}else if(codeFileArr.indexOf(childs[key].data.ext)!=-1){
 						icon = '<i class="fa fa-file-code-o" aria-hidden="true"></i>';
+					}else if(childs[key].data.ext=='pdf'){
+						icon = '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
 					}
 
 					html += "<h3 class='file' data-key='"+childs[key].data.key+"'>\
@@ -289,9 +306,9 @@
 
 	<!-- ========================================================================== -->	
 	<!-- ========================================================================== -->
-
+	<!-- ========================================================================== -->
+	
 	<div class="container">
-
 		<h1>
 			<a href="">
 				CLOUD OF JONGIN <i class="fa fa-cloud-download" aria-hidden="true"></i>
@@ -313,7 +330,6 @@
 		</div>
 		<form id="uploadForm" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="uploadPath" value=""/>
-			<label>현재위치에 파일 업로드</label>
 			<input type="file" name="files" multiple="multiple">
 			<button type="button">업로드</button>
 		</form>
@@ -331,6 +347,7 @@
 
 	</div>
 
+	<!-- ========================================================================== -->
 	<!-- ========================================================================== -->
 	<!-- ========================================================================== -->
 	
@@ -477,10 +494,11 @@
 							 </div>';
 			};
 						
+			// 파일명
 			html += "<h1>\
-						파일명 : <span id='fileName'>"+selectNode.title+"</span>\
+						<span id='fileName'>"+selectNode.title+"</span>\
 					</h1>\
-						<span>수정한 날짜 : <span id='updateDate'>"+dateFormat(selectNode.updateDate)+"</span></span>";
+						<div id='updateDate'>수정한 날짜 : <span id='updateDate'>"+dateFormat(selectNode.updateDate)+"</span></div>";
 			
 			///확장자 구분
 			
@@ -491,10 +509,10 @@
 				if(codeFileArr.indexOf(ext)!=-1){		
 					html += `
 						<div class="codeBtn-box">
-							<button type="button" class="code-view">
+							<button type="button" class="code-view btn btn-default btn-sm">
 								<i class="fa fa-file-code-o" aria-hidden="true"></i> 코드 보기
 							</button>
-							<button type="button" class="code-refresh">
+							<button type="button" class="code-refresh btn btn-default btn-sm">
 								<i class="fa fa-refresh" aria-hidden="true"></i> 코드 새로고침
 							</button>
 						</div>
@@ -504,8 +522,17 @@
 				}else if(imgFileArr.indexOf(ext)!=-1){
 					html += `
 						<div class="imageBtn-box">
-							<button type="button" class="image-view" data-toggle='modal' data-target='#image'>
+							<button type="button" class="image-view btn btn-default btn-sm" data-toggle='modal' data-target='#image'>
 								<i class="fa fa-file-image-o" aria-hidden="true"></i> 이미지 보기
+							</button>
+						</div>
+						`;
+				}else if(ext=='pdf'){
+
+					html += `
+						<div class="pdfBtn-box">
+							<button type="button" class="pdf-view btn btn-default btn-sm" data-toggle='modal' data-target='#pdf'>
+								<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF 보기
 							</button>
 						</div>
 						`;
@@ -513,11 +540,14 @@
 			}
 			html += `<br>
 			<form id="form-comment">
-				<div class="form-group">
+				<div class="form-group" style="margin-bottom:-1px;">
 					<label for="comment-file"><i class="fa fa-comments-o" aria-hidden="true"></i> 이 파일에 대한 코멘트</label>
 					<textarea style="overflow:visible;" name="comment" class="form-control" id="comment-file"></textarea>
 				</div>
-				<button type="button" class="btn btn-block">코멘트 수정 완료</button>
+				<button type="button" class="btn btn-block btn btn-danger btn-sm">
+					<i class="fa fa-comments-o" aria-hidden="true"></i> 
+					코멘트 수정 완료
+				</button>
 			</form>
 			`;
 			
@@ -630,7 +660,7 @@
 
 			var path = (node.data.path).replace(/\\/gi, "/");
 
-			location.href = "${pageContext.request.contextPath}/common/img.do?path="+path+"&title="+node.data.title;
+			location.href = "${pageContext.request.contextPath}/common/down.do?path="+path+"&title="+node.data.title;
 		})
 		
 		// 상단 파일 첨부 버튼
@@ -692,7 +722,7 @@
 					$(".code-content").html(html);
 					loadEditor(data.code);
 
-					var buttonHtml = '<button type="button" id="codeEidtBtn" data-key="'+key+'">\
+					var buttonHtml = '<button class="btn btn-default" type="button" id="codeEidtBtn" data-key="'+key+'">\
 										<i class="fa fa-floppy-o" aria-hidden="true"></i> 수정하기\
 									  </button>';
 					$("#codeEidtBtn").remove();
@@ -763,13 +793,30 @@
 
 			var path = (node.data.path).replace(/\\/gi, "/");
 
-			var viewUrl = "${pageContext.request.contextPath}/common/img.do?path="+path;
+			var viewUrl = "${pageContext.request.contextPath}/common/down.do?path="+path;
 			var downUrl = viewUrl+"&title="+node.data.title;
 
 			$(".image-content>img").attr("src", viewUrl);
 			$("#image-down-link>a").attr("href", downUrl).html(node.data.title)
 
 		})
+
+		// pdf
+		$("body").on("click",".pdf-view",function(){
+
+			var key = $(this).parents("#detailFile").attr("data-key");
+			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
+
+			var path = (node.data.path).replace(/\\/gi, "/");
+
+			var viewUrl = "${pageContext.request.contextPath}/common/down.do?pdf=true&path="+path;
+			var downUrl = "${pageContext.request.contextPath}/common/down.do?path="+path+"&title="+node.data.title;
+
+			$(".pdf-content>object").attr("data", viewUrl);
+			$("#pdf-down-link>a").attr("href", downUrl).html(node.data.title)
+
+		})
+		
 
 		// 드래그 & 드롭으로 파일 업로드
 		$("body").on('dragover', '.file', function (e) {
@@ -844,7 +891,7 @@
 	</script>
 	
 
-	<!-- Modal -->
+	<!-- img Modal -->
 	<div class="modal modal-middle fade scale-out" id="image" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -861,5 +908,21 @@
 		</div>
 	</div>
 
+	<!-- pdf Modal -->
+	<div class="modal modal-middle fade scale-out" id="pdf" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-body pdf-content">
+						<object data="" type="application/pdf" width="100%" height="600px"></object>
+					</div>
+					<div class="modal-footer">
+						<div class="pull-left" id="pdf-down-link">
+							<a style="font-size:22px" href=""></a>
+						</div>
+						<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 </body>
 </html>
