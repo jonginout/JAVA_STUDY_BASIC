@@ -106,7 +106,7 @@ public class TreeController {
 	@ResponseBody
 	public Tree rootTree(String user) throws Exception {
 		
-		String path = user;
+		String path = "C:\\tree\\"+user;
 		
 		File f = new File(path);
 		if(!f.exists()) {
@@ -138,7 +138,7 @@ public class TreeController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("dup", true);
 		
-		File f = new File(path+"/"+name);
+		File f = new File(path+"\\"+name);
 		if(!f.exists()) {
 			map.put("dup", false);
 			f.mkdirs();
@@ -153,7 +153,7 @@ public class TreeController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("dup", true);
 		
-		File f = new File(path+"/"+name);
+		File f = new File(path+"\\"+name);
 		if(!f.exists()) {
 			map.put("dup", false);
 			f.createNewFile();
@@ -183,10 +183,10 @@ public class TreeController {
 		String ext = "";
 		
 		if(f.isDirectory()) {
-			path = path.substring(0, path.lastIndexOf("/")+1)+rename;
+			path = path.substring(0, path.lastIndexOf("\\")+1)+rename;
 		}else {
 			ext = f.getName().substring(f.getName().lastIndexOf("."));
-			path = path.substring(0, path.lastIndexOf("/")+1)+rename+ext;
+			path = path.substring(0, path.lastIndexOf("\\")+1)+rename+ext;
 		}
 		
 		try {
@@ -216,7 +216,7 @@ public class TreeController {
 		}
 		
 		System.out.println(recFilePath);
-		Path recPath = Paths.get(recFilePath+"/"+moveF.getFileName());
+		Path recPath = Paths.get(recFilePath+"\\"+moveF.getFileName());
 		System.out.println("옮겨질 곳 : "+recPath);
 		
 		try {
@@ -308,7 +308,7 @@ public class TreeController {
 				long fileSize = f.getSize();
 				System.out.println("파일 사이즈 : " + fileSize);
 				
-				f.transferTo(new File(uploadPath+"/"+saveFileName));
+				f.transferTo(new File(uploadPath+"\\"+saveFileName));
 			}
 			
 		}
@@ -323,7 +323,7 @@ public class TreeController {
 	@ResponseBody
 	public void fileComment(String comment, Tree tree) throws Exception {
 		
-		String commentPath = tree.getPath()+"/"+tree.getTitle()+".jci";
+		String commentPath = tree.getPath()+"\\"+tree.getTitle()+".jci";
 		
 		deleteFile(commentPath);
 		
@@ -343,7 +343,7 @@ public class TreeController {
 	@ResponseBody
 	public String commentView(Tree tree) throws Exception {
 		
-		String commentPath = tree.getPath()+"/"+tree.getTitle()+".jci";
+		String commentPath = tree.getPath()+"\\"+tree.getTitle()+".jci";
 				
 		File file = new File(commentPath);
 		if(!file.exists()) {
