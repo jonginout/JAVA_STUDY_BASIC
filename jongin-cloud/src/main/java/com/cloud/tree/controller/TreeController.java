@@ -25,7 +25,7 @@ import com.cloud.repository.vo.Tree;
 import com.cloud.tree.service.TreeService;
 
 @Controller
-@RequestMapping("/tree")
+@RequestMapping("/cloud")
 public class TreeController {
 
 	@Autowired
@@ -174,21 +174,32 @@ public class TreeController {
 	
 	@RequestMapping("/filerename.json")
 	@ResponseBody
-	public Map<String, Object> fileRename(String path, String rename) throws Exception {
+	public Map<String, Object> fileRename(String path, String rename, String nowHost) throws Exception {
+		
+		System.out.println(nowHost);
+		
+		String slash = "/";
+		if(nowHost.equals("localhost")) {
+			slash = "\\";
+		}
 		
 		Map<String, Object> map = new HashMap<>();
 		File f = new File(path);
 		Path file = Paths.get(path);
 
 		String ext = "";
+		System.out.println("옮길거 : "+ path);
 		
 		if(f.isDirectory()) {
-			path = path.substring(0, path.lastIndexOf("/")+1)+rename;
+			path = path.substring(0, path.lastIndexOf(slash)+1)+rename;
 		}else {
-			ext = f.getName().substring(f.getName().lastIndexOf("."));
-			path = path.substring(0, path.lastIndexOf("/")+1)+rename+ext;
+			if(f.getName().lastIndexOf(".")!=-1) {
+				ext = f.getName().substring(f.getName().lastIndexOf("."));
+			}
+			path = path.substring(0, path.lastIndexOf(slash)+1)+rename+ext;
 		}
-		
+
+		System.out.println("바뀐것 : "+ path);
 		
 		try {
 			Files.move(file , Paths.get(path));

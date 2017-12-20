@@ -1,0 +1,77 @@
+@charset "UTF-8";
+	
+	body{
+		background: whitesmoke;
+	}
+	#cloud-content{
+		margin-top: 60px !important;
+	}
+	.file-list, .file-detail{
+		min-height: 300px !important;
+		overflow: hidden;
+		word-break: break-word;
+	}
+	.detail-box{
+		margin-top: 30px;
+	}
+	#fileName{
+		font-weight: bold;
+	}
+	.file:hover {
+		font-weight: bold;
+		color:tomato;
+		cursor: pointer;
+	}
+	#updateDate{
+		margin-bottom: 15px;
+	}
+	.selected{
+		font-weight: bold;
+		color:tomato;
+	}
+	.button-box{
+		margin-top : 10px; 
+		margin-bottom : 20px;
+	}
+	.button-box>button{	
+		margin-top : 5px; 
+		margin-bottom : 5px;
+	}
+	input[type=file]{
+		width : 200px;
+		display: inline-block;
+	}
+	.CodeMirror {
+		border: 1px solid #eee;
+		height: auto;
+	}
+	#image-down-link{
+		overflow: hidden;
+		word-break: break-word;
+	}
+	.drag-over{
+		font-weight: bold;
+		font-size: 30px;
+		color: cornflowerblue;
+	}
+	.container{
+		margin: auto !important;
+		margin-top: 5px !important;
+		margin-bottom : 30px !important;
+	}
+	.comment-btn{
+		opacity: 0.9;
+	}
+	#kPay-btn:hover{
+		cursor: pointer;
+		opacity: 0.8;
+	}
+	.form-err{
+		border: 0.1em solid tomato !important;
+	}
+	.form-success{
+		border: 0.1em solid darkgreen !important;
+	}
+	.form-control:focus {
+		border-color: none !important;
+	}

@@ -1,0 +1,52 @@
+/* 헤더 본체 CSS */
+.st-header{
+    background : #1276AA; /* #42b27fe0; #4267b2;*/
+    padding: 11px !important;
+    border: none;
+    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+    opacity: 0.985;
+    position : fixed !important;
+    top : 0 !important;
+    left : 0 !important;
+    z-index : 100 !important;
+    width : 100% !important;
+}
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px; 
+}
+.stylish-input-group .form-control{
+    border-right:0; 
+    box-shadow:0 0 0; 
+    border-color:#ccc;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px; 
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+.st-header__title a, .st-header__actions>li{
+    color : white;
+    text-decoration: none;
+}
+.st-header__count, .st-notifications-count{
+    background: tomato;
+    color: white;
+    font-size : 12px;
+}
+.header-title-btn{
+    padding: 0px;
+}
+.header-icon-btn{
+	padding: 0px 15px 0px 0px;
+}
+.header-icon-btn>ul{
+    margin-right: 20px;
+}
+/* 알람 사이드바 CSS */
+.st-settings__row:hover{
+	background: #f2f2f2;
+	cursor: pointer;
+}
