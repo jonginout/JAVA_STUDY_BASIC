@@ -4,6 +4,7 @@
 <html>
 <head>
 	<title>종인 클라우드</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- 제이쿼리, 제이쿼리-ui -->	
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -85,6 +86,9 @@
 		margin-top: 20px;
 		margin-bottom : 20px;
 	}
+	.comment-btn{
+		opacity: 0.9;
+	}
 </style>
 
 <script type="text/javascript">
@@ -93,7 +97,12 @@
 	var codeFileArr = ["java","js","html","css","jsp","php","txt"];
 	//이미지 뷰 사용가능 확장자
 	var imgFileArr = ["png","jpg","jpeg","gif","png","bmp"];
-	
+	//음악 사용가능 확장자
+	var audioFileArr = ["mp3", "ogg", "wav", "ACC"];
+	//동영상파일 사용가능 확장자
+	var movieFileArr = ["mp4", "avi", "mkv", "wmv"];
+	//압축파일 사용가능 확장자
+	var zipFileArr = ["zip", "alz", "egg"];
 	
 	//현재 active된 경로
 	var nowNode = "";
@@ -136,6 +145,12 @@
 						icon = '<i class="fa fa-file-code-o" aria-hidden="true"></i>';
 					}else if(childs[key].data.ext=='pdf'){
 						icon = '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
+					}else if(audioFileArr.indexOf(childs[key].data.ext)!=-1){
+						icon = '<i class="fa fa-file-audio-o" aria-hidden="true"></i>';
+					}else if(movieFileArr.indexOf(childs[key].data.ext)!=-1){
+						icon = '<i class="fa fa-file-video-o" aria-hidden="true"></i>';
+					}else if(zipFileArr.indexOf(childs[key].data.ext)!=-1){
+						icon = '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
 					}
 
 					html += "<h3 class='file' data-key='"+childs[key].data.key+"'>\
@@ -337,10 +352,10 @@
 		<div id="tree"></div>
 
 		<div class="row detail-box">
-			<div class="col-xs-4 file-list">
+			<div class="hidden-xs col-sm-4 file-list">
 				<div id="nowList"></div>
 			</div>
-			<div class="col-xs-8 file-detail">
+			<div class="col-xs-12 col-sm-8 file-detail">
 				<div id="detailFile" data-key=""></div>
 			</div>
 		</div>
@@ -483,12 +498,12 @@
 						  	  </div>\
 							  <div class="btn-group file-rename">\
 							    <button type="button" class="btn btn-default">\
-							    	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 이름 바꾸기\
+							    	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 이름 변경\
 								</button>\
 							  </div>\
 							  <div class="btn-group file-down">\
 							    <button type="button" class="btn btn-default">\
-									<i class="fa fa-download" aria-hidden="true"></i> 파일 다운로드\
+									<i class="fa fa-download" aria-hidden="true"></i> 다운로드\
 								</button>\
 							  </div>\
 							 </div>';
@@ -544,7 +559,7 @@
 					<label for="comment-file"><i class="fa fa-comments-o" aria-hidden="true"></i> 이 파일에 대한 코멘트</label>
 					<textarea style="overflow:visible;" name="comment" class="form-control" id="comment-file"></textarea>
 				</div>
-				<button type="button" class="btn btn-block btn btn-danger btn-sm">
+				<button type="button" class="btn btn-block btn btn-danger btn-sm comment-btn">
 					<i class="fa fa-comments-o" aria-hidden="true"></i> 
 					코멘트 수정 완료
 				</button>
