@@ -62,7 +62,11 @@
 	}
 	.button-box{
 		margin-top : 20px; 
-		margin-bottom : 20px; 		
+		margin-bottom : 20px;
+	}
+	.button-box>button{	
+		margin-top : 5px; 
+		margin-bottom : 5px;
 	}
 	input[type=file]{
 		width : 200px;
@@ -89,9 +93,45 @@
 	.comment-btn{
 		opacity: 0.9;
 	}
+	#kPay-btn:hover{
+		cursor: pointer;
+		opacity: 0.8;
+	}
+	.form-err{
+		border: 0.1em solid tomato !important;
+	}
+	.form-success{
+		border: 0.1em solid darkgreen !important;
+	}
+	.form-control:focus {
+		border-color: none !important;
+	}
 </style>
 
 <script type="text/javascript">
+
+	function fileExtChecker(ext){
+
+		var chk = "";
+
+		if(imgFileArr.indexOf(ext)!=-1){
+			chk = "img"
+		}else if(codeFileArr.indexOf(ext)!=-1){
+			chk = "code"
+		}else if(ext=='pdf'){
+			chk = "pdf"
+		}else if(audioFileArr.indexOf(ext)!=-1){
+			chk = "audio"
+		}else if(movieFileArr.indexOf(ext)!=-1){
+			chk = "movie"
+		}else if(zipFileArr.indexOf(ext)!=-1){
+			chk = "zip"
+		}else{
+			chk = "ect"
+		}
+
+		return chk;
+	}
 	
 	//코드 뷰 사용가능 확장자
 	var codeFileArr = ["java","js","html","css","jsp","php","txt"];
@@ -138,18 +178,21 @@
 			for ( var key in childs) {
 		    	 if(!childs[key].data.isFolder){
 					var icon = '<i class="fa fa-file-o" aria-hidden="true"></i>';
-					
-					if(imgFileArr.indexOf(childs[key].data.ext)!=-1){
+					var extNow = childs[key].data.ext.toLowerCase();
+
+					var fc = fileExtChecker(extNow);
+
+					if(fc=='img'){
 						icon = '<i class="fa fa-file-image-o" aria-hidden="true"></i>';
-					}else if(codeFileArr.indexOf(childs[key].data.ext)!=-1){
+					}else if(fc=='code'){
 						icon = '<i class="fa fa-file-code-o" aria-hidden="true"></i>';
-					}else if(childs[key].data.ext=='pdf'){
+					}else if(fc=='pdf'){
 						icon = '<i class="fa fa-file-pdf-o" aria-hidden="true"></i>';
-					}else if(audioFileArr.indexOf(childs[key].data.ext)!=-1){
+					}else if(fc=='audio'){
 						icon = '<i class="fa fa-file-audio-o" aria-hidden="true"></i>';
-					}else if(movieFileArr.indexOf(childs[key].data.ext)!=-1){
+					}else if(fc=='movie'){
 						icon = '<i class="fa fa-file-video-o" aria-hidden="true"></i>';
-					}else if(zipFileArr.indexOf(childs[key].data.ext)!=-1){
+					}else if(fc=='zip'){
 						icon = '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
 					}
 
@@ -331,11 +374,11 @@
 	<!-- ========================================================================== -->
 	
 	<div class="container">
-		<h1>
+		<h2>
 			<a href="">
 				CLOUD OF JONGIN <i class="fa fa-cloud-download" aria-hidden="true"></i>
 			</a>
-		</h1>
+		</h2>
 		<div class="button-box">
 			<button class="btn btn-default" id="reload">
 				<i class="fa fa-refresh" aria-hidden="true"></i> 
@@ -349,6 +392,10 @@
 				<i class="fa fa-file-o" aria-hidden="true"></i>
 				현재위치에 텍스트 파일
 			</button>			
+			<button class="btn btn-default" data-toggle="modal" data-target="#addVolume">
+				<i class="fa fa-hdd-o" aria-hidden="true"></i> 
+				용량추가
+			</button>	
 		</div>
 		<form id="uploadForm" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="uploadPath" value=""/>
@@ -376,6 +423,10 @@
 
 	 
 	<script type="text/javascript">
+
+		$("#addVolume").click(function(){
+
+		})
 		
 		//파일 선택시 빨강 포커스
 		function focusFile(ele) {
@@ -528,7 +579,9 @@
 			if(!selectNode.isFolder){
 
 				var ext = selectNode.ext.toLowerCase();
-				if(codeFileArr.indexOf(ext)!=-1){		
+				var fc = fileExtChecker(ext);
+
+				if(fc=='code'){		
 					html += `
 						<div class="codeBtn-box">
 							<button type="button" class="code-view btn btn-default btn-sm">
@@ -541,23 +594,20 @@
 						<div class="code-content">
 						</div>
 						`;
-				}else if(imgFileArr.indexOf(ext)!=-1){
-					html += `
-						<div class="imageBtn-box">
-							<button type="button" class="image-view btn btn-default btn-sm" data-toggle='modal' data-target='#image'>
-								<i class="fa fa-file-image-o" aria-hidden="true"></i> 이미지 보기
-							</button>
-						</div>
-						`;
-				}else if(ext=='pdf'){
+				}else if(fc=='img' || fc == 'pdf' || fc == 'audio' || fc == 'movie'){
 
-					html += `
-						<div class="pdfBtn-box">
-							<button type="button" class="pdf-view btn btn-default btn-sm" data-toggle='modal' data-target='#pdf'>
-								<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF 보기
-							</button>
-						</div>
-						`;
+					var icon = {
+						'img' : '<i class="fa fa-file-image-o" aria-hidden="true"></i> 이미지 보기',
+						'pdf' : '<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF 보기',
+						'audio' : '<i class="fa fa-file-audio-o" aria-hidden="true"></i> 오디오 듣기',
+						'movie' : '<i class="fa fa-file-video-o" aria-hidden="true"></i> 동영상 재생',
+					}
+
+					html += '<div class="imageBtn-box">\
+								<button type="button" class="file-view-btn btn btn-default btn-sm" data-toggle="modal" data-target="#file-modal">\
+									'+icon[fc]+'\
+								</button>\
+							</div>';
 				}
 			}
 
@@ -594,7 +644,13 @@
 			})
 
 		}
+
+		// 닫기 버튼
+		$("body").on("click", ".file-view-close", function(){
+			$(".file-view-content").html("")
+		})
 		
+		// 자동 코멘트 높이 조정
 		$('body').on('keydown keyup', '#comment-file' , function () {
 			$(this).height(1).height( $(this).prop('scrollHeight')+12 );				
 		});
@@ -680,14 +736,14 @@
 			})
 		})
 		
-		//파일 업로드 우측하단 버튼
+		//파일 다운로드 우측하단 버튼
 		$("body").on("click", ".file-down", function () {
 			var key = $(this).parents("#detailFile").attr("data-key");
 			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
 
 			var path = (node.data.path).replace(/\\/gi, "/");
 
-			location.href = "${pageContext.request.contextPath}/common/down.do?path="+path+"&title="+node.data.title;
+			location.href = "${pageContext.request.contextPath}/common/down.do?ext="+node.data.ext+"&path="+path+"&title="+node.data.title;
 		})
 		
 		// 상단 파일 첨부 버튼
@@ -812,35 +868,30 @@
 			
 		})
 		
-		// 이미지 보기
-		$("body").on("click",".image-view",function(){
+		// 이미지 PDF 동영상 음악 뷰어
+		$("body").on("click",".file-view-btn",function(){
 
 			var key = $(this).parents("#detailFile").attr("data-key");
 			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
 
 			var path = (node.data.path).replace(/\\/gi, "/");
+			var ext = node.data.ext.toLowerCase();
 
-			var viewUrl = "${pageContext.request.contextPath}/common/down.do?path="+path;
+			var viewUrl = "${pageContext.request.contextPath}/common/down.do?ext="+ext+"&path="+path;
 			var downUrl = viewUrl+"&title="+node.data.title;
 
-			$(".image-content>img").attr("src", viewUrl);
-			$("#image-down-link>a").attr("href", downUrl).html(node.data.title)
+			var fc = fileExtChecker(ext);
+			var wh100 = 'style="width:100%;height:100%"';
 
-		})
+			var viweHtml = {
+				'img' : '<img '+wh100+' src="'+viewUrl+'" alt="'+node.data.title+'" />',
+				'pdf' : '<object data="'+viewUrl+'" type="application/pdf" width="100%" height="600px"></object>',
+				'audio' : '<div '+wh100+'><audio controls><source src="'+viewUrl+'" type="audio/mpeg"></audio></div>',
+				'movie' : '<video '+wh100+' controls><source src="'+viewUrl+'" type="video/mp4"></video>',
+			}
 
-		// pdf
-		$("body").on("click",".pdf-view",function(){
-
-			var key = $(this).parents("#detailFile").attr("data-key");
-			var node = $("#tree").dynatree("getTree").getNodeByKey(key);
-
-			var path = (node.data.path).replace(/\\/gi, "/");
-
-			var viewUrl = "${pageContext.request.contextPath}/common/down.do?pdf=true&path="+path;
-			var downUrl = "${pageContext.request.contextPath}/common/down.do?path="+path+"&title="+node.data.title;
-
-			$(".pdf-content>object").attr("data", viewUrl);
-			$("#pdf-down-link>a").attr("href", downUrl).html(node.data.title)
+			$(".file-view-content").html("").html(viweHtml[fc]);
+			$("#file-down-link>a").attr("href", downUrl).html(node.data.title)
 
 		})
 		
@@ -917,39 +968,143 @@
 
 	</script>
 	
-
-	<!-- img Modal -->
-	<div class="modal modal-middle fade scale-out" id="image" tabindex="-1" role="dialog">
+	
+	<!-- Modal -->
+	<div class="modal modal-middle fade scale-out" id="file-modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-body image-content">
-					<img style="width:100%;height:100%" src="" alt="" />
+				<div class="modal-body file-view-content">
+					<object data="" type="application/pdf" width="100%" height="600px"></object>
 				</div>
 				<div class="modal-footer">
-					<div class="pull-left" id="image-down-link">
+					<div class="pull-left" id="file-down-link">
 						<a style="font-size:22px" href=""></a>
 					</div>
-					<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+					<button class="btn btn-default file-view-close" type="button" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<!-- pdf Modal -->
-	<div class="modal modal-middle fade scale-out" id="pdf" tabindex="-1" role="dialog">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-body pdf-content">
-						<object data="" type="application/pdf" width="100%" height="600px"></object>
-					</div>
-					<div class="modal-footer">
-						<div class="pull-left" id="pdf-down-link">
-							<a style="font-size:22px" href=""></a>
-						</div>
-						<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-					</div>
+	<!-- 결제 Modal -->
+	<div class="modal modal-middle fade scale-out" id="addVolume" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 style="padding:0px;margin:0px;"><strong><i class="fa fa-hdd-o" aria-hidden="true"></i> 드라이브 용량 추가</strong></h3>
+				</div>
+				<div class="modal-body pay-content">
+					
+						<form class="form-horizontal pay-info">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">성명</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="name" placeholder="이름">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">이메일</label>
+								<div class="col-sm-10">
+									<input type="email" class="form-control" name="email" placeholder="E-mail">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">추가용량</label>				
+								<div class="col-sm-10">
+									<select class="form-control" name="volume">
+										<optgroup label="용량선택">
+											<option value="100">+100MB</option>
+											<option value="300">+300MB</option>
+											<option value="500">+500MB</option>
+											<option value="800">+800MB</option>
+											<option value="1000">+1GB</option>
+										</optgroup>
+									</select>
+								</div>					
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">전화번호</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="tel" placeholder="전화번호 - 제외">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10 pull-right">
+									<img src="${pageContext.request.contextPath}/img/kpay-btn.png" alt="카카오페이로 결제" id="kPay-btn">
+									<!-- <button type="submit" class="btn btn-info btn-block">카카오페이</button> -->
+								</div>
+							</div>
+						</form>
+
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default pay-close" type="button" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
+	</div>
+
 </body>
 </html>
+
+<!-- 카카오 페이 -->
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+	$("body").on("keyup", ".pay-info input[name=tel]", function(){
+		var telPattern = /^([0-9]){9,12}$/;
+		var tel = $(this).val();
+		if(!telPattern.test(tel)){
+			$(this).removeClass("form-success").addClass("form-err");
+		}else{
+			console.log("??")
+			$(this).removeClass("form-err").addClass("form-success");			
+		}
+	})
+
+	$("body").on("click", "#kPay-btn", function(){
+
+		var fd = {
+			name : $(".pay-info input[name=name]").val(),
+			email : $(".pay-info input[name=email]").val(),
+			volume : $(".pay-info select[name=volume]").val(),
+			tel : $(".pay-info input[name=tel]").val()
+		}	
+
+		for (var key in fd) {
+			console.log(fd[key].length<0)
+			if(fd[key].length<1){
+				alert("결제정보를 옳바르게 입력하시오.");
+				return;
+			}
+		}
+
+		$(".pay-close").trigger("click");
+
+			IMP.init('imp32572105'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+			IMP.request_pay({
+			pg : 'kakao', // version 1.1.0부터 지원.
+			pay_method : 'card',
+			merchant_uid : 'merchant_' + new Date().getTime(),
+			name : '종인 클라우드 ['+fd.volume+'MB] 용량추가',
+			amount : 1000,
+			buyer_email : fd.email,
+			buyer_name : fd.name,
+			buyer_tel : fd.tel,
+			m_redirect_url : '/'
+		}, function(rsp) {
+			if ( rsp.success ) {
+				var msg = '결제가 완료되었습니다.';
+				msg += '고유ID : ' + rsp.imp_uid;
+				msg += '상점 거래ID : ' + rsp.merchant_uid;
+				msg += '결제 금액 : ' + rsp.paid_amount;
+				msg += '카드 승인번호 : ' + rsp.apply_num;
+			} else {
+				var msg = '결제에 실패하였습니다.';
+				msg += '에러내용 : ' + rsp.error_msg;
+			}
+			$(".tf_kakaopay").val(fd.tel);
+			alert(msg);
+		});
+	})
+</script>

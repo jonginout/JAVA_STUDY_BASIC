@@ -22,7 +22,7 @@ public class CloudDownController extends HttpServlet{
 	@RequestMapping("/common/down.do")
 	@ResponseBody
 	public void down(
-			String pdf,
+			String ext,
 			Tree file, HttpServletResponse response
 			) throws Exception {
 		
@@ -33,7 +33,10 @@ public class CloudDownController extends HttpServlet{
 		String dName = file.getTitle(); 
 		
 		File f = new File(file.getPath());
-		if (pdf != null) {
+		
+		System.out.println(ext);
+		
+		if (ext.equals("pdf")) {
 			response.setHeader(
 					"Content-Disposition", 
 					"inline; filename=help.pdf"
