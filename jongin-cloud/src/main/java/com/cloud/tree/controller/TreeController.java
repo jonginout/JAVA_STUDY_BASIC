@@ -189,6 +189,7 @@ public class TreeController {
 			path = path.substring(0, path.lastIndexOf("/")+1)+rename+ext;
 		}
 		
+		
 		try {
 			Files.move(file , Paths.get(path));
 			map.put("result", true);

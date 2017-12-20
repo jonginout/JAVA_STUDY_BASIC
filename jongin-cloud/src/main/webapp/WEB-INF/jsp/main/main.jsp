@@ -83,8 +83,8 @@
 	}
 	.container{
 		margin: auto !important;
-		margin-top: 20px;
-		margin-bottom : 20px;
+		margin-top: 5px !important;
+		margin-bottom : 30px !important;
 	}
 	.comment-btn{
 		opacity: 0.9;
@@ -269,7 +269,13 @@
 	          }
 	        },
 			////////////////드래그앤드롭////////////////드래그앤드롭
-	      
+			onKeydown: function(node, event) {
+				switch( event.which ) {
+					case 113: // [F2]
+						$(".file-rename").trigger("click")
+						return false;
+				}
+			},
 	      
 // 	      onClick : function (node) {
 // 		  },
@@ -277,6 +283,7 @@
 	      debugLevel: 0
 	    });
 	}
+
 
 	// 파일 드래그 앤 드롭 이동
 	function moveFile(moveNode, recNode, hitModeChk) {
@@ -553,18 +560,23 @@
 						`;
 				}
 			}
-			html += `<br>
-			<form id="form-comment">
-				<div class="form-group" style="margin-bottom:-1px;">
-					<label for="comment-file"><i class="fa fa-comments-o" aria-hidden="true"></i> 이 파일에 대한 코멘트</label>
-					<textarea style="overflow:visible;" name="comment" class="form-control" id="comment-file"></textarea>
-				</div>
-				<button type="button" class="btn btn-block btn btn-danger btn-sm comment-btn">
-					<i class="fa fa-comments-o" aria-hidden="true"></i> 
-					코멘트 수정 완료
-				</button>
-			</form>
-			`;
+
+			if(selectNode.title!="jongin"){
+				html += `<br>
+				<form id="form-comment">
+					<div class="form-group" style="margin-bottom:-1px;">
+						<label for="comment-file"><i class="fa fa-comments-o" aria-hidden="true"></i> 이 파일에 대한 코멘트</label>
+						<textarea style="overflow:visible;" name="comment" class="form-control" id="comment-file"></textarea>
+					</div>
+					<button type="button" class="btn btn-block btn btn-danger btn-sm comment-btn">
+						<i class="fa fa-comments-o" aria-hidden="true"></i> 
+						코멘트 수정 완료
+					</button>
+				</form>
+				`;
+			}else{
+				html += '<br><h1>Root 디렉토리</h1>'
+			}
 			
 			$("#detailFile").html(html);
 
