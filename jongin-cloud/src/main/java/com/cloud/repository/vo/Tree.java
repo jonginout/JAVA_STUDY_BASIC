@@ -19,8 +19,22 @@ public class Tree {
 	private String ext;
 	private String contentType;
 	private Date updateDate;
+	private long maxSize;
+	private long size;
 	
 	
+	public long getMaxSize() {
+		return maxSize;
+	}
+	public void setMaxSize(long maxSize) {
+		this.maxSize = maxSize;
+	}
+	public long getSize() {
+		return size;
+	}
+	public void setSize(long size) {
+		this.size = size;
+	}
 	public String getContentType() {
 		return contentType;
 	}

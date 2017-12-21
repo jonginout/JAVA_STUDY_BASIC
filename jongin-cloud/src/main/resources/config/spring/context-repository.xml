@@ -21,16 +21,14 @@
 	
 	
 	<!-- mybatis 객체 준비 -->
-	<!--  -->
-	<context:property-placeholder location="classpath:config/spring/db.properties" />
 
 	<!-- !!DBCP 사용 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close"
-      	p:driverClassName="${jdbc.oracle.driver}"
-        p:url="${jdbc.oracle.url}"
-        p:username="${jdbc.oracle.username}" 
-        p:password="${jdbc.oracle.password}" />
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://chopo01.cafe24.com:3306/sns?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"></property>
+        <property name="username" value="chopo01"></property>
+        <property name="password" value="chvy996812"></property>
+    </bean>
 	
 	<!-- 스프링에서 마이바티스를 연결하는 부분 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">

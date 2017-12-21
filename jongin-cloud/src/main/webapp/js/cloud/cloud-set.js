@@ -334,6 +334,17 @@ $("#uploadForm>input[type=file]").click(function () {
 	$("#uploadForm>input[name=uploadPath]").val(nowNode.path)			
 })
 
+function fileSizeChk(fd){
+	var size = 0;
+	for(var pair of fd.entries()) {
+	  if (pair[1] instanceof Blob) 
+		size += pair[1].size;
+	  else
+		size += pair[1].length;
+	}
+	return size;
+}
+
 // 업로드 버튼
 $("#uploadForm>button").click(function () {
 	if(!$("#uploadForm>input[name=uploadPath]").val()){
@@ -341,7 +352,16 @@ $("#uploadForm>button").click(function () {
 		return false;
 	}
 	var fd = new FormData($("#uploadForm")[0]);
-	console.log(fd)
+
+	//용량체크
+	var rootNode = $("#tree").dynatree("getTree").getNodeByKey("_2").data;
+	if(rootNode.size + fileSizeChk(fd)>rootNode.maxSize){
+		if(confirm("용량초과!! 용량추가 하시겠습니까?")){
+			$("button[data-target='#addVolume']").trigger("click");
+		}
+		return;
+	}
+	
 	
 	$.ajax({
 		type : "post",
@@ -358,6 +378,8 @@ $("#uploadForm>button").click(function () {
 			$("#uploadForm")[0].reset();
 			$("#uploadForm>input[name=uploadPath]").val("");
 			lazyReloadActive();
+			//용량 더하기
+			rootNode.size = rootNode.size + fileSizeChk(fd);
 		},
 		error : function () {
 			alert("파일 업로드 실패!!");
@@ -510,10 +532,21 @@ $("body").on("drop", '.file', function (e){
 		return false;
 	}else{
 		var fd = new FormData();
+
 		fd.append('uploadPath',node.data.path)
 		for (var i = 0; i < files.length; i++) {
     		fd.append('files', files[i]);
- 		}
+		}
+
+		//용량체크
+		var rootNode = $("#tree").dynatree("getTree").getNodeByKey("_2").data;
+		if(rootNode.size + fileSizeChk(fd)>rootNode.maxSize){
+			if(confirm("용량초과!! 용량추가 하시겠습니까?")){
+				$("button[data-target='#addVolume']").trigger("click");
+			}
+			return;
+		}
+		 
 		$.ajax({
 			type : "post",
 			url : projectURL+"/cloud/fileupload.json",
@@ -533,6 +566,9 @@ $("body").on("drop", '.file', function (e){
 
 				alert(msg);
 				lazyReloadTarget(key);
+
+				//용량 더하기
+				rootNode.size = rootNode.size + fileSizeChk(fd);
 			},
 			error : function () {
 				alert("파일 업로드 실패!!");

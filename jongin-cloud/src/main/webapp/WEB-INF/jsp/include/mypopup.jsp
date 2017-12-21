@@ -7,24 +7,17 @@
 		<div class="st-userpopup__main">
 			<div class="st-userpopup__photo">
 				<div class="st-userpopup__img"
-					style="background-image: url('프로필 사진 URL 삽입');"></div>
+					style="background-image: url('${user.profileImg}');"></div>
 				</div>
 				
 			<div class="st-userpopup__info">
 				<div class="st-userpopup__name text-ellipsis">
-					이름 <small>(@아이디)</small>
+					${user.name} <small>(${user.id})</small>
 				</div>
 				<div class="st-userpopup__status">
 					<span class="label label-success">
-						<c:choose>
-							<c:when test="${user.status=='ADMIN'}">
-								관리자 계정
-							</c:when>
-							<c:otherwise>
-								일반 계정
-							</c:otherwise>
-						</c:choose>
-					</span><!-- 학생/ 반장 -->
+						${user.maxVolume/1024/1024} MB 소유
+					</span>
 				</div>
 			</div>
 		</div>
@@ -51,7 +44,7 @@
 						</div>
 					</div>
 			</a></li>
-			<li><a href="#로그아웃 URL 삽입">
+			<li><a href="${pageContext.request.contextPath}/login/logout.do">
 					<div class="fluid-cols">
 						<div class="expand-col text-ellipsis">
 							<span>로그아웃</span>

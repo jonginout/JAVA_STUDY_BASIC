@@ -102,6 +102,12 @@
 		</dependency>
 
 		<!-- DBDBDBD관련관련관련DBDBDBD관련관련관련DBDBDBD관련관련관련DBDBDBD관련관련관련 -->
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>6.0.6</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
 		<dependency>
@@ -129,13 +135,6 @@
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>3.4.5</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.github.noraui/ojdbc7 -->
-		<dependency>
-			<groupId>com.github.noraui</groupId>
-			<artifactId>ojdbc7</artifactId>
-			<version>12.1.0.2</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->

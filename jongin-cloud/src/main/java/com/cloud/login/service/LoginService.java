@@ -1,7 +1,7 @@
-package com.cloud.tree.service;
+package com.cloud.login.service;
 
 
-public interface TreeService {
+public interface LoginService {
 
 //	public List<Turn> turnList(Turn turn) throws Exception;
 //	public Turn turnDetail(Turn turn) throws Exception;

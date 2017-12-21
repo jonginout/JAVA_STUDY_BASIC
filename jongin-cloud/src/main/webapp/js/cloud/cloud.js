@@ -165,14 +165,18 @@ function dirTree() {
       // //////////////드래그앤드롭////////////////드래그앤드롭
       dnd: {
           onDragStart: function(node) {
+			console.log("onDragStart")
             return true;
           },
           autoExpandMS: 1000,
           preventVoidMoves: true,
           onDragEnter: function(node, sourceNode) {
+			console.log("onDragEnter")
             return true;
           },
           onDragOver: function(node, sourceNode, hitMode) {
+
+			console.log("onDragOver")
             // 옮기는 과정에서 위에 가져다 대기만 한 상황
             
             if(node.isDescendantOf(sourceNode)){
@@ -185,6 +189,8 @@ function dirTree() {
             }
           },
           onDrop: function(node, sourceNode, hitMode, ui, draggable) {
+
+			console.log("onDrop")
             // 노드 실게 그곳에 두어서 옮기기
             
             // 힛모드 이동인지 체크

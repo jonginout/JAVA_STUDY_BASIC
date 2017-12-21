@@ -21,15 +21,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cloud.login.service.LoginService;
 import com.cloud.repository.vo.Tree;
-import com.cloud.tree.service.TreeService;
 
 @Controller
 @RequestMapping("/cloud")
-public class TreeController {
+public class CloudController {
 
 	@Autowired
-	TreeService service;
+	LoginService service;
+	
+	long folderSize(File f) {		
+		long length = 0;
+		for (File file : f.listFiles()) {
+			if(file.isFile()) {
+				length += file.length();
+			}else {
+				length += folderSize(file);
+			}
+		}
+		return length;
+	}
 	
 	
     //ff 폴더 안 모든 파일 및 폴더 검색
@@ -88,6 +100,9 @@ public class TreeController {
 		
 	}
     
+	@RequestMapping("/cloud.do")
+	public void cloud() throws Exception {}
+	
 	@RequestMapping("/sublist.json")
 	@ResponseBody
 	public List<Tree> subTree(String path) throws Exception {
@@ -106,7 +121,7 @@ public class TreeController {
 	@ResponseBody
 	public Tree rootTree(String user) throws Exception {
 		
-		String path = user;
+		String path = "cloud/"+user;
 		
 		File f = new File(path);
 		if(!f.exists()) {
@@ -114,12 +129,16 @@ public class TreeController {
 		}
 		//폴더 만들기
 		
+
+		
 		List<Tree> trees = pullFile(path);
 		Tree tree = new Tree();
 		
 		Date updateDate = new Date(f.lastModified());
 		
 		System.out.println(trees.toString());
+		tree.setMaxSize(209715200);
+		tree.setSize(folderSize(f));
 		tree.setTitle(user);
 		tree.setIsFolder(true);
 		tree.setPath(path);

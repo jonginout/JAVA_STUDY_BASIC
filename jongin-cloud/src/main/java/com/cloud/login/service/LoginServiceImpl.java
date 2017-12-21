@@ -1,9 +1,9 @@
-package com.cloud.tree.service;
+package com.cloud.login.service;
 
 import org.springframework.stereotype.Service;
 
 @Service("TreeService")
-public class TreeServiceImpl implements TreeService{
+public class LoginServiceImpl implements LoginService{
 	
 
 //	@Autowired

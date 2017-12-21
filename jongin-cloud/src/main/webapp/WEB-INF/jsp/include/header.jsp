@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 
 <div class="st-header" class="navbar-fixed-top">
   <div class="fluid-cols">
@@ -25,18 +26,27 @@
 <!--            </div> -->
 <!--        </div> -->
 <!--     </div> -->
-    
+
     <div class="col-xs-4 col-sm-6 header-icon-btn ">
-      <ul class="st-header__actions text-nowrap">
-        <li class="st-header__act st-spanel__open st-header__notifications" data-tab="#notifications"><i class="fa fa-bell"></i>
-          <div class="st-header__count st-notifications-count"><strong>9</strong></div> <!-- 알람 갯수 99개 최대 설정-->
-        </li>
-        <li class="st-header__act st-spanel__open st-header__settings" data-tab="#settings"><i class="fa fa-cog"></i></li>
-        <li class="st-header__act st-header__user" data-toggle="popup" data-target="#user-popup"><i class="fa fa-user"></i>
-
-			<%@ include file="/WEB-INF/jsp/include/mypopup.jsp" %>
-
-        </li>
+      <ul class="st-header__actions text-nowrap">        
+	    <c:choose>
+	    	<c:when test="${empty user}">
+	    		<a href="${pageContext.request.contextPath}/login/loginform.do" style="color:white !important;">
+			        <li class="st-header__act">
+			       		로그인 <i class="fa fa-sign-out"></i>
+			        </li>		
+		        </a>	    		
+	    	</c:when>
+	    	<c:otherwise>
+	    		<li class="st-header__act st-spanel__open st-header__notifications" data-tab="#notifications"><i class="fa fa-bell"></i>
+		          <div class="st-header__count st-notifications-count"><strong>9</strong></div> <!-- 알람 갯수 99개 최대 설정-->
+		        </li>
+		        <li class="st-header__act st-spanel__open st-header__settings" data-tab="#settings"><i class="fa fa-cog"></i></li>
+		        <li class="st-header__act st-header__user" data-toggle="popup" data-target="#user-popup"><i class="fa fa-user"></i>
+					<%@ include file="/WEB-INF/jsp/include/mypopup.jsp" %>
+		        </li>	
+	    	</c:otherwise>
+	    </c:choose>
       </ul>
     </div>
     

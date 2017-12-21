@@ -24,7 +24,10 @@
 
 <!-- 제이쿼리 UI -->
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-	
+
+<!-- <script src="${pageContext.request.contextPath}/lib/mobile-touch/touch-punch.min.js"></script> -->
+
+
 
 <!-- 종인 정의 CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/include/basic-css.css">
