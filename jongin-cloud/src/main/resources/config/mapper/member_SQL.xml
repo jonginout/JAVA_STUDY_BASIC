@@ -4,79 +4,37 @@
 <!-- 매퍼 연결 -->
 <mapper namespace="com.cloud.repository.mapper.MemberMapper">
 
-<!-- 	<resultMap id="memberMap" type="member"> -->
-<!-- 		<result column="member_no" property="memberNo" /> -->
-<!-- 		<result column="id" property="id" /> -->
-<!-- 		<result column="pass" property="pass" /> -->
-<!-- 		<result column="name" property="name" /> -->
-<!-- 		<result column="email" property="email" /> -->
-<!-- 		<result column="reg_date" property="reg_date" /> -->
-<!-- 		<result column="address" property="address" /> -->
-<!-- 		<result column="status" property="status" /> -->
-<!-- 		<result column="tocken_no" property="tockenNo" /> -->
-<!-- 		<result column="gender" property="gender" /> -->
-<!-- 	</resultMap> -->
+	<resultMap id="memberMap" type="member">
+		<result column="member_no" property="memberNo" />
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="email" property="email" />
+		<result column="pass" property="pass" />
+		<result column="address" property="address" />
+		<result column="reg_date" property="regDate" />
+		<result column="max_volume" property="maxVolume" />
+		<result column="profile_img" property="profileImg" />
+	</resultMap>
 	
-<!-- 	<resultMap id="profileMap" type="profile"> -->
-<!-- 		<result column="file_no" property="fileNo" /> -->
-<!-- 		<result column="member_no" property="memberNo" /> -->
-<!-- 		<result column="file_path" property="filePath" /> -->
-<!-- 		<result column="ori_name" property="oriName" /> -->
-<!-- 		<result column="system_name" property="systemName" /> -->
-<!-- 		<result column="file_size" property="fileSize" /> -->
-<!-- 	</resultMap> -->
+	<select id="idChk" parameterType="string" resultType="int">
+		select
+			count(id)
+		from members
+			where id = #{id}
+	</select>
 	
-<!-- 	<insert id="tockenInsert" parameterType="tocken"> -->
-<!-- 		INSERT INTO sns.tockens -->
-<!-- 		(tocken_no, id, delete_date) -->
-<!-- 		VALUES -->
-<!-- 		(#{tockenNo}, #{id}, #{deleteDate}) -->
-<!-- 	</insert> -->
-	
-<!-- 	<insert id="memberInsert" parameterType="member"> -->
-<!-- 		insert into sns.members -->
-<!-- 		(id, pass, name, email, reg_date, adress, gender, tocken_no) -->
-<!-- 		valuse -->
-<!-- 		(#{id}, #{pass}, #{name}, #{email}, now(), #{adress}, #{gender}, #{tockenNo}) -->
-<!-- 	</insert> -->
-	
-<!-- 	<insert id="profileInsert" parameterType="profile"> -->
-<!-- 		insert into sns.profile -->
-<!-- 		(member_no, file_path, ori_name, system_name, file_size) -->
-<!-- 		VALUES -->
-<!-- 		(#{memberNo}, #{filePath}, #{oriName}, #{systemName}, #{fileSize}) -->
-<!-- 	</insert> -->
-	
-<!-- 	<select id="getSequence" resultType="int"> -->
-<!-- 		SELECT last_insert_id((max(member_no)+1)) FROM sns.members -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="isTocken" parameterType="String" resultMap="memberMap"> -->
-<!-- 		SELECT *  -->
-<!-- 		 FROM -->
-<!-- 		  sns.members -->
-<!-- 		WHERE -->
-<!-- 		 status='WAIT' AND tocken_no=#{tokenNo} -->
-<!-- 	</select> -->
-	
-<!-- 	<update id="tockenSuc" parameterType="member"> -->
-<!-- 		UPDATE sns.members SET -->
-<!-- 		status=#{status} -->
-<!-- 		WHERE member_no=#{memberNo} -->
-<!-- 	</update> -->
-	
-<!-- 	<select id="login" parameterType="member" resultMap="memberMap"> -->
-<!-- 		SELECT * -->
-<!-- 		 FROM sns.members -->
-<!-- 		WHERE id=#{id} AND pass=#{pass} -->
-<!-- 	</select> -->
-	
-<!-- 	<select id="getProfile" parameterType="member" resultMap="profileMap"> -->
-<!-- 		select * -->
-<!-- 			from profile -->
-<!-- 		where member_no = #{memberNo} -->
-<!-- 	</select> -->
-	
+	<insert id="memberInsert" parameterType="member">
+		insert into members
+			(id, pass, name, email, reg_date, address, profile_img)
+		values
+			(#{id}, #{pass}, #{name}, #{email}, now(), #{address}, #{profileImg})
+	</insert>
+
+	<select id="memberLogin" parameterType="member" resultMap="memberMap">
+		select *
+			from members
+		where id = #{id} and pass = #{pass}
+	</select>
 	
 </mapper>
 

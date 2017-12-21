@@ -7,8 +7,6 @@
 </head>
 <body>
 
-<h1>네이버 로그인 처리중...</h1>
-
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script type="text/javascript">
 	const nowHost = location.hostname.toLowerCase();	
@@ -54,13 +52,14 @@
 	function signupChk(user) {
 		$.ajax({
 			type : "post",
-			url : "${pageContext.request.contextPath}/login/login.do",
+			url : "${pageContext.request.contextPath}/login/login.json",
 			dataType : "json",
 			data : {
 				id : user.nickname,
 				name : user.name,
 				email : user.email,
-				profileImg : user.profile_image
+				profileImg : user.profile_image,
+				loginType : "NAVER"
 			},
 			dataType : "json",
 			success : function (data) {

@@ -1,5 +1,4 @@
-const nowHost = location.hostname.toLowerCase();
-const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
+
 
 
 
@@ -112,14 +111,20 @@ function showChildList(node) {
 
 // 트리 가져오기
 function dirTree() {
+
+	if(userId==null){
+		return false;
+	}
+
 	console.log("트리 로딩 완료..")
+
     $("#tree").dynatree({
       title: "김종인님의 클라우드",
       fx: { height: "toggle", duration: 200 },
       autoFocus: false,
       initAjax: {
         url: projectURL+"/cloud/list.json",
-        data : {user:"jongin"}
+        data : {user:userId}
         },
 // onPostInit: function(isReloading, isError) {
 // alert(isReloading)
@@ -197,7 +202,7 @@ function dirTree() {
             var hitModeChk = false;
             
             if(hitMode=="before" || hitMode=="after"){
-            	if(node.data.title=="jongin"){
+            	if(node.data.title==userId){
             		alert("루트 폴더 밖으로는 옮길 수 없습니다.")
             		return false;
             	}

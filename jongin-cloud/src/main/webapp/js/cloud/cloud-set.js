@@ -1,8 +1,17 @@
 //클라우드 제어 js
 
+$(".progress-bar").trigger("click")
 
-$("#addVolume").click(function(){
-
+$(".progress").click(function() {
+	//프로그레스바
+	var maxSize = parseInt($(".progress-bar").attr("aria-valuemax"));
+	var nowSize = parseInt($("#tree").dynatree("getTree").getNodeByKey("_2").data.size)
+	var x = 100/(maxSize/1024/1024);
+	var percent = Math.round((nowSize/1024/1024)*x);
+	$(".progress-bar").attr("aria-valuenow", nowSize/1024/1024)
+					  .attr("aria-valuemax", maxSize/1024/1024)
+					  .css("width", percent+"%")
+					  .html(percent+"% 사용중")
 })
 
 // 파일 선택시 빨강 포커스
@@ -124,7 +133,7 @@ function showFileDetail(key) {
 	
 	var html = "";
 	
-	if(selectNode.title!="jongin"){
+	if(selectNode.title!=userId){
 		html = '<div class="btn-group btn-group-justified">\
 		  			  <div class="btn-group file-delete">\
 				    	<button type="button" class="btn btn-default">\
@@ -188,7 +197,7 @@ function showFileDetail(key) {
 		}
 	}
 
-	if(selectNode.title!="jongin"){
+	if(selectNode.title!=userId){
 		html += `<br>
 		<form id="form-comment">
 			<div class="form-group" style="margin-bottom:-1px;">

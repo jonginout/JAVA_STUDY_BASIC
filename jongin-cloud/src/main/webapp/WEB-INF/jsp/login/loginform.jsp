@@ -41,11 +41,13 @@ pageEncoding="UTF-8"%>
 							</div>
 							<div class="st-panel__content">
 								<form class="form" id="login-form" action="${pageContext.request.contextPath}/login/login.do" method="post">
-									<div class="form-group">
+									<div class="form-group has-error has-feedback">
 										<input name="id" id="id" class="form-control" type="text" placeholder="아이디">
+										<span class="glyphicon glyphicon-remove form-control-feedback"></span>
 									</div>
-									<div class="form-group">
+									<div class="form-group has-error has-feedback">
 										<input name="pass" id="pass" class="form-control" type="password" placeholder="비밀번호">
+										<span class="glyphicon glyphicon-remove form-control-feedback"></span>
 									</div>
 									<div class="form-group text-center">
 										<button id="login-formBtn" type="button" class="btn btn-primary btn-md">로그인</button>
@@ -71,7 +73,6 @@ pageEncoding="UTF-8"%>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 
 <script type="text/javascript">
-	const nowHost = location.hostname.toLowerCase();	
 	var localCallbackUrl = "http://localhost:8080/jongin-cloud/login/naverLogin.do";
 	var Cafe24CallbackUrl = "http://chopo01.cafe24.com/login/naverLogin.do";
 	const callbackUrl = nowHost=='localhost' ? localCallbackUrl : Cafe24CallbackUrl;
@@ -87,6 +88,52 @@ pageEncoding="UTF-8"%>
    /* 설정정보를 초기화하고 연동을 준비 */
 	naverLogin.init();
 	
+</script>
+
+
+<script>
+	
+	var isNull = true;
+	$("#id,#pass").on("keyup", function () {
+		var len = $(this).val().length;
+		if(len>0){
+			$(".has-feedback").removeClass("has-error").addClass("has-success");
+			$(".has-feedback>span").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+			isNull = false;
+		}else {
+			$(".has-feedback").removeClass("has-success").addClass("has-error");			
+			$(".has-feedback>span").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+			isNull = true;
+		}
+	})
+	
+	$("#login-formBtn").click(function () {
+		if(!isNull){
+			$.ajax({
+				type : "POST",
+				url : projectURL+"/login/login.json",
+				data : {
+					id : $("#id").val(),
+					pass : $("#pass").val()
+				},
+				success : function (data) {
+					if(!data.result){
+						alert("일치하는 회원정보가 없습니다.")	
+					}else {
+						location.href = projectURL;
+					}
+				},
+				error : function () {					
+					alert("로그인 에러")	
+				}
+			})
+		}
+	})
+	
+	$("#signup-formBtn").click(function(){
+		location.href = projectURL+"/login/signupform.do";
+	})
+
 </script>
 
 </body>

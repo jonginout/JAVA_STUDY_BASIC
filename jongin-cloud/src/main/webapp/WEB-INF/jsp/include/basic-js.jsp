@@ -23,6 +23,7 @@
 
 	<!-- 김종인 데이트 라이브러리 -->
 	<script src="${pageContext.request.contextPath}/js/common/date.format.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/waitme/waitMe.js"></script>
 
 
     

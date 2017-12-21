@@ -1,6 +1,9 @@
 package com.cloud.repository.vo;
 
 import java.sql.Date;
+import java.util.Arrays;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class Member {
 
@@ -9,11 +12,29 @@ public class Member {
 	private String name;
 	private String email;
 	private String pass;
-	private String adress;
-	private Date reg_date;
+	private String address;
+	private Date regDate;
 	private Integer maxVolume;
-	private String tel;
 	private String profileImg;
+	
+	/////////////////////////////////
+	
+	private String loginType;
+
+	public String getLoginType() {
+		return loginType;
+	}
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
+	}
+	private MultipartFile[] images;
+	public MultipartFile[] getImages() {
+		return images;
+	}
+	public void setImages(MultipartFile[] images) {
+		this.images = images;
+	}
+	/////////////////////////////////
 	public int getMemberNo() {
 		return memberNo;
 	}
@@ -44,29 +65,24 @@ public class Member {
 	public void setPass(String pass) {
 		this.pass = pass;
 	}
-	public String getAdress() {
-		return adress;
+	public String getAddress() {
+		return address;
 	}
-	public void setAdress(String adress) {
-		this.adress = adress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	public Date getReg_date() {
-		return reg_date;
+
+	public Date getRegDate() {
+		return regDate;
 	}
-	public void setReg_date(Date reg_date) {
-		this.reg_date = reg_date;
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
 	}
 	public Integer getMaxVolume() {
 		return maxVolume;
 	}
 	public void setMaxVolume(Integer maxVolume) {
 		this.maxVolume = maxVolume;
-	}
-	public String getTel() {
-		return tel;
-	}
-	public void setTel(String tel) {
-		this.tel = tel;
 	}
 	public String getProfileImg() {
 		return profileImg;
@@ -77,9 +93,11 @@ public class Member {
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", id=" + id + ", name=" + name + ", email=" + email + ", pass=" + pass
-				+ ", adress=" + adress + ", reg_date=" + reg_date + ", maxVolume=" + maxVolume + ", tel=" + tel
-				+ ", profileImg=" + profileImg + "]";
+				+ ", address=" + address + ", regDate=" + regDate + ", maxVolume=" + maxVolume + ", profileImg="
+				+ profileImg + ", loginType=" + loginType + ", images=" + Arrays.toString(images) + "]";
 	}
+	
+	
 	
 	
 	

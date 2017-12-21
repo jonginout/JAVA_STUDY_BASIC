@@ -29,18 +29,6 @@
 				
 					<form class="form-horizontal pay-info">
 						<div class="form-group">
-							<label class="col-sm-2 control-label">성명</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="name" placeholder="이름">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">이메일</label>
-							<div class="col-sm-10">
-								<input type="email" class="form-control" name="email" placeholder="E-mail">
-							</div>
-						</div>
-						<div class="form-group">
 							<label class="col-sm-2 control-label">추가용량</label>				
 							<div class="col-sm-10">
 								<select class="form-control" name="volume">
@@ -57,7 +45,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">전화번호</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="tel" placeholder="전화번호 - 제외">
+								<input type="text" class="form-control" name="tel" placeholder="전화번호 - 제외" >
 							</div>
 						</div>
 						<br />

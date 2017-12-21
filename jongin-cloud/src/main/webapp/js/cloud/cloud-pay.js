@@ -12,19 +12,10 @@ $("body").on("keyup", ".pay-info input[name=tel]", function(){
 
 $("body").on("click", "#kPay-btn", function(){
 
-	var fd = {
-		name : $(".pay-info input[name=name]").val(),
-		email : $(".pay-info input[name=email]").val(),
-		volume : $(".pay-info select[name=volume]").val(),
-		tel : $(".pay-info input[name=tel]").val()
-	}	
-
-	for (var key in fd) {
-		console.log(fd[key].length<0)
-		if(fd[key].length<1){
-			alert("결제정보를 옳바르게 입력하시오.");
-			return;
-		}
+	
+	if(!$(".pay-info input[name=tel]").val().length<1){
+		alert("결제정보를 옳바르게 입력하시오.");
+		return;
 	}
 
 	$(".pay-close").trigger("click");

@@ -27,7 +27,8 @@
 
 <!-- <script src="${pageContext.request.contextPath}/lib/mobile-touch/touch-punch.min.js"></script> -->
 
-
+<!-- 웨잇미 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/waitme/waitMe.css">
 
 <!-- 종인 정의 CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/include/basic-css.css">
@@ -37,4 +38,26 @@
 
 <title>종인 클라우드</title>
 
+<script type="text/javascript">
+const nowHost = location.hostname.toLowerCase();
+const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 
+	$(function () {
+		$(document)
+		.ajaxStart(function () {
+		    $("body").waitMe({
+		        effect: 'bounce',
+		        text : '로딩중 입니다..',
+		        bg: 'rgba(255,255,255,0.7)', //바탕화면 약간 어둡
+		        color: '#000'
+		    });
+		})
+		.ajaxStop(function () {
+		    $("body").waitMe("hide");
+		})
+	});
+
+	const userId = "${userId}"=="" ? null : "${userId}"
+	console.log(userId)
+
+</script>

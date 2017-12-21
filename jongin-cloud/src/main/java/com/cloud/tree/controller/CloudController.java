@@ -126,9 +126,11 @@ public class CloudController {
 		File f = new File(path);
 		if(!f.exists()) {
 			f.mkdirs();
+			System.out.println("new"+user);
 		}
 		//폴더 만들기
 		
+		System.out.println("o>"+user);
 
 		
 		List<Tree> trees = pullFile(path);

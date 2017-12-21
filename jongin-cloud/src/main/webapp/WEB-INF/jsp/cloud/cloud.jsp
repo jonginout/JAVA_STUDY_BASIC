@@ -40,43 +40,49 @@ pageEncoding="UTF-8"%>
 	
               <!------------------------------------------------------------>
               <!------------------------------------------------------------>
-    
+    				
                 	<div class="container" id="cloud-content">
-						<div class="button-box">
-							<button class="btn btn-default btn-md" id="reload">
-								<i class="fa fa-refresh" aria-hidden="true"></i> 
-								클라우드 새로고침
-							</button>
-							<button class="btn btn-default btn-md" id="newFolder">
-								<i class="fa fa-folder-o" aria-hidden="true"></i>
-								현 위치에 새폴더
-							</button>
-							<button class="btn btn-default btn-md" id="newCode">
-								<i class="fa fa-file-o" aria-hidden="true"></i>
-								현 위치에 새파일
-							</button>			
-							<button class="btn btn-default btn-md" data-toggle="modal" data-target="#addVolume">
-								<i class="fa fa-hdd-o" aria-hidden="true"></i> 
-								용량추가
-							</button>	
-						</div>
-						<form id="uploadForm" method="post" enctype="multipart/form-data">
-							<input type="hidden" name="uploadPath" value=""/>
-							<input type="file" name="files" multiple="multiple">
-							<button type="button">업로드</button>
-						</form>
-						
-						<div id="tree"></div>
-				
-						<div class="row detail-box">
-							<div class="hidden-xs col-sm-4 file-list">
-								<div id="nowList"></div>
+	    				<c:if test="${!empty user}">
+
+							<div class="button-box">
+								<button class="btn btn-default btn-md" id="reload">
+									<i class="fa fa-refresh" aria-hidden="true"></i> 
+									클라우드 새로고침
+								</button>
+								<button class="btn btn-default btn-md" id="newFolder">
+									<i class="fa fa-folder-o" aria-hidden="true"></i>
+									현 위치에 새폴더
+								</button>
+								<button class="btn btn-default btn-md" id="newCode">
+									<i class="fa fa-file-o" aria-hidden="true"></i>
+									현 위치에 새파일
+								</button>			
+								<button class="btn btn-default btn-md" data-toggle="modal" data-target="#addVolume">
+									<i class="fa fa-hdd-o" aria-hidden="true"></i> 
+									용량추가
+								</button>	
 							</div>
-							<div class="col-xs-12 col-sm-8 file-detail">
-								<div id="detailFile" data-key=""></div>
+							<form id="uploadForm" method="post" enctype="multipart/form-data">
+								<input type="hidden" name="uploadPath" value=""/>
+								<input type="file" name="files" multiple="multiple">
+								<button type="button">업로드</button>
+							</form>
+							
+							<div id="tree"></div>
+
+							<div class="progress" style="margin: 10px 0px 10px 0px;">
+								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="${user.maxVolume}" style="width: 0%;">0%</div>
 							</div>
-						</div>
-				
+					
+							<div class="row detail-box">
+								<div class="hidden-xs col-sm-4 file-list">
+									<div id="nowList"></div>
+								</div>
+								<div class="col-xs-12 col-sm-8 file-detail">
+									<div id="detailFile" data-key=""></div>
+								</div>
+							</div>
+	    				</c:if>
 					</div>
     
               <!------------------------------------------------------------>

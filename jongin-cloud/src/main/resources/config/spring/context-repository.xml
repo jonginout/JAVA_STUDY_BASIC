@@ -25,7 +25,7 @@
 	<!-- !!DBCP »ç¿ë -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://chopo01.cafe24.com:3306/sns?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"></property>
+        <property name="url" value="jdbc:mysql://183.111.183.101:3306/chopo01?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"></property>
         <property name="username" value="chopo01"></property>
         <property name="password" value="chvy996812"></property>
     </bean>

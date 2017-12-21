@@ -6,10 +6,18 @@
 	<div class="st-userpopup__cont">
 		<div class="st-userpopup__main">
 			<div class="st-userpopup__photo">
-				<div class="st-userpopup__img"
-					style="background-image: url('${user.profileImg}');"></div>
-				</div>
-				
+				<c:choose>
+					<c:when test="${user.pass=='NAVER'}">
+						<div class="st-userpopup__img"
+							style="background-image: url('${user.profileImg}');"></div>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="st-userpopup__img"
+							style="background-image: url('${pageContext.request.contextPath}/common/down.do?ext=img&path=${user.profileImg}');"></div>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			<div class="st-userpopup__info">
 				<div class="st-userpopup__name text-ellipsis">
 					${user.name} <small>(${user.id})</small>
