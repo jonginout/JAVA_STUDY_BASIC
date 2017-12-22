@@ -20,52 +20,52 @@
         <div class="st-spanel__scroll scrollbar">
           <div class="st-settings" id="app-settings">
             <div class="st-settings__list">
-              <div class="st-settings__item">
+              <a class="st-settings__item">
                 <div class="st-settings__row">
                   <div class="st-settings__label"><b>앱 설정</b></div>
                   <div class="st-settings__control"><i class="fa fa-spin fa-circle-o-notch st-settings__loader"></i></div>
                 </div>
-              </div>
-              <div class="st-settings__item">
+              </a>
+              <a class="st-settings__item">
                 <div class="st-settings__row">
                   <div class="st-settings__label">온라인 모드<!-- 오프라인 모드 --></div>
                   <div class="st-settings__control">
                     <input id="app-settings__site" type="checkbox" name="site" checked="checked">
                   </div>
                 </div>
-              </div>
-              <div class="st-settings__item">
+              </a>
+              <a class="st-settings__item" href="${pageContext.request.contextPath}/cloud/cloud.do">
                 <div class="st-settings__row">
                   <div class="st-settings__label">
                   	내 클라우드 <i class="fa fa-cloud-download"></i>
                   </div>
                   <div class="st-settings__control text-nowrap"><i class="fa fa-angle-right st-settings__ico"></i></div>
                 </div>
-              </div>
-              <div class="st-settings__item">
+              </a>
+              <a class="st-settings__item">
                 <div class="st-settings__row">
                   <div class="st-settings__label">
-                  	이모티콘
+                  	타임라인
                   </div>
                   <div class="st-settings__control text-nowrap"><i class="fa fa-angle-right st-settings__ico"></i></div>
                 </div>
-              </div>
-              <div class="st-settings__item">
+              </a>
+              <a class="st-settings__item">
                 <div class="st-settings__row">
                   <div class="st-settings__label">
-                    채팅목록
+                    문의하기
                   </div>
                   <div class="st-settings__control text-nowrap"><i class="fa fa-angle-right st-settings__ico"></i></div>
                 </div>
-              </div>
-              <div class="st-settings__item">
+              </a>
+              <a class="st-settings__item" href="">
                 <div class="st-settings__row">
                   <div class="st-settings__label">
-                    내 정보 수정
+                    INFORMATION
                   </div>
                   <div class="st-settings__control text-nowrap"><i class="fa fa-angle-right st-settings__ico"></i></div>
                 </div>
-              </div>
+              </a>
             </div>
           </div>
 

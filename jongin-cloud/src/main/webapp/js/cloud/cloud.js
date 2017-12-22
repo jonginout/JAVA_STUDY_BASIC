@@ -37,12 +37,16 @@ var movieFileArr = ["mp4", "avi", "mkv", "wmv"];
 // 압축파일 사용가능 확장자
 var zipFileArr = ["zip", "alz", "egg"];
 
+var rootNode = {};
+
 // 현재 active된 경로
 var nowNode = "";
 // 리네임
 var rename = "";
 
 var editor;
+
+var nowVoluemSize = 0;
 
 
 // 왼쪽 파일 폴더 리스트
@@ -112,6 +116,7 @@ function showChildList(node) {
 // 트리 가져오기
 function dirTree() {
 
+	// 로그인 체크
 	if(userId==null){
 		return false;
 	}
@@ -124,11 +129,13 @@ function dirTree() {
       autoFocus: false,
       initAjax: {
         url: projectURL+"/cloud/list.json",
-        data : {user:userId}
+		data : {user:userId},
         },
-// onPostInit: function(isReloading, isError) {
-// alert(isReloading)
-// },
+		onPostInit: function(isReloading, isError) {
+			//용량 체크!
+			rootNode = $("#tree").dynatree("getTree").getNodeByKey("_2").data
+			volumeCheck($("#tree").dynatree("getTree").getNodeByKey("_2").data.size);
+		},
       onActivate: function(node) {
     	console.log(node)
     	showChildList(node);
@@ -139,13 +146,13 @@ function dirTree() {
         node.appendAjax({
           url: projectURL+"/cloud/sublist.json",
           data : { path : node.data.path },
-          debugLazyDelay: 200, 
+		  debugLazyDelay: 200,
           success : function (node) {
         	  console.log(node)
         	  showChildList(node)
         	  showFileDetail(node.data.key)
         	  focusFile($(".file[data-key="+node.data.key+"]"));
-        	  
+			  
         	  // /////////////////////////파일명수정
         	  if(node.childList){	        		  
 	        	  for (let ch of node.childList) {
@@ -227,6 +234,9 @@ function dirTree() {
 				case 113: // [F2]
 					$(".file-rename").trigger("click")
 					return false;
+				case 46: // [Del]
+				$(".file-delete").trigger("click")
+					return false;			
 			}
 		},
       
@@ -234,7 +244,9 @@ function dirTree() {
 // },
       minExpandLevel: 2,
       debugLevel: 0
-    });
+	});
+	
+
 }
 
 

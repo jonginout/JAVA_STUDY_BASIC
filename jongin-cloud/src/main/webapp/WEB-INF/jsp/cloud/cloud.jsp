@@ -70,8 +70,10 @@ pageEncoding="UTF-8"%>
 							
 							<div id="tree"></div>
 
-							<div class="progress" style="margin: 10px 0px 10px 0px;">
-								<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="${user.maxVolume}" style="width: 0%;">0%</div>
+							<div class="progress">
+								<div class="progress-bar progress-bar-striped active progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="${user.maxVolume/1024/1024}" style="width: 0%;">
+									<span id="percent">0%</span>
+								</div>
 							</div>
 					
 							<div class="row detail-box">
@@ -88,13 +90,14 @@ pageEncoding="UTF-8"%>
               <!------------------------------------------------------------>
               <!------------------------------------------------------------>
 
-      	<%@ include file="/WEB-INF/jsp/include/basic-js.jsp" %>
-
-  		
-  		
+		  <%@ include file="/WEB-INF/jsp/include/basic-js.jsp" %>
+		  
+<!-- 클립보드 -->
+<script src="${pageContext.request.contextPath}/lib/clipboard/clipboard.min.js"></script>
 <!-- 클라우드 제어 -->
 <script src="${pageContext.request.contextPath}/js/cloud/cloud-set.js"></script>
-
+<!-- url 단축  -->
+<script src="https://apis.google.com/js/client.js?onload=load"></script>
 <!-- 모달 -->
 <%@ include file="/WEB-INF/jsp/cloud/modal/cloud-modal.jsp" %>
 

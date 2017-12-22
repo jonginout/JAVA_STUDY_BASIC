@@ -43,8 +43,7 @@ const nowHost = location.hostname.toLowerCase();
 const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 
 	$(function () {
-		$(document)
-		.ajaxStart(function () {
+		$(document).ajaxStart(function () {
 		    $("body").waitMe({
 		        effect: 'bounce',
 		        text : '로딩중 입니다..',

@@ -25,9 +25,9 @@
 	<!-- !!DBCP 사용 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-        <property name="url" value="jdbc:mysql://183.111.183.101:3306/chopo01?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"></property>
-        <property name="username" value="chopo01"></property>
-        <property name="password" value="chvy996812"></property>
+        <property name="url" value="jdbc:mysql://35.201.240.147:3306/cloud?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;useSSL=false&amp;serverTimezone=UTC"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="root"></property>
     </bean>
 	
 	<!-- 스프링에서 마이바티스를 연결하는 부분 -->

@@ -50,3 +50,7 @@
 	background: #f2f2f2;
 	cursor: pointer;
 }
+.st-settings__item{
+    text-decoration: none !important;
+    color: #81888b !important;
+}

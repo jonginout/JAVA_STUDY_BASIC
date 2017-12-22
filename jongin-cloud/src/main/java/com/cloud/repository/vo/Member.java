@@ -16,17 +16,10 @@ public class Member {
 	private Date regDate;
 	private Integer maxVolume;
 	private String profileImg;
+	private String type;
 	
 	/////////////////////////////////
 	
-	private String loginType;
-
-	public String getLoginType() {
-		return loginType;
-	}
-	public void setLoginType(String loginType) {
-		this.loginType = loginType;
-	}
 	private MultipartFile[] images;
 	public MultipartFile[] getImages() {
 		return images;
@@ -90,15 +83,18 @@ public class Member {
 	public void setProfileImg(String profileImg) {
 		this.profileImg = profileImg;
 	}
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", id=" + id + ", name=" + name + ", email=" + email + ", pass=" + pass
 				+ ", address=" + address + ", regDate=" + regDate + ", maxVolume=" + maxVolume + ", profileImg="
-				+ profileImg + ", loginType=" + loginType + ", images=" + Arrays.toString(images) + "]";
+				+ profileImg + ", type=" + type + ", images=" + Arrays.toString(images) + "]";
 	}
-	
-	
-	
-	
-	
+
 }

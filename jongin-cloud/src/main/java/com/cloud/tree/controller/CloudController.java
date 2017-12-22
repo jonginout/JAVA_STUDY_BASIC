@@ -1,9 +1,13 @@
 package com.cloud.tree.controller;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -66,10 +70,12 @@ public class CloudController {
                 if (ff.isFile()) {
                 	System.out.println("파일 : "+ff.getName());
             		tree.setExt(FilenameUtils.getExtension(ff.getName()));
+            		tree.setSize(ff.length());
                 	
                 }else if (ff.isDirectory()) {
                 	tree.setIsFolder(true);
                 	tree.setIsLazy(true);
+                	tree.setSize(folderSize(ff));
                 	System.out.println("폴더 : "+ff.getName());
                 	
                     //pullFile(ff.toString());
@@ -394,6 +400,6 @@ public class CloudController {
 		
 		return comment;
 	}
-	
+
 	
 }

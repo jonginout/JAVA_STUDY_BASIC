@@ -1,18 +1,39 @@
 //클라우드 제어 js
 
-$(".progress-bar").trigger("click")
+// 클립보드
+$(function(){
+	$(document).ready(function(){
+		var clipboard = new Clipboard('.clipboard');
+	});
+})
 
-$(".progress").click(function() {
+// 프로그레스바 추가
+function volumeCheck(size) {
 	//프로그레스바
 	var maxSize = parseInt($(".progress-bar").attr("aria-valuemax"));
-	var nowSize = parseInt($("#tree").dynatree("getTree").getNodeByKey("_2").data.size)
-	var x = 100/(maxSize/1024/1024);
-	var percent = Math.round((nowSize/1024/1024)*x);
-	$(".progress-bar").attr("aria-valuenow", nowSize/1024/1024)
-					  .attr("aria-valuemax", maxSize/1024/1024)
+	var nowSize = Math.round((parseInt(size))/1024/1024)
+	var x = (100/maxSize);
+	var percent = Math.round(nowSize*x);
+
+	$(".progress-bar").attr("aria-valuenow", nowSize)
+					  .attr("aria-valuemax", maxSize)
 					  .css("width", percent+"%")
-					  .html(percent+"% 사용중")
-})
+	$("#percent").html(percent+"% 사용중")
+
+	if(percent>=50 && percent<90){
+		$(".progress-bar").removeClass("progress-bar-success")
+						  .removeClass("progress-bar-danger")
+						  .addClass("progress-bar-warning")
+	}else if(percent>=90){
+		$(".progress-bar").removeClass("progress-bar-warning")
+						  .removeClass("progress-bar-success")
+						  .addClass("progress-bar-danger")
+	}else{
+		$(".progress-bar").removeClass("progress-bar-warning")
+						  .removeClass("progress-bar-danger")
+						  .addClass("progress-bar-success")
+	}
+};
 
 // 파일 선택시 빨강 포커스
 function focusFile(ele) {
@@ -124,7 +145,6 @@ function lazyReloadTarget(key) {
 	}
 };
 
-
 // 우측 디테일 부분
 function showFileDetail(key) {
 	$("#detailFile").attr({"data-key":key})
@@ -135,24 +155,24 @@ function showFileDetail(key) {
 	
 	if(selectNode.title!=userId){
 		html = '<div class="btn-group btn-group-justified">\
-		  			  <div class="btn-group file-delete">\
-				    	<button type="button" class="btn btn-default">\
-				    		<i class="fa fa-trash" aria-hidden="true"></i> 삭제\
-		  			    </button>\
-				  	  </div>\
-					  <div class="btn-group file-rename">\
-					    <button type="button" class="btn btn-default">\
-					    	<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 이름 변경\
+					<div class="btn-group file-delete">\
+						<button type="button" class="btn btn-default">\
+							<i class="fa fa-trash" aria-hidden="true"></i> 삭제\
 						</button>\
-					  </div>\
-					  <div class="btn-group file-down">\
-					    <button type="button" class="btn btn-default">\
+					</div>\
+					<div class="btn-group file-rename">\
+						<button type="button" class="btn btn-default">\
+							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 이름 변경\
+						</button>\
+					</div>\
+					<div class="btn-group file-down">\
+						<button type="button" class="btn btn-default">\
 							<i class="fa fa-download" aria-hidden="true"></i> 다운로드\
 						</button>\
-					  </div>\
-					 </div>';
+					</div>\
+				</div>';
 	};
-				
+
 	// 파일명
 	html += "<h1>\
 				<span id='fileName'>"+selectNode.title+"</span>\
@@ -206,12 +226,30 @@ function showFileDetail(key) {
 			</div>
 			<button type="button" class="btn btn-block btn btn-danger btn-sm comment-btn">
 				<i class="fa fa-comments-o" aria-hidden="true"></i> 
-				코멘트 수정 완료
+				코멘트 수정
 			</button>
 		</form>
 		`;
 	}else{
 		html += '<br><h1>Root 디렉토리</h1>'
+	}
+
+					
+	if(!selectNode.isFolder){
+		
+		html += `<br><div class="input-group">
+					<input id="copy" type="text" class="form-control" readonly>
+					<span class="input-group-btn">
+					<button class="btn btn-success make-down-link">
+						<i class="fa fa-link" aria-hidden="true"></i>
+						다운링크 생성
+					</button>					
+					<button class="btn btn-success clipboard clipboard-btn" type="button" data-clipboard-target="#copy" style="display:none">
+						<i class="fa fa-clone" aria-hidden="true"></i> 
+						다운링크 복사
+					</button>
+					</span>
+				</div>`;
 	}
 	
 	$("#detailFile").html(html);
@@ -243,6 +281,12 @@ $('body').on('keydown keyup', '#comment-file' , function () {
 
 // 코멘트 저장하기
 $("body").on("click", "#form-comment>button", function(){
+
+	if($("#comment-file").val().length<3){
+		alert("코멘트를 3자 이상 입력하세요!")
+		return false;
+	}
+
 	console.log(nowNode.title)
 	var comment = $("#comment-file").val();
 	$.ajax({
@@ -270,6 +314,8 @@ $("body").on("click", ".file-delete", function () {
 	var key = $(this).parents("#detailFile").attr("data-key");
 	var parentKey = $("#tree").dynatree("getTree").getNodeByKey(key).parent.data.key;
 	var path = $("#tree").dynatree("getTree").getNodeByKey(key).data.path;
+	var nowSize = $("#tree").dynatree("getActiveNode").data.size;
+	
 	$.ajax({
 		type : "POST",
 		url : projectURL+"/cloud/filedelete.json",
@@ -278,6 +324,10 @@ $("body").on("click", ".file-delete", function () {
 			alert("삭제 성공");
 			lazyReloadTarget(parentKey);
 			showFileDetail(parentKey)
+
+			//용량 삭제
+			rootNode.size = rootNode.size - nowSize;
+			volumeCheck(rootNode.size)
 		},
 		error : function () {
 			alert("삭제 실패!!");
@@ -363,7 +413,6 @@ $("#uploadForm>button").click(function () {
 	var fd = new FormData($("#uploadForm")[0]);
 
 	//용량체크
-	var rootNode = $("#tree").dynatree("getTree").getNodeByKey("_2").data;
 	if(rootNode.size + fileSizeChk(fd)>rootNode.maxSize){
 		if(confirm("용량초과!! 용량추가 하시겠습니까?")){
 			$("button[data-target='#addVolume']").trigger("click");
@@ -389,6 +438,8 @@ $("#uploadForm>button").click(function () {
 			lazyReloadActive();
 			//용량 더하기
 			rootNode.size = rootNode.size + fileSizeChk(fd);
+
+			volumeCheck(rootNode.size)
 		},
 		error : function () {
 			alert("파일 업로드 실패!!");
@@ -548,7 +599,6 @@ $("body").on("drop", '.file', function (e){
 		}
 
 		//용량체크
-		var rootNode = $("#tree").dynatree("getTree").getNodeByKey("_2").data;
 		if(rootNode.size + fileSizeChk(fd)>rootNode.maxSize){
 			if(confirm("용량초과!! 용량추가 하시겠습니까?")){
 				$("button[data-target='#addVolume']").trigger("click");
@@ -578,6 +628,7 @@ $("body").on("drop", '.file', function (e){
 
 				//용량 더하기
 				rootNode.size = rootNode.size + fileSizeChk(fd);
+				volumeCheck(rootNode.size)
 			},
 			error : function () {
 				alert("파일 업로드 실패!!");
@@ -585,6 +636,33 @@ $("body").on("drop", '.file', function (e){
 		})
 	}
 
-
-	
 });
+
+
+function load() {
+	gapi.client.setApiKey('AIzaSyChPkv0zZP46JBJhHiu2I9_2SoF6XDWcXQ');      
+	gapi.client.load('urlshortener', 'v1',function(){});
+}
+$("body").on("click", ".make-down-link", function(){
+	
+	var path = (nowNode.path).replace(/\\/gi, "/");
+	var ext = nowNode.ext.toLowerCase();
+	var url = window.location.origin+"/"+projectURL+"/common/down.do?ext="+ext+"&path="+path+"&title="+nowNode.title;
+
+	var longURL = url;    
+		var request = gapi.client.urlshortener.url.insert({
+			'resource' : {
+				'longUrl' : longURL
+			}
+		});
+		request.execute(function(response) {
+			if (response.id != null) {
+				$('#copy').val(response.id);
+				$(".make-down-link").hide();
+				$(".clipboard-btn").show();
+			} else {
+				alert("error: creating short url");
+			}
+		});
+
+})
