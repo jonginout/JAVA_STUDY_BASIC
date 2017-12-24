@@ -63,18 +63,20 @@ public class LoginController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("result", false);
 		
-		String loginType = member.getLoginType();
-		
-		if(service.checkId(member.getId())<1) {
-			member.setPass(loginType);
-//			member.setAddress("");
-			service.signup(member);
-			
-			System.out.println("외부 로그인 최초 회원가입!");
-		}
+		String loginType = member.getType();
 		
 		if(loginType!=null) {
+			
 			member.setPass(loginType);
+			
+			if(service.checkId(member.getId())<1) {
+				
+	//			member.setAddress("");
+				service.signup(member);
+				
+				System.out.println("외부 로그인 최초 회원가입!");
+			}
+		
 		}
 		
 		Member user = service.login(member);
@@ -83,9 +85,7 @@ public class LoginController {
 			session.setAttribute("user", user);
 			session.setAttribute("userId", user.getId());
 			map.put("result", true);
-		}
-		
-		if(user==null) {
+		}else {
 			map.put("result", false);
 		}
 		
@@ -107,6 +107,7 @@ public class LoginController {
 		String email = email1+"@"+email2;
 		member.setAddress(adress);
 		member.setEmail(email);
+		member.setType("NORMAL");
 		
 		// root는 공용폴더
 		// path는 실제 경로

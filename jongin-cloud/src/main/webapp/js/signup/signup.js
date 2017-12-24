@@ -220,7 +220,7 @@ function sendSmsKey(tel){
 				sphone1 : "010",
 				sphone2 : "4021",
 				sphone3 : "6749",
-				// testflag : "Y" //테스트
+				testflag : "Y" //테스트
 			},
 			dataType : "json",
 			success : function(data){

@@ -42,6 +42,7 @@
 const nowHost = location.hostname.toLowerCase();
 const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 
+
 	// $(function () {
 	// 	$(document)
 	// 	.ajaxStart(function () {
@@ -56,6 +57,7 @@ const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 	// 	    $("body").waitMe("hide");
 	// 	})
 	// });
+
 
 	const userId = "${userId}"=="" ? null : "${userId}"
 	console.log(userId)

@@ -97,12 +97,12 @@ pageEncoding="UTF-8"%>
 	$("#id,#pass").on("keyup", function () {
 		var len = $(this).val().length;
 		if(len>0){
-			$(".has-feedback").removeClass("has-error").addClass("has-success");
-			$(".has-feedback>span").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+			$(this).parent().removeClass("has-error").addClass("has-success");
+			$(this).next().removeClass("glyphicon-remove").addClass("glyphicon-ok");
 			isNull = false;
 		}else {
-			$(".has-feedback").removeClass("has-success").addClass("has-error");			
-			$(".has-feedback>span").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+			$(this).parent().removeClass("has-success").addClass("has-error");			
+			$(this).next().removeClass("glyphicon-ok").addClass("glyphicon-remove");
 			isNull = true;
 		}
 	})
@@ -120,7 +120,7 @@ pageEncoding="UTF-8"%>
 					if(!data.result){
 						alert("일치하는 회원정보가 없습니다.")	
 					}else {
-						location.href = projectURL;
+						location.href = projectURL+"/";
 					}
 				},
 				error : function () {					

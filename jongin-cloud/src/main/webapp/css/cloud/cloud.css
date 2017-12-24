@@ -65,7 +65,7 @@
 	#kPay-btn:hover{
 		cursor: pointer;
 		opacity: 0.8;
-	}
+	} 
 	.form-err{
 		border: 0.1em solid tomato !important;
 	}
@@ -74,4 +74,18 @@
 	}
 	.form-control:focus {
 		border-color: none !important;
+	}
+	#percent{
+		font-size: 12px !important; 
+	}
+	.progress{
+		margin: 10px 0px 10px 0px;
+		height: 13px;
+		background-color: lightgray;
+	}
+	.progress-bar{
+		line-height : 1 !important;
+	}
+	.down-link-box{
+		margin-top: 15px !important;
 	}

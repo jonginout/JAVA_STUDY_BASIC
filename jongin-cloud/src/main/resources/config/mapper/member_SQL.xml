@@ -14,6 +14,7 @@
 		<result column="reg_date" property="regDate" />
 		<result column="max_volume" property="maxVolume" />
 		<result column="profile_img" property="profileImg" />
+		<result column="type" property="type" />
 	</resultMap>
 
 	<resultMap id="authSmsMap" type="authSms">
@@ -31,9 +32,9 @@
 
 	<insert id="memberInsert" parameterType="member">
 		insert into members
-			(id, pass, name, email, reg_date, address, profile_img)
+			(id, pass, name, email, reg_date, address, profile_img, type)
 		values
-			(#{id}, #{pass}, #{name}, #{email}, now(), #{address}, #{profileImg})
+			(#{id}, #{pass}, #{name}, #{email}, now(), #{address}, #{profileImg}, #{type})
 	</insert>
 
 	<select id="memberLogin" parameterType="member" resultMap="memberMap">

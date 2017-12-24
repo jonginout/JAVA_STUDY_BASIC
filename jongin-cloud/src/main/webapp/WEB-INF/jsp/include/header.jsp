@@ -6,10 +6,10 @@
 <div class="st-header" class="navbar-fixed-top">
   <div class="fluid-cols">
 
-    <div class="col-xs-8 col-sm-6 header-title-btn">
-      <div class="st-header__title">
+    <div class="col-xs-7 col-sm-6 header-title-btn">
+      <div class="st-header__title"> 
       	<span><strong><a href="${pageContext.request.contextPath}/cloud/cloud.do">
-      		CLOUD OF JONGIN <i class="fa fa-cloud-download" aria-hidden="true"></i>
+      		CLOUD  Z <i class="fa fa-cloud-download" aria-hidden="true"></i>
       	</a></strong></span>
       </div>
     </div>
@@ -27,7 +27,7 @@
 <!--        </div> -->
 <!--     </div> -->
 
-    <div class="col-xs-4 col-sm-6 header-icon-btn ">
+    <div class="col-xs-5 col-sm-6 header-icon-btn ">
       <ul class="st-header__actions text-nowrap">        
 	    <c:choose>
 	    	<c:when test="${empty user}">

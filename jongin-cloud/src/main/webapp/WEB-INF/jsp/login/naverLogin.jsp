@@ -53,19 +53,23 @@
 		$.ajax({
 			type : "post",
 			url : "${pageContext.request.contextPath}/login/login.json",
-			dataType : "json",
 			data : {
 				id : user.nickname,
 				name : user.name,
 				email : user.email,
 				profileImg : user.profile_image,
-				loginType : "NAVER"
+				type : "NAVER"
 			},
 			dataType : "json",
 			success : function (data) {
+				console.log(data,"ss")
 				if(data.result){
 					location.href = "${pageContext.request.contextPath}/cloud/cloud.do"
 				}
+			},
+			error : function(){
+				alert("네이버 로그인 오류")
+				location.href = "${pageContext.request.contextPath}/login/loginform.do"
 			}
 		})
 	}

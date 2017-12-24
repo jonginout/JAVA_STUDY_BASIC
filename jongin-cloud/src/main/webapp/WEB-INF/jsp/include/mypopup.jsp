@@ -7,14 +7,14 @@
 		<div class="st-userpopup__main">
 			<div class="st-userpopup__photo">
 				<c:choose>
-					<c:when test="${user.pass=='NAVER'}">
+					<c:when test="${user.type=='NORMAL'}">
 						<div class="st-userpopup__img"
-							style="background-image: url('${user.profileImg}');"></div>
+							style="background-image: url('${pageContext.request.contextPath}/common/down.do?ext=img&path=${user.profileImg}');"></div>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="st-userpopup__img"
-							style="background-image: url('${pageContext.request.contextPath}/common/down.do?ext=img&path=${user.profileImg}');"></div>
+							style="background-image: url('${user.profileImg}');"></div>
 						</div>
 					</c:otherwise>
 				</c:choose>

@@ -78,10 +78,12 @@ public class CloudController {
                 if (ff.isFile()) {
                 	System.out.println("파일 : "+ff.getName());
             		tree.setExt(FilenameUtils.getExtension(ff.getName()));
+            		tree.setSize(ff.length());
                 	
                 }else if (ff.isDirectory()) {
                 	tree.setIsFolder(true);
                 	tree.setIsLazy(true);
+                	tree.setSize(folderSize(ff));
                 	System.out.println("폴더 : "+ff.getName());
                 	
                     //pullFile(ff.toString());
@@ -406,7 +408,7 @@ public class CloudController {
 		
 		return comment;
 	}
-	
+
 	@RequestMapping("/sendForm.do")
 	public void sendForm() throws Exception {}
 	
