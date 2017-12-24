@@ -15,6 +15,12 @@
 		<result column="max_volume" property="maxVolume" />
 		<result column="profile_img" property="profileImg" />
 	</resultMap>
+
+	<resultMap id="authSmsMap" type="authSms">
+		<result column="no" property="no" />
+		<result column="auth_key" property="authKey" />
+		<result column="tel" property="tel" />
+	</resultMap>
 	
 	<select id="idChk" parameterType="string" resultType="int">
 		select
@@ -22,7 +28,7 @@
 		from members
 			where id = #{id}
 	</select>
-	
+
 	<insert id="memberInsert" parameterType="member">
 		insert into members
 			(id, pass, name, email, reg_date, address, profile_img)
@@ -35,7 +41,37 @@
 			from members
 		where id = #{id} and pass = #{pass}
 	</select>
+
+	<insert id="keyInsert" parameterType="authSms">
+		insert into auth_sms
+			(auth_key, tel)
+		values
+			(#{authKey}, #{tel})
+	</insert>
+
+
+	<select id="keyChk" parameterType="authSms" resultType="int">
+	select
+		count(*)
+	from auth_sms
+		<where>
+			tel = #{tel}
+			<if test="authKey != null">
+				and auth_key = #{authKey}
+			</if>
+		</where>
+	</select>
 	
+	<delete id="keyDelete" parameterType="authSms">
+		delete from auth_sms
+			<where>
+				tel = #{tel}
+				<if test="authKey != null">
+					and auth_key = #{authKey}
+				</if>
+			</where>
+	</delete>
+
 </mapper>
 
 

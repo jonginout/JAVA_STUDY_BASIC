@@ -42,20 +42,20 @@
 const nowHost = location.hostname.toLowerCase();
 const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 
-	$(function () {
-		$(document)
-		.ajaxStart(function () {
-		    $("body").waitMe({
-		        effect: 'bounce',
-		        text : '로딩중 입니다..',
-		        bg: 'rgba(255,255,255,0.7)', //바탕화면 약간 어둡
-		        color: '#000'
-		    });
-		})
-		.ajaxStop(function () {
-		    $("body").waitMe("hide");
-		})
-	});
+	// $(function () {
+	// 	$(document)
+	// 	.ajaxStart(function () {
+	// 	    $("body").waitMe({
+	// 	        effect: 'bounce',
+	// 	        text : '로딩중 입니다..',
+	// 	        bg: 'rgba(255,255,255,0.7)', //바탕화면 약간 어둡
+	// 	        color: '#000'
+	// 	    });
+	// 	})
+	// 	.ajaxStop(function () {
+	// 	    $("body").waitMe("hide");
+	// 	})
+	// });
 
 	const userId = "${userId}"=="" ? null : "${userId}"
 	console.log(userId)

@@ -18,8 +18,8 @@
 	<%@ include file="/WEB-INF/jsp/include/header.jsp"%>
 
 	<center>
-		<div class="st-panel" style="margin: 70px 10px 50px 10px !important;">
-			<div class="st-panel__cont" style="min-height: 540px !important; max-width: 360px !important;">
+		<div class="st-panel" style="margin: 68px 10px 20px 10px !important">
+			<div class="st-panel__cont text-center" style="min-height: 590px !important; max-width: 360px !important;">
 				<div class="st-panel__header">
 					<div class="fluid-cols">
 						<div class="expand-col">
@@ -31,8 +31,7 @@
 				<div class="st-panel__content">
 					<form id="signup-form" enctype="multipart/form-data">
 	
-						<div class="form-group has-error has-feedback"
-							data-url="${pageContext.request.contextPath}">
+						<div class="form-group has-error has-feedback" >
 							<input class="form-control" id="id" name="id" placeholder="아이디">
 							<span class="glyphicon glyphicon-remove form-control-feedback"></span>
 						</div>
@@ -79,10 +78,31 @@
 								</div>
 							</div>
 						</div>
+						<div class="form-group tel-input">
+							<div class="input-group">
+								<input name="tel" type="text" class="form-control" 
+								id="tel" placeholder="휴대폰 번호 '-'포함! ">
+								<span class="input-group-btn">
+									<button class="btn btn-secondary" type="button" 
+									id="sendSMSBtn">인증키 전송</button>
+								</span>
+							</div>
+						</div>
+						<div class="form-group auth-input" style="display:none;">
+								<div class="input-group">
+									<input name="key" type="text" class="form-control" 
+									id="key" placeholder="인증키 입력">
+									<span class="input-group-btn">
+										<button class="btn btn-secondary" type="button" 
+										id="authKeyBtn">키 인증</button>
+									</span>
+								</div>
+							</div>
 						<div class="form-group">
-							<label for="">프로필 사진</label>
+							<label class="pull-left">프로필 사진</label>
 							<input id="images" name="images" type="file" accept="image/png, image/jpeg, image/gif, image/jpg" />							
 						</div>
+						<br />
 						<div class="form-group text-center">
 							<div class="col-md-12">
 								<a id="signup-formBtn" class="btn btn-primary btn-md btn-block">회원가입</a>
@@ -100,7 +120,6 @@
 				</div>
 			</div>
 	</center>
-
 
 	<%@ include file="/WEB-INF/jsp/include/basic-js.jsp"%>
 

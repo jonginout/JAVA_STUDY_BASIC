@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bitcamp-189105",
+  "private_key_id": "703a07eaf6d070ac1618f4d12d01e838d8dfc615",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCT3Sjuh6YPJ9np\ngsOmgYPJE5/XKVqBowAsYAlwHpxcALTSYNKY/7Sd3RxrOMOWwdR0SYZi7eF16q7Z\nEFutPo6hq0v8JLORXqvmStc7nFrudJB0A+MUX4AiiBTl9pr6UkELTinLlgGoJzXt\nnlgE3gcy6pgGUS3u21UILx7/Y/fEHzli2KpMkEQjMggzoVfGxUeqKVId0o4AG4TZ\nAFIFUIUDA68j7/kZHLOBuIbvTp50lJaQp34dpvE03OWlNZYdWm6/kwjtpt4OnZQd\nq8jUg9emjMUdpqnoWc15oLO1YpShYaqFmy9pW5Mz0szg7SOepVSyEuUkSeyekZ8h\n3zalyzSJAgMBAAECggEARQ2Npge3Z3CG9eRZlpL5hpghl4v6dnw3AoI/JhtFjjnO\nOEl7UHRqVycBtJknzmnq2/vSRLUvC7Bzw28+QSPr3Fhw/ent6j+6K6xb47zbQm0x\nYNzH2aXX40iF6fdG3Qw40BzKrAb78xmMt9Gw7WT7G64vHRQgTWIkzdOjuEVpWi89\nAVF/ppqmo37JxsD6JqGxj1fO/dVGvSMUT/LA3yKaNegAs3Zq4K4Hgf6CpGsFAa4g\n2eAkrHEb0jtNp/iPfj7GyoIlQL9dngtMeMF9dg7Oh+JyjRLb/ldfErwSpVbJOWz5\nLRcrfjpbg2PXjhOIQMpTA2NF5WFwQqpF7vevdIO6GQKBgQDIi8gOsJggOBE9Q3nh\nPO0rhjKyvc2CegoQXqWHOVrR+mrxCk8zBOfWAbWLffT9zh9bOMJBgJ9EZwcddVNU\n5mIABmcFUYaqFBCyoJ6ko95lmVtBICR7nOmJZh3JD/2ZH9SCNOvtsp12md6WTIjq\nnEAJ7odey2OSImrT7t9alOljDwKBgQC8wCAkCASK6ofZD51Xy1apSfny41JG37PL\nnAEE1GU8QVa50nAXGpKT/mWtLY0j4aJ+z3KOfudApDimWdIqimCxsclmb5JsgpSw\nVsa6b0bFyjQOAaU8QM3rGFpnnV6SFGlRyQL2Y6s+bdQ0BVW7m6SUGuZvTmqdKjWt\nZRrwn7gO5wKBgHC4QIYhNCBH40iv+H1lJVllYHGexTglKCrzR86tqiKDwkAhL0rZ\n4wUiiMwSy/UsOeuoB2eRx/NGhXVFUMVTiJnC/3y5yhsmlAwSw5h+kq5AeE4uptLj\n60/TGcK9Pikm/ucAn+tGjcLv0XBhLEPR9xyd+XCKmTi2J51fkiLzuAp5AoGAHe61\n6iDfX4xL2M9SG28iohwaKDuGe7jUEXD+9F4eY8zUzQkjP3a2UgPg6fK0VEFe/I83\nUoOrdqPUXAUYgCiLpwJTtwvwg4a9v60zPLOS3KDxWltGceSxAxxMkevx6GaWQSMI\ndjxeFrtiEJHcA7FuCxKtAm/EFoJwGrxS5l/d13cCgYBkMcLDlVU2p5RLvPe3tTaf\nNeire3XoHqWIdgZy+dA4IYtWDGGuJZhTMNHZP7x0dmsjlE7qEKfqXU7LFrcC75Wm\nOhjstB33h/9V2/6s5wYs1RWNJbaFJmOh3qZJAdSLLHlND3TJ9ssjhqHDwdLmdtFJ\nzVOb1B+nHtmA2Aq/0zLv2Q==\n-----END PRIVATE KEY-----\n",
+  "client_email": "jongin-cloud@bitcamp-189105.iam.gserviceaccount.com",
+  "client_id": "100208046621786240513",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/jongin-cloud%40bitcamp-189105.iam.gserviceaccount.com"
+}
