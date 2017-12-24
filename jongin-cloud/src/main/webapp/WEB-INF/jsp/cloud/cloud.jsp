@@ -86,7 +86,6 @@ pageEncoding="UTF-8"%>
 							</div>
 	    				</c:if>
 					</div>
-    
               <!------------------------------------------------------------>
               <!------------------------------------------------------------>
 
@@ -100,10 +99,6 @@ pageEncoding="UTF-8"%>
 <script src="https://apis.google.com/js/client.js?onload=load"></script>
 <!-- 모달 -->
 <%@ include file="/WEB-INF/jsp/cloud/modal/cloud-modal.jsp" %>
-
-<!-- 결제 -->
-<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/cloud/cloud-pay.js"></script>
-
 </body>
 </html>
+

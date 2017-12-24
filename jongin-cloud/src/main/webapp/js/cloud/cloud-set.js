@@ -530,6 +530,7 @@ $("body").on("click", "#codeEidtBtn", function(){
 
 // 이미지 PDF 동영상 음악 뷰어
 $("body").on("click",".file-view-btn",function(){
+	$("#textConvertBtn").html("")
 
 	var key = $(this).parents("#detailFile").attr("data-key");
 	var node = $("#tree").dynatree("getTree").getNodeByKey(key);
@@ -542,6 +543,11 @@ $("body").on("click",".file-view-btn",function(){
 
 	var fc = fileExtChecker(ext);
 	var wh100 = 'style="width:100%;height:100%"';
+
+	if(fc == 'img'){
+		console.log('?')
+		$("#textConvertBtn").html('<button class="btn btn-default img-to-text-btn" type="button">텍스트 추출</button>')
+	}
 
 	var viweHtml = {
 		'img' : '<img '+wh100+' src="'+viewUrl+'" alt="'+node.data.title+'" />',

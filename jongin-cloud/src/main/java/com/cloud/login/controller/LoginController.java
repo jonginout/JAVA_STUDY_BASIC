@@ -414,5 +414,8 @@ public class LoginController {
 		String result = new String(strByte);
 		return result;
 	}
+	
+	
+	
 
 }
