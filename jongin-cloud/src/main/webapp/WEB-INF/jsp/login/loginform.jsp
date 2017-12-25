@@ -18,7 +18,7 @@ pageEncoding="UTF-8"%>
     <div class="col-xs-8 col-sm-6 header-title-btn">
       <div class="st-header__title">
       	<span><strong><a href="${pageContext.request.contextPath}/cloud/cloud.do">
-      		CLOUD OF JONGIN <i class="fa fa-cloud-download" aria-hidden="true"></i>
+			CLOUD  Z <i class="fa fa-cloud-download" aria-hidden="true"></i>
       	</a></strong></span>
       </div>
     </div>
@@ -116,11 +116,13 @@ pageEncoding="UTF-8"%>
 					id : $("#id").val(),
 					pass : $("#pass").val()
 				},
+				beforeSend : loadingAjax("로그인 중.."),
 				success : function (data) {
+					loadingStopAjax();
 					if(!data.result){
 						alert("일치하는 회원정보가 없습니다.")	
 					}else {
-						location.href = projectURL+"/";
+						location.href = projectURL+"/cloud/cloud.do";
 					}
 				},
 				error : function () {					

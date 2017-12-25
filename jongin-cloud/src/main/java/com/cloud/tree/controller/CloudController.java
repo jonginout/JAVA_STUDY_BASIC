@@ -1,12 +1,17 @@
 package com.cloud.tree.controller;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,9 +21,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,15 +36,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloud.login.service.LoginService;
 import com.cloud.repository.vo.Member;
 import com.cloud.repository.vo.Tree;
-import com.google.cloud.vision.v1.AnnotateImageRequest;
-import com.google.cloud.vision.v1.AnnotateImageResponse;
-import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
-import com.google.cloud.vision.v1.EntityAnnotation;
-import com.google.cloud.vision.v1.Feature;
-import com.google.cloud.vision.v1.Feature.Type;
-import com.google.cloud.vision.v1.Image;
-import com.google.cloud.vision.v1.ImageAnnotatorClient;
-import com.google.protobuf.ByteString;
 
 @Controller
 @RequestMapping("/cloud")
@@ -409,38 +408,84 @@ public class CloudController {
 	@RequestMapping("/detecttext.json")
 	@ResponseBody
 	public String detectText(String filePath) throws Exception, IOException {
-		List<AnnotateImageRequest> requests = new ArrayList<>();
 
-		ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
-
-		Image img = Image.newBuilder().setContent(imgBytes).build();
-		Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
-		AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-		requests.add(request);
+		String base64Code = fileToString(new File(filePath));
 		
+		String TARGET_URL = "https://vision.googleapis.com/v1/images:annotate?";
+		String API_KEY = "key=AIzaSyBEYeqtSfixGg0e4qlRnSOwNL3w4V38HfY";
 		
-		String result = "";
-		try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
-			BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
-			List<AnnotateImageResponse> responses = response.getResponsesList();
+		URL serverUrl = new URL(TARGET_URL + API_KEY);
+		URLConnection urlConnection = serverUrl.openConnection();
+		HttpURLConnection httpConnection = (HttpURLConnection)urlConnection;
+		
+		httpConnection.setRequestMethod("POST");
+		httpConnection.setRequestProperty("Content-Type", "application/json");
 
-			
-			for (AnnotateImageResponse res : responses) {
-				if (res.hasError()) {
-					System.out.printf("Error: %s\n", res.getError().getMessage());
-					return result;
-				}
-
-				// For full list of available annotations, see http://g.co/cloud/vision/doc
-				for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-					System.out.printf("Text: %s\n", annotation.getDescription());
-					System.out.printf("Position : %s\n", annotation.getBoundingPoly());
-					return annotation.getDescription();
-				}
+		httpConnection.setDoOutput(true);
+		
+		BufferedWriter httpRequestBodyWriter = new BufferedWriter(
+				new OutputStreamWriter(httpConnection.getOutputStream()));
+		httpRequestBodyWriter.write("{" + 
+				"  \"requests\": [" + 
+				"    {" + 
+				"      \"image\": {" + 
+				"        \"content\": \""+base64Code+"\"" + 
+				"      }," + 
+				"      \"features\": [" + 
+				"        {" + 
+				"            \"type\" : \"TEXT_DETECTION\"" + 
+				"        }" + 
+				"      ]" + 
+				"    }" + 
+				"  ]" + 
+				"}");
+		httpRequestBodyWriter.close();
+		
+		String response = httpConnection.getResponseMessage();
+		
+		if (httpConnection.getInputStream() == null) {
+			   System.out.println("No stream");
+			   return "";
 			}
-		}
-		return null;
 
+			Scanner httpResponseScanner = new Scanner (httpConnection.getInputStream());
+			String resp = "";
+			while (httpResponseScanner.hasNext()) {
+			   String line = httpResponseScanner.nextLine();
+			   resp += line;
+			   System.out.println(line);  //  alternatively, print the line of response
+			}
+			httpResponseScanner.close();
+
+			return resp;
 	}
+	
+	
+	public String fileToString(File file) throws Exception {
+
+		String fileString = new String();
+		FileInputStream inputStream = null;
+		ByteArrayOutputStream byteOutStream = null;
+
+
+		inputStream = new FileInputStream(file);
+		byteOutStream = new ByteArrayOutputStream();
+
+		int len = 0;
+		byte[] buf = new byte[1024];
+		while ((len = inputStream.read(buf)) != -1) {
+			byteOutStream.write(buf, 0, len);
+		}
+
+		byte[] fileArray = byteOutStream.toByteArray();
+		fileString = new String(Base64.encodeBase64(fileArray));
+
+		inputStream.close();
+		byteOutStream.close();
+		
+
+		return fileString;
+	}
+
 
 }

@@ -151,12 +151,6 @@
 			<version>5.0.1.RELEASE</version>
 		</dependency>
 
-		<!-- 비전 API -->
-		<dependency>
-			<groupId>com.google.cloud</groupId>
-			<artifactId>google-cloud-vision</artifactId>
-			<version>1.14.0</version>
-		</dependency>
 
 	</dependencies>
 

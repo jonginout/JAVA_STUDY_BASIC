@@ -41,7 +41,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-body text-view-content">
-				<textarea id="imgTextCopy"></textarea>
+				<textarea id="imgTextCopy" class="form-control"></textarea>
 			</div>
 			<div class="modal-footer">	
 				<button class="btn btn-default clipboard clipboard-btn" type="button" data-clipboard-target="#imgTextCopy">
@@ -111,16 +111,29 @@ $(function(){
 })
 
 $("body").on("click", ".img-to-text-btn", function () {
+
+	var path = (nowNode.path).replace(/\\/gi, "/");
+
 	$.ajax({
 		type : "post",
 		url : "${pageContext.request.contextPath}/cloud/detecttext.json",
 		data : {
-			filePath : nowNode.path
+			filePath : path
 		},
+		beforeSend: loadingAjax("이미지 분석중... ( 최대 1분 )"),
 		success : function (data) {
-			if(data){
+			loadingStopAjax();
+
+			var result = JSON.parse(data);
+			console.log(result)
+			
+			if(result){
+				
+				var content = result.responses[0].fullTextAnnotation.text;
+				console.log(content)
+
 				var width = $(".file-view-content>img").css("width");
-				$("#imgTextCopy").css("width",width).val(data)
+				$("#imgTextCopy").css("width",width).val(content)
 				$("#img-to-text-hidden").trigger("click")
 			}
 		},

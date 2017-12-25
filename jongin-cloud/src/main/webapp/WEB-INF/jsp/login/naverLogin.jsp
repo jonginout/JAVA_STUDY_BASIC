@@ -4,11 +4,24 @@
 <html lang="ko">
 <head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<!-- 웨잇미 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/waitme/waitMe.css">
+<script src="${pageContext.request.contextPath}/lib/waitme/waitMe.js"></script>
+
 </head>
 <body>
 
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 <script type="text/javascript">
+
+	$("body").waitMe({
+		effect: 'bounce',
+		text : '네이버 연동중....',
+		bg: 'rgba(255,255,255,0.7)', //바탕화면 약간 어둡
+		color: '#1276AA'
+	});
+
+
 	const nowHost = location.hostname.toLowerCase();	
 	var localCallbackUrl = "http://localhost:8080/jongin-cloud/login/naverLogin.do";
 	var Cafe24CallbackUrl = "http://chopo01.cafe24.com/login/naverLogin.do";

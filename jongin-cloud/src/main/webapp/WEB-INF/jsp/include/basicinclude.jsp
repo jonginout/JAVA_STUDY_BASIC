@@ -36,12 +36,23 @@
 <!-- 절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  -->
 
 
-<title>종인 클라우드</title>
+<title>CLOUD OF Z</title>
 
 <script type="text/javascript">
 const nowHost = location.hostname.toLowerCase();
 const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 
+	function loadingAjax(text){
+			$("body").waitMe({
+			effect: 'bounce',
+			text : text,
+			bg: 'rgba(255,255,255,0.7)', //바탕화면 약간 어둡
+			color: '#1276AA'
+		});
+	}
+	function loadingStopAjax(){
+		$("body").waitMe("hide");
+	}
 
 	// $(function () {
 	// 	$(document)
@@ -50,7 +61,7 @@ const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 	// 	        effect: 'bounce',
 	// 	        text : '로딩중 입니다..',
 	// 	        bg: 'rgba(255,255,255,0.7)', //바탕화면 약간 어둡
-	// 	        color: '#000'
+	// 	        color: '#1276AA'
 	// 	    });
 	// 	})
 	// 	.ajaxStop(function () {

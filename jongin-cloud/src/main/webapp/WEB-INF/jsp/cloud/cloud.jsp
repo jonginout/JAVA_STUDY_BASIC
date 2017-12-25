@@ -47,19 +47,23 @@ pageEncoding="UTF-8"%>
 							<div class="button-box">
 								<button class="btn btn-default btn-md" id="reload">
 									<i class="fa fa-refresh" aria-hidden="true"></i> 
-									Cloud Reload
+									Reload
 								</button>
 								<button class="btn btn-default btn-md" id="newFolder">
 									<i class="fa fa-folder-o" aria-hidden="true"></i>
-									New Folder
+									새 폴더
 								</button>
 								<button class="btn btn-default btn-md" id="newCode">
 									<i class="fa fa-file-o" aria-hidden="true"></i>
-									New File
+									새 파일
 								</button>			
 								<button class="btn btn-default btn-md" data-toggle="modal" data-target="#addVolume">
 									<i class="fa fa-hdd-o" aria-hidden="true"></i> 
 									Add Volume
+								</button>	
+								<button class="btn btn-default btn-md" id="gear">
+									<i class="fa fa-gear" aria-hidden="true"></i> 
+									확장 프로그램
 								</button>	
 							</div>
 							<form id="uploadForm" method="post" enctype="multipart/form-data">
