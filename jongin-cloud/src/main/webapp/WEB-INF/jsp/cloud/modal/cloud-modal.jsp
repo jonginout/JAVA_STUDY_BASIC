@@ -30,7 +30,7 @@
 				</span>
 				<br><br>
 				<span id="textConvertBtn"></span>
-				<button type="button" id="img-to-text-hidden" data-toggle="modal" data-target="#imgText"></button>			
+				<button type="button" id="img-to-text-hidden" data-toggle="modal" data-target="#imgText">텍스트 추출</button>			
 				<button class="btn btn-default file-view-close" type="button" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -138,6 +138,7 @@ $("body").on("click", ".img-to-text-btn", function () {
 			}
 		},
 		error : function () {
+			loadingStopAjax();
 			alert("서버에러 개발자에게 문의하세요!")		
 		}						
 	})

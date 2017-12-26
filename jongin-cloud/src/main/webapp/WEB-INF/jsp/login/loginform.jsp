@@ -125,7 +125,8 @@ pageEncoding="UTF-8"%>
 						location.href = projectURL+"/cloud/cloud.do";
 					}
 				},
-				error : function () {					
+				error : function () {	
+					loadingStopAjax();				
 					alert("로그인 에러")	
 				}
 			})
