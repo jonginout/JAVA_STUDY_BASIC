@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 매퍼 연결 -->
+<mapper namespace="com.cloud.repository.mapper.ForumMapper">
+
+	<resultMap id="forumMap" type="forum">
+		<result column="forum_no" property="forumNo" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="writer" property="writer" />
+		<result column="writer_id" property="writerId" />
+		<result column="reg_date" property="regDate" />
+		<result column="update_date" property="updateDate" />
+		<result column="view" property="view" />
+		<result column="status" property="status" />
+		<result column="category" property="category" />
+		<result column="start" property="start" />
+		<result column="count" property="count" />
+	</resultMap>
+	
+	
+	<select id="selectForum" parameterType="forum" resultMap="forumMap">
+		select *
+			from forum
+		where status = 'PUBLIC'
+			order by update_date desc
+		LIMIT #{start}, #{count};
+	</select>
+
+</mapper>
+
+
+
+

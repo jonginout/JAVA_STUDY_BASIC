@@ -261,11 +261,14 @@ function submitForm() {
 		data : fd,
 		processData : false,
 		contentType : false,
+		beforeSend: loadingAjax("회원가입 처리중..."),
 		success : function(data) {
+			loadingStopAjax();
 			alert("회원가입 성공!! 로그인 페이지로 이동합니다.")
 			location.href = projectURL+"/login/loginform.do"
 		},
 		error : function(data) {
+			loadingStopAjax();
 			alert("회원가입 실패")
 		}
 	})

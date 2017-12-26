@@ -42,10 +42,10 @@
                   <div class="st-settings__control text-nowrap"><i class="fa fa-angle-right st-settings__ico"></i></div>
                 </div>
               </a>
-              <a class="st-settings__item">
+              <a class="st-settings__item" href="${pageContext.request.contextPath}/forum/forum.do">
                 <div class="st-settings__row">
                   <div class="st-settings__label">
-                  	타임라인
+                  	개발자 포럼
                   </div>
                   <div class="st-settings__control text-nowrap"><i class="fa fa-angle-right st-settings__ico"></i></div>
                 </div>
