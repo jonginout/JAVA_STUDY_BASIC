@@ -252,7 +252,7 @@ pageEncoding="UTF-8"%>
 			"background": "tomato",
 			"color": "white"
 		})
-		parent.find(".like-i").css({ 
+		parent.find(".like-btn>.like-i").css({ 
 			"color": "white"
 		})
 		$.ajax({
