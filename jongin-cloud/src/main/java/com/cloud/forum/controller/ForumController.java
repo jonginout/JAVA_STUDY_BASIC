@@ -1,6 +1,8 @@
 package com.cloud.forum.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +42,8 @@ public class ForumController {
 
 	@RequestMapping("/forum.json")
 	@ResponseBody
-	public String forumJson(Forum forum) throws Exception {
+	public Map<String, Object> forumJson(Forum forum) throws Exception {
+		Map<String, Object> map = new HashMap<>();
 		
 		if(forum.getStart()==null) {
 			forum.setStart(0);
@@ -48,13 +51,18 @@ public class ForumController {
 		}
 		
 		List<Forum> forums = service.forumList(forum);
-		for (Forum f : forums) {
-			if(f.getCategory().equals("FREE")) {
-				f.setCategory("자유");
+		if(forums.size()>1) {				
+			for (Forum f : forums) {
+				if(f.getCategory().equals("FREE")) {
+					f.setCategory("자유");
+				}
 			}
+			map.put("result", new Gson().toJson(forums));
+		}else {
+			map.put("result", false);		
 		}
+		return map;
 		
-		return new Gson().toJson(forums);
 	}
 	
 }

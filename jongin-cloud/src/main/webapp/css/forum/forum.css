@@ -74,3 +74,68 @@
 	.dateT{
 		font-size: 11px;
 	}
+	.no-data{
+		padding: 5px !important;
+	    border-radius: 0 !important;		
+	}
+	.forum-list{
+		margin: 0px !important;
+	}
+	#loading-bar{
+		display: none;
+		padding: 5px !important; 
+	}
+	.info-box{
+		margin:0; margin-bottom:10px; 
+		font-size: 13px; 
+		color: black;
+		margin-bottom: 10px;
+	}
+	.info-bar{
+		margin:0 3px;
+	}
+	.content-box{
+		overflow:hidden;
+		word-wrap:break-word;
+	}
+	.writer-box{
+		color: black;
+		font-weight: bold !important;
+	}
+	.writer-box .writer{
+		display:inline; 
+		padding: 0; 
+		line-height: 25px; 
+	}
+	.button-box{
+		margin: 2px;
+	}
+	.button-box button{
+		color: black;
+		margin-right: 5px;
+		border-radius: 0;
+	}
+	.comment-input-box{
+		margin-top: 8px !important;
+		margin-bottom: 8px !important;
+	}
+	.comment-content:hover{
+		border-radius: 0;
+		background: #d3d3d359 !important;
+	}
+	.comment-img{
+		background-image: url("default_profile.png");
+		background-size:100%; 
+		float: none;
+		display: inline-block;
+		width: 35px;
+		height: 35px;
+		line-height: 35px;
+		text-align: center;
+		vertical-align: middle;
+		color: white;
+		border-radius: 4px;
+		margin: 5px;
+		margin-top: 7px;
+		font-size: 12px;
+	}
