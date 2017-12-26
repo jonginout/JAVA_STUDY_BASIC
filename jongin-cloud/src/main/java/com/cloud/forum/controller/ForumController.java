@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cloud.forum.service.ForumService;
+import com.cloud.repository.vo.Comment;
 import com.cloud.repository.vo.Forum;
+import com.cloud.repository.vo.Like;
 import com.google.gson.Gson;
 
 @Controller
@@ -22,23 +24,8 @@ public class ForumController {
 	ForumService service;
 	
 	@RequestMapping("/forum.do")
-	public ModelAndView forum() throws Exception {
-		ModelAndView mav = new ModelAndView();
-		
-		Forum forum = new Forum();
-		forum.setStart(0);
-		forum.setCount(20);
-		
-		List<Forum> forums = service.forumList(forum);
-		for (Forum f : forums) {
-			if(f.getCategory().equals("FREE")) {
-				f.setCategory("자유");
-			}
-		}
-		mav.addObject("forums", forums);
-		mav.addObject("forumsJSON", new Gson().toJson(forums));
-		return mav;
-	}
+	public void forum(Forum forum) throws Exception {}
+	
 
 	@RequestMapping("/forum.json")
 	@ResponseBody
@@ -64,5 +51,29 @@ public class ForumController {
 		return map;
 		
 	}
+
+	@RequestMapping("/comment.json")
+	@ResponseBody
+	public List<Comment> comment(Comment comment) throws Exception {
+		
+		return service.commentList(comment);
+
+	}
+
+	@RequestMapping("/addlike.json")
+	@ResponseBody
+	public Map<String, Object> addLike(Like like) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+
+		if(service.chkLike(like)>0) {
+			map.put("result", false);
+		}else {			
+			service.addLike(like);
+			map.put("result", true);
+		}
+		
+		return map;
+	}
+	
 	
 }

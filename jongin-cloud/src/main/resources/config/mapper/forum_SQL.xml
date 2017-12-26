@@ -17,16 +17,62 @@
 		<result column="category" property="category" />
 		<result column="start" property="start" />
 		<result column="count" property="count" />
+		<result column="comment_count" property="commentCount" />
+		<result column="like_count" property="likeCount" />
+	</resultMap>
+
+	<resultMap id="commentMap" type="comment">
+		<result column="comment_no" property="commentNo" />
+		<result column="forum_no" property="forumNo" />
+		<result column="writer_id" property="writerId" />
+		<result column="writer" property="writer" />
+		<result column="content" property="content" />
+		<result column="reg_date" property="regDate" />
+		<result column="update_date" property="updateDate" />
 	</resultMap>
 	
+	<resultMap id="likeMap" type="like">
+		<result column="like_no" property="likeNo" />
+		<result column="forum_no" property="forumNo" />
+		<result column="liker" property="liker" />
+	</resultMap>
+
 	
 	<select id="selectForum" parameterType="forum" resultMap="forumMap">
-		select *
-			from forum
+		select *, 
+		(
+			select count(*)
+				from comments c
+			where c.forum_no=f.forum_no
+		) comment_count,
+		(
+			select count(*)
+				from likes l
+			where l.forum_no=f.forum_no
+		) like_count
+			from forum f
 		where status = 'PUBLIC'
 			order by update_date desc
-		LIMIT #{start}, #{count};
+		LIMIT #{start}, #{count}
 	</select>
+	
+	<select id="selectComment" parameterType="comment" resultMap="commentMap">
+		select *
+			from comments
+		where forum_no = #{forumNo}
+	</select>
+	
+	<select id="checkLike" resultType="int" parameterType="like">
+		select count(*)
+			from likes
+		where forum_no = #{forumNo} and liker = #{liker}
+	</select>
+		
+	<insert id="insertLike" parameterType="like">
+		insert into likes
+			(forum_no, liker) 
+		values (#{forumNo}, #{liker})
+	</insert>
 
 </mapper>
 

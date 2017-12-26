@@ -38,6 +38,9 @@
 	.panel a>div{
 		margin-bottom: 5px;
 	}
+	.panel-title{
+		cursor: pointer;
+	}
 	.panel .category{
 		float: none;
 		display: inline-block;
@@ -85,6 +88,10 @@
 		display: none;
 		padding: 5px !important; 
 	}
+	#comment-loading-bar{
+		display: none;
+		padding: 5px !important; 
+	}
 	.info-box{
 		margin:0; margin-bottom:10px; 
 		font-size: 13px; 
@@ -94,9 +101,18 @@
 	.info-bar{
 		margin:0 3px;
 	}
-	.content-box{
+	.content-box{ 
+		background: #f2f3f5;
+		padding: 10px;
 		overflow:hidden;
 		word-wrap:break-word;
+		margin-bottom: 7px;		
+	}
+	.like-box{
+		margin-bottom: 15px;
+	}
+	.like-btn{
+		border-radius: 0!important;		
 	}
 	.writer-box{
 		color: black;
@@ -115,27 +131,70 @@
 		margin-right: 5px;
 		border-radius: 0;
 	}
+	.like-i{
+		color: tomato;
+	}
+	.comment-i{
+		color: darksalmon !important; 
+	}
 	.comment-input-box{
 		margin-top: 8px !important;
 		margin-bottom: 8px !important;
 	}
-	.comment-content:hover{
-		border-radius: 0;
-		background: #d3d3d359 !important;
+	.comment-box{
+		margin-bottom: 8px;
 	}
-	.comment-img{
-		background-image: url("default_profile.png");
-		background-size:100%; 
-		float: none;
-		display: inline-block;
-		width: 35px;
-		height: 35px;
-		line-height: 35px;
-		text-align: center;
-		vertical-align: middle;
-		color: white;
-		border-radius: 4px;
-		margin: 5px;
-		margin-top: 7px;
-		font-size: 12px;
+	#comments{
+		display: block;
+		margin-top: 20px;	
+	}
+	.comment-wrap {
+		margin-bottom: 1.25rem;
+		display: table;
+		width: 100%;
+		min-height: 5.3125rem;
+	}.photo {
+		padding-top: 0.625rem;
+		display: table-cell;
+		width: 3.5rem;
+	}.photo .avatar {
+		height: 2.25rem;
+		width: 2.25rem;
+		border-radius: 50%;
+		background-size: contain;
+	}.photo span {
+		font-size: 10px;
+		display: block;
+		max-width: 45px !important;
+		overflow:hidden;
+		word-wrap:break-word;
+	}.comment-block {
+		padding: 11px;
+		background-color: #f2f3f5;
+		display: table-cell;
+		vertical-align: top;
+		border-radius: 0.1875rem;
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+	}.comment-text {
+		margin-bottom: 1.25rem;
+	}.bottom-comment {
+		color: #acb4c2;
+		font-size: 0.875rem;
+	}.comment-date {
+		float: left;
+	}.comment-actions {
+		margin: 0px;
+		float: right;
+	}.comment-actions li {
+		display: inline;
+		margin: -2px;
+		cursor: pointer;
+	}.comment-actions li.modify-comment {
+		padding-right: 0.75rem;
+		border-right: 1px solid #e1e5eb;
+	}.comment-actions li.delete-comment {
+		padding-left: 0.75rem;
+		padding-right: 0.125rem;
+	}.comment-actions li:hover {
+		color: #0095ff;
 	}

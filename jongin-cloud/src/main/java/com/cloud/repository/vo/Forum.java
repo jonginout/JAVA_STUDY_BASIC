@@ -17,6 +17,23 @@ public class Forum {
 	private Integer start;
 	private Integer count;
 	
+	///////////////////////////////
+	private int commentCount;
+	public int getCommentCount() {
+		return commentCount;
+	}
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+	private int likeCount;	
+	public int getLikeCount() {
+		return likeCount;
+	}
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+	
+	///////////////////////////////
 	public int getForumNo() {
 		return forumNo;
 	}
