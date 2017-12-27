@@ -38,13 +38,13 @@
 		        </a>	    		
 	    	</c:when>
 	    	<c:otherwise>
-	    		<li class="st-header__act st-spanel__open st-header__notifications" data-tab="#notifications"><i class="fa fa-bell"></i>
-		          <div class="st-header__count st-notifications-count"><strong>9</strong></div> <!-- 알람 갯수 99개 최대 설정-->
-		        </li>
-		        <li class="st-header__act st-spanel__open st-header__settings" data-tab="#settings"><i class="fa fa-cog"></i></li>
-		        <li class="st-header__act st-header__user" data-toggle="popup" data-target="#user-popup"><i class="fa fa-user"></i>
+				<li class="st-header__act st-header__user" data-toggle="popup" data-target="#user-popup"><i class="fa fa-user"></i>
 					<%@ include file="/WEB-INF/jsp/include/mypopup.jsp" %>
-		        </li>	
+				</li>	
+				<li class="st-header__act st-spanel__open st-header__notifications" data-tab="#notifications"><i class="fa fa-bell"></i>
+					<div class="st-header__count st-notifications-count"><strong>9</strong></div> <!-- 알람 갯수 99개 최대 설정-->
+				</li>
+				<li class="st-header__act st-spanel__open st-header__settings" data-tab="#settings"><i class="fa fa-bars"></i></li>
 	    	</c:otherwise>
 	    </c:choose>
       </ul>

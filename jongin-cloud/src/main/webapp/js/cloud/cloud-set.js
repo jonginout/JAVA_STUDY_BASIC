@@ -153,7 +153,7 @@ function showFileDetail(key) {
 	
 	var html = "";
 	
-	if(selectNode.title!=userId){
+	if(selectNode.title!=user.id){
 		html = '<div class="btn-group btn-group-justified">\
 					<div class="btn-group file-delete">\
 						<button type="button" class="btn btn-default">\
@@ -213,11 +213,11 @@ function showFileDetail(key) {
 						<button type="button" class="file-view-btn btn btn-default btn-sm" data-toggle="modal" data-target="#file-modal">\
 							'+icon[fc]+'\
 						</button>\
-					</div>';
+					</div>'; 
 		}
 	}
 
-	if(selectNode.title!=userId){
+	if(selectNode.title!=user.id){
 		html += `<br>
 		<form id="form-comment">
 			<div class="form-group" style="margin-bottom:-1px;">
@@ -427,6 +427,9 @@ $("#uploadForm>button").click(function () {
 		data : fd,
 		processData : false,
 		contentType : false,
+		beforeSend : function(){
+			loadingAjax("파일 업로드 중 ..")
+		},
 		success : function (data) {
 			var msg = "파일 업로드 성공!";
 			if(data.dup){
@@ -440,9 +443,11 @@ $("#uploadForm>button").click(function () {
 			rootNode.size = rootNode.size + fileSizeChk(fd);
 
 			volumeCheck(rootNode.size)
+			loadingStopAjax()
 		},
 		error : function () {
 			alert("파일 업로드 실패!!");
+			loadingStopAjax()
 		}
 	})
 	

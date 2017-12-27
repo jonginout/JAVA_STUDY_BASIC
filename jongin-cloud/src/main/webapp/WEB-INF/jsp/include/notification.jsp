@@ -6,7 +6,7 @@
 <div class="st-spanel">
 <div class="st-spanel__tabs">
   <ul class="nav">
-    <li class="active alt"><a href="#settings" data-toggle="tab" tabindex="-1">앱 설정</a></li>
+    <li class="active alt"><a href="#settings" data-toggle="tab" tabindex="-1">앱 메뉴</a></li>
     <li><a href="#notifications" data-toggle="tab" tabindex="-1">내 알람</a></li>
     <li class="st-spanel__close"><a class="fa fa-long-arrow-right" tabindex="-1"></a></li>
   </ul>
@@ -22,7 +22,7 @@
             <div class="st-settings__list">
               <a class="st-settings__item">
                 <div class="st-settings__row">
-                  <div class="st-settings__label"><b>앱 설정</b></div>
+                  <div class="st-settings__label"><b>앱 메뉴</b></div>
                   <div class="st-settings__control"><i class="fa fa-spin fa-circle-o-notch st-settings__loader"></i></div>
                 </div>
               </a>

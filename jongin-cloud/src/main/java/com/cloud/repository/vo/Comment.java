@@ -10,6 +10,17 @@ public class Comment {
 	private String content;
 	private Date regDate;
 	private Date updateDate;
+	
+	////////////////////////////
+	private String profileImg;
+
+	public String getProfileImg() {
+		return profileImg;
+	}
+	public void setProfileImg(String profileImg) {
+		this.profileImg = profileImg;
+	}
+	////////////////////////////
 	public int getCommentNo() {
 		return commentNo;
 	}

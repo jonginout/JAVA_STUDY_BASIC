@@ -95,6 +95,12 @@ pageEncoding="UTF-8"%>
 	// 글 추가 
 	$("body").on("click",".write-forum", function(){
 		var content = $(".write-forum-input").val().trim();
+
+		if(content.length<3){
+			alert("포럼을 3글자 이상 입력하세요.");
+			return;
+		}
+
 		var title = content.substring(0,30);
 		var category = '자유';
 		$.ajax({
@@ -415,7 +421,7 @@ pageEncoding="UTF-8"%>
 					var html = '<div class="comment-wrap" data-commentNo="'+data[c].commentNo+'">\
 									<div class="photo">\
 										<center>\
-											<div class="avatar" style="background-image: url(\''+projectURL+'/img/forum/default_profile.png\')"></div>\
+											<div class="avatar" style="background-image: url(\''+projectURL+'/common/down.do?ext=img&path='+data[c].profileImg+'\')"></div>\
 											<span>'+data[c].writerId+'</span>\
 										</center>\
 									</div>\
@@ -437,6 +443,15 @@ pageEncoding="UTF-8"%>
 										<li class="modify-comment-submit">수정완료</li>\
 										<li class="delete-comment">삭제</li>`;
 						$(".comment-wrap[data-commentNo="+data[c].commentNo+"]").find(".comment-actions").html(btnHtml)
+
+						$(".comment-wrap[data-commentNo="+data[c].commentNo+"]").find(".photo").remove();
+						var photoHtml ='<div class="photo">\
+											<center>\
+												<div class="avatar" style="background-image: url(\''+projectURL+'/common/down.do?ext=img&path='+data[c].profileImg+'\')"></div>\
+												<span>'+data[c].writerId+'</span>\
+											</center>\
+										</div>';
+						$(".comment-wrap[data-commentNo="+data[c].commentNo+"]").append(photoHtml);
 					}
 				}
  
@@ -553,27 +568,27 @@ pageEncoding="UTF-8"%>
 			},
 			success : function(newCommentNo){
 				var html = '<div class="comment-wrap" data-commentNo="'+newCommentNo+'">\
-						<div class="photo">\
-							<center>\
-								<div class="avatar" style="background-image: url(\''+projectURL+'/img/forum/default_profile.png\')"></div>\
-								<span>'+user.id+'</span>\
-							</center>\
-						</div>\
-						<div class="comment-block">\
-							<p class="comment-text">\
-								<span>'+content+'</span>\
-								<span></span>\
-							</p>\
-							<div class="bottom-comment">\
-								<div class="comment-date">지금</div>\
-								<ul class="comment-actions">\
-									<li class="modify-comment">수정</li>\
-									<li class="modify-comment-submit">수정완료</li>\
-									<li class="delete-comment">삭제</li>\
-								</ul>\
-							</div>\
-						</div>\
-					</div>';
+								<div class="comment-block">\
+									<p class="comment-text">\
+										<span>'+content+'</span>\
+										<span></span>\
+									</p>\
+									<div class="bottom-comment">\
+										<div class="comment-date">지금</div>\
+										<ul class="comment-actions">\
+											<li class="modify-comment">수정</li>\
+											<li class="modify-comment-submit">수정완료</li>\
+											<li class="delete-comment">삭제</li>\
+										</ul>\
+									</div>\
+								</div>\
+								<div class="photo">\
+									<center>\
+										<div class="avatar" style="background-image: url(\''+projectURL+'/common/down.do?ext=img&path='+user.profileImg+'\')"></div>\
+										<span>'+user.id+'</span>\
+									</center>\
+								</div>\
+							</div>';
 				parent(no).find(".comments").append(html);
 				$(".comment-content").val("");
 			}

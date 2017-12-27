@@ -8,8 +8,7 @@
 			<div class="st-userpopup__photo">
 				<c:choose>
 					<c:when test="${user.type=='NORMAL'}">
-						<div class="st-userpopup__img"
-							style="background-image: url('${pageContext.request.contextPath}/common/down.do?ext=img&path=${user.profileImg}');"></div>
+						<div class="st-userpopup__img" id="user-profile-img"></div>
 						</div>
 					</c:when>
 					<c:otherwise>

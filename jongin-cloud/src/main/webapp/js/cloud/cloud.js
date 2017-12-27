@@ -209,7 +209,7 @@ function dirTree() {
             var hitModeChk = false;
             
             if(hitMode=="before" || hitMode=="after"){
-            	if(node.data.title==userId){
+            	if(node.data.title==user.id){
             		alert("루트 폴더 밖으로는 옮길 수 없습니다.")
             		return false;
             	}

@@ -29,6 +29,7 @@
 		<result column="content" property="content" />
 		<result column="reg_date" property="regDate" />
 		<result column="update_date" property="updateDate" />
+		<result column="profile_img" property="profileImg" />
 	</resultMap>
 	
 	<resultMap id="likeMap" type="like">
@@ -57,8 +58,10 @@
 	</select>
 	
 	<select id="selectComment" parameterType="comment" resultMap="commentMap">
-		select *
-			from comments
+		select c.* , m.profile_img
+			from comments c	
+		inner join members m 
+			on c.writer = m.member_no
 		where forum_no = #{forumNo}
 	</select>
 	

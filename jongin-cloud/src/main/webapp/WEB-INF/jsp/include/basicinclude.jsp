@@ -71,13 +71,21 @@ const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 
 
 	var userOri = "${user}"=="" ? null : "${user}"
-	var userTmp = userOri.substring(userOri.indexOf("[")+1, userOri.lastIndexOf("]"))
+	var userTmp = userOri.substring(userOri.indexOf("[")+1, userOri.lastIndexOf("]")) 
 	userOri = {};
 	userTmp = userTmp.split(", ")
-		for(var u of userTmp){
+	for(var u of userTmp){
 		var tmp = u.split("=")
 		userOri[tmp[0]]=tmp[1]
+		if(tmp[0]=='profileImg' && tmp[1]==''){
+			userOri[tmp[0]] = '/img/forum/default_profile.png'
+		}
 	}	
 	const user = userOri;
 
+	// $(function(){
+	// 	$("#user-profile-img").css({
+	// 		"background-image" : "url('${pageContext.request.contextPath}/common/down.do?ext=img&path="+projectURL+user.profileImg+"')"
+	// 	})
+	// })
 </script>
