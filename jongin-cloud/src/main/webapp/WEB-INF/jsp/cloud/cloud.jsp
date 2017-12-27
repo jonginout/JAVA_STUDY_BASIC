@@ -43,7 +43,6 @@ pageEncoding="UTF-8"%>
     				
                 	<div class="container" id="cloud-content">
 	    				<c:if test="${!empty user}">
-
 							<div class="button-box">
 								<button class="btn btn-default btn-md" id="reload">
 									<i class="fa fa-refresh" aria-hidden="true"></i> 
@@ -61,10 +60,14 @@ pageEncoding="UTF-8"%>
 									<i class="fa fa-hdd-o" aria-hidden="true"></i> 
 									Add Volume
 								</button>	
-								<button class="btn btn-default btn-md" id="gear">
+								<!-- <button class="btn btn-default btn-md" id="gear">
 									<i class="fa fa-gear" aria-hidden="true"></i> 
 									확장 프로그램
-								</button>	
+								</button> -->
+								<button class="btn btn-default btn-md" id="gear" onclick="location.href='${pageContext.request.contextPath}/forum/forum.do'">
+									<i class="fa fa-gear" aria-hidden="true"></i> 
+									개발자 포럼
+								</button>		
 							</div>
 							<form id="uploadForm" method="post" enctype="multipart/form-data">
 								<input type="hidden" name="uploadPath" value=""/>

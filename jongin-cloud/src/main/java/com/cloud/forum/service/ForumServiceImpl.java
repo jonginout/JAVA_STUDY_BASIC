@@ -9,6 +9,7 @@ import com.cloud.repository.mapper.ForumMapper;
 import com.cloud.repository.vo.Comment;
 import com.cloud.repository.vo.Forum;
 import com.cloud.repository.vo.Like;
+import com.sun.org.apache.regexp.internal.recompile;
 
 @Service("ForumService")
 public class ForumServiceImpl implements ForumService{
@@ -35,6 +36,51 @@ public class ForumServiceImpl implements ForumService{
 	public void addLike(Like like) throws Exception {
 		mapper.insertLike(like);
 	}
-	
+
+	@Override
+	public void addComment(Comment comment) throws Exception {
+		mapper.insertComment(comment);
+	}
+
+	@Override
+	public void addView(int forumNo) throws Exception {
+		mapper.insertView(forumNo);
+	}
+
+	@Override
+	public int chkWriter(Forum forum) throws Exception {
+		return mapper.checkWriter(forum);
+	}
+
+	@Override
+	public void removeForum(Forum forum) throws Exception {
+		mapper.deleteForum(forum);
+	}
+
+	@Override
+	public void editForum(Forum forum) throws Exception {
+		mapper.updateForum(forum);
+	}
+
+	@Override
+	public int chkCommentWriter(Comment comment) throws Exception {
+		return mapper.checkCommentWriter(comment);
+	}
+
+	@Override
+	public void removeComment(Comment comment) throws Exception {
+		mapper.deleteComment(comment);
+	}
+
+	@Override
+	public void editComment(Comment comment) throws Exception {
+		mapper.updateComment(comment);
+	}
+
+	@Override
+	public void addForum(Forum forum) throws Exception {
+		mapper.insertForum(forum);
+	}
+
 
 }

@@ -9,6 +9,7 @@ pageEncoding="UTF-8"%>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <%@ include file="/WEB-INF/jsp/include/basicinclude.jsp" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login/login.css">
 </head>
 <body>
 
@@ -53,15 +54,14 @@ pageEncoding="UTF-8"%>
 										<button id="login-formBtn" type="button" class="btn btn-primary btn-md">로그인</button>
 										<button id="signup-formBtn" type="button" class="btn btn-primary btn-md">회원가입</button>
 										
-										<br /><br />
-										<div id="naverIdLogin"></div>
-<!-- 										<div id="naver_id_login"></div> -->
-
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
+					<center>
+						<div id="naverIdLogin"></div>
+					</center>
 				</div>
 			</div>
 		</div>
@@ -81,7 +81,7 @@ pageEncoding="UTF-8"%>
 		{
 			clientId: "lbeEftb6cSDwLJdxPMJW",
 			callbackUrl: callbackUrl,
-			loginButton: {color: "green", type: 2, height: 40} /* 로그인 버튼의 타입을 지정 */
+			loginButton: {color: "green", type: 2, height: 30} /* 로그인 버튼의 타입을 지정 */
 		}
 	);
 	

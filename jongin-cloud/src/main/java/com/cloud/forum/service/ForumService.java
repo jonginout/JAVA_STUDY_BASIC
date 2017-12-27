@@ -12,5 +12,14 @@ public interface ForumService {
 	public List<Comment> commentList(Comment comment) throws Exception;
 	public int chkLike(Like like) throws Exception;
 	public void addLike(Like like) throws Exception;
+	public void addComment(Comment comment) throws Exception;
+	public void addView(int forumNo) throws Exception;
+	public int chkWriter(Forum forum) throws Exception;
+	public void removeForum(Forum forum) throws Exception;
+	public void editForum(Forum forum) throws Exception;
+	public int chkCommentWriter(Comment comment) throws Exception;
+	public void removeComment(Comment comment) throws Exception;
+	public void editComment(Comment comment) throws Exception;
+	public void addForum(Forum forum) throws Exception;
 
 }

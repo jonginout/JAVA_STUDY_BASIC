@@ -73,6 +73,70 @@
 			(forum_no, liker) 
 		values (#{forumNo}, #{liker})
 	</insert>
+		
+	<insert id="insertForum" parameterType="forum" useGeneratedKeys="true" keyProperty="forumNo" keyColumn="forum_no">
+		<selectKey keyProperty="forumNo" resultType="int" order="AFTER">
+      		SELECT LAST_INSERT_ID()
+   		</selectKey> 
+		insert into forum
+			(title, content, writer_id, writer, category)
+		values
+			(#{title}, #{content}, #{writerId}, #{writer}, #{category})
+	</insert>
+	
+	<insert id="insertComment" parameterType="comment" useGeneratedKeys="true" keyProperty="commentNo" keyColumn="comment_no">
+		<selectKey keyProperty="commentNo" resultType="int" order="AFTER">
+      		SELECT LAST_INSERT_ID()
+   		</selectKey> 
+		insert into comments
+			(forum_no, writer_id, writer, content)
+		values
+			(#{forumNo}, #{writerId}, #{writer}, #{content})
+	</insert>
+
+	<update id="insertView" parameterType="int">
+		UPDATE forum 
+			SET view=view+1 
+		WHERE forum_no=#{forumNo};
+	</update>
+	
+	<select id="checkWriter" parameterType="forum" resultType="int">
+		SELECT count(*)
+			FROM forum
+		where forum_no = #{forumNo} and writer = #{writer}
+	</select>
+	
+	<update id="deleteForum" parameterType="forum">
+		UPDATE forum 
+			SET status='DELETE'
+		WHERE forum_no = #{forumNo};
+	</update>
+	
+	<update id="updateForum" parameterType="forum">
+		UPDATE forum 
+			SET content=#{content},
+				update_date = now()
+		WHERE forum_no = #{forumNo};
+	</update>
+	
+	<select id="checkCommentWriter" parameterType="comment" resultType="int">
+		SELECT count(*)
+			FROM comments
+		where comment_no = #{commentNo} and writer = #{writer}
+	</select>
+	
+	<delete id="deleteComment" parameterType="comment">
+		delete from
+			comments
+		where comment_no = #{commentNo}
+	</delete>
+	
+	<update id="updateComment" parameterType="comment">
+		UPDATE comments
+			SET content=#{content},
+				update_date = now()
+		WHERE comment_no = #{commentNo};
+	</update>
 
 </mapper>
 

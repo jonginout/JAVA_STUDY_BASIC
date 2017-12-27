@@ -117,7 +117,7 @@ function showChildList(node) {
 function dirTree() {
 
 	// 로그인 체크
-	if(userId==null){
+	if(user==null){
 		return false;
 	}
 
@@ -129,7 +129,7 @@ function dirTree() {
       autoFocus: false,
       initAjax: {
         url: projectURL+"/cloud/list.json",
-		data : {user:userId},
+		data : {user:user.memberId},
         },
 		onPostInit: function(isReloading, isError) {
 			//용량 체크!

@@ -70,7 +70,14 @@ const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 	// });
 
 
-	const userId = "${userId}"=="" ? null : "${userId}"
-	console.log(userId)
+	var userOri = "${user}"=="" ? null : "${user}"
+	var userTmp = userOri.substring(userOri.indexOf("[")+1, userOri.lastIndexOf("]"))
+	userOri = {};
+	userTmp = userTmp.split(", ")
+		for(var u of userTmp){
+		var tmp = u.split("=")
+		userOri[tmp[0]]=tmp[1]
+	}	
+	const user = userOri;
 
 </script>
