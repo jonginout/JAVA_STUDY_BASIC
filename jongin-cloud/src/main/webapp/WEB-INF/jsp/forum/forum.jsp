@@ -113,7 +113,7 @@ pageEncoding="UTF-8"%>
 							<div class="category">'+category+'</div>\
 							<div class="contentT">\
 								<span class="titleT">'+title+'</span>\
-								<span class="dateT"><span id="moment"> 지금</span> | 댓글 0 | <span id="author">'+user.writerId+'</span>\
+								<span class="dateT"><span id="moment"> 지금</span> | 댓글 0 | <span id="author">'+user.id+'</span>\
 							</div>\
 						</h4>\
 						</div>\
@@ -134,7 +134,7 @@ pageEncoding="UTF-8"%>
 								<h5 class="writer-box" style="margin:0; margin-bottom: 10px; font-weight: normal;">\
 									<i class="fa fa-user-o" aria-hidden="true"></i>\
 									<div class="writer">\
-										<span>'+user.writerId+'</span>\
+										<span>'+user.id+'</span>\
 									</div>\
 									<div class="button-box pull-right">\
 									</div>\
