@@ -1,0 +1,16 @@
+
+.st-notification{
+    padding: 10px 10px 0 !important;
+}
+.st-notification p{
+    font-size: 11px !important;
+}
+.st-notification__title{
+    margin-bottom: 3px;
+}
+.tab-content{
+    color: #313030 !important;
+}
+.st-notification.new {
+    background-color: #f1f1f1 !important;
+}

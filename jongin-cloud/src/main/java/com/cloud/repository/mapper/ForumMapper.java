@@ -8,6 +8,7 @@ import com.cloud.repository.vo.Like;
 
 public interface ForumMapper {
 	
+	public Forum selectOneForum(int forumNo) throws Exception;
 	public List<Forum> selectForum(Forum forum) throws Exception;
 	public List<Comment> selectComment(Comment comment) throws Exception;
 	public int checkLike(Like like) throws Exception;
@@ -21,5 +22,7 @@ public interface ForumMapper {
 	public void deleteComment(Comment comment) throws Exception;
 	public void updateComment(Comment comment) throws Exception;
 	public void insertForum(Forum forum) throws Exception;
+	public void updateDateForum(int forumNo) throws Exception;
 
 }
+

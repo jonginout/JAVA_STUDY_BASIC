@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 매퍼 연결 -->
+<mapper namespace="com.cloud.repository.mapper.AlarmMapper">
+
+	<resultMap id="alarmMap" type="alarm">
+		<result column="alarm_no" property="alarmNo" />
+		<result column="receiver" property="receiver" />
+		<result column="forum_no" property="forumNo" />
+		<result column="comment_no" property="commentNo" />
+		<result column="content" property="content" />
+		<result column="is_read" property="isRead" />
+		<result column="reg_date" property="regDate" />
+		<result column="url" property="url" />
+	</resultMap>
+	
+	<select id="countAlarm" parameterType="alarm" resultType="int">
+		select count(*)
+			from alarm
+		where receiver = #{receiver} and is_read='F'
+	</select>
+	
+	<insert id="insertAlarm" parameterType="alarm">
+		insert into alarm
+			(receiver, forum_no, comment_no, content) 
+		values 
+			(#{receiver}, #{forumNo}, #{commentNo}, #{content})
+	</insert>
+	
+	<select id="selectAlarm" parameterType="alarm" resultMap="alarmMap">
+		select *
+			from alarm
+		where receiver = #{receiver}
+			order by reg_date desc
+	</select>
+	
+	<update id="readAlarm" parameterType="alarm">
+		UPDATE alarm
+			SET is_read='T'
+		WHERE alarm_no = #{alarmNo}
+	</update>
+	
+	<update id="readAllAlarm" parameterType="alarm">
+		UPDATE alarm
+			SET is_read='T'
+		WHERE receiver = #{receiver}
+	</update>
+	
+	<delete id="deleteAlarm" parameterType="alarm">
+		delete from alarm
+			WHERE alarm_no = #{alarmNo}
+	</delete>
+	
+</mapper>
+
+
+
+

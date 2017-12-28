@@ -17,6 +17,12 @@ public class ForumServiceImpl implements ForumService{
 	@Autowired
 	private ForumMapper mapper;
 	
+
+	@Override
+	public Forum forumDetail(int forumNo) throws Exception {
+		return mapper.selectOneForum(forumNo);
+	}
+
 	@Override
 	public List<Forum> forumList(Forum forum) throws Exception {
 		return mapper.selectForum(forum);
@@ -40,6 +46,7 @@ public class ForumServiceImpl implements ForumService{
 	@Override
 	public void addComment(Comment comment) throws Exception {
 		mapper.insertComment(comment);
+		mapper.updateDateForum(comment.getForumNo());
 	}
 
 	@Override

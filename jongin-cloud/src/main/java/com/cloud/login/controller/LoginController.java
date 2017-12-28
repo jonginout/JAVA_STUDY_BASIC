@@ -112,7 +112,7 @@ public class LoginController {
 		// root는 공용폴더
 		// path는 실제 경로
 
-		String uploadDir = "profile";
+		String uploadDir = "data/profile";
 		System.out.println(uploadDir);
 
 		File f = new File(uploadDir);

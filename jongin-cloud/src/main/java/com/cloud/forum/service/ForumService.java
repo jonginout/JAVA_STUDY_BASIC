@@ -8,6 +8,7 @@ import com.cloud.repository.vo.Like;
 
 public interface ForumService {
 
+	public Forum forumDetail (int forumNo) throws Exception;
 	public List<Forum> forumList(Forum forum) throws Exception;
 	public List<Comment> commentList(Comment comment) throws Exception;
 	public int chkLike(Like like) throws Exception;

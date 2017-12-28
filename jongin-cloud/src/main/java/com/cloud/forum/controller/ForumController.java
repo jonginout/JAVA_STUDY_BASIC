@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cloud.alarm.service.AlarmService;
 import com.cloud.forum.service.ForumService;
+import com.cloud.repository.vo.Alarm;
 import com.cloud.repository.vo.Comment;
 import com.cloud.repository.vo.Forum;
 import com.cloud.repository.vo.Like;
@@ -23,6 +26,9 @@ public class ForumController {
 	
 	@Autowired
 	ForumService service;
+	
+	@Autowired
+	AlarmService alarmService;
 	
 	@RequestMapping("/forum.do")
 	public void forum(Forum forum) throws Exception {}
@@ -90,9 +96,28 @@ public class ForumController {
 	
 	@RequestMapping("/addcommetn.json")
 	@ResponseBody
-	public int addCommetn(Comment comment) throws Exception {
+	public int addCommetn(Comment comment, HttpSession session) throws Exception {
 		service.addComment(comment);
-		return comment.getCommentNo();
+		// 방금 인서트한 코멘트 NO
+		int insertCommentNo = comment.getCommentNo();
+		
+		////////////////////////////////////
+		Member user = (Member)session.getAttribute("user");
+		int forumNo = comment.getForumNo();
+		Forum forum = service.forumDetail(forumNo);
+		//자신글 알람 X
+		if(user.getMemberNo()!=forum.getWriter()) {			
+			Alarm alarm = new Alarm();
+			alarm.setReceiver(forum.getWriter());		
+			alarm.setForumNo(forumNo);
+			alarm.setCommentNo(insertCommentNo);
+			alarm.setContent("'"+comment.getWriterId()+"'님이 ['"+forum.getTitle()+"'] 글에 댓글을 달았습니다.");
+			alarmService.addAlarm(alarm);
+		}
+		////////////////////////////////////
+		
+		
+		return insertCommentNo;
 	}
 	
 	@RequestMapping("/addview.json")

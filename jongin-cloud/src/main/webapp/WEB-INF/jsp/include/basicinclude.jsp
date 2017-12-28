@@ -42,16 +42,22 @@
 const nowHost = location.hostname.toLowerCase();
 const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 
-	function loadingAjax(text){
-			$("body").waitMe({
+	function loadingAjax(text, ele){
+		if(ele==undefined){
+			ele = $("body");
+		}
+			ele.waitMe({
 			effect: 'bounce',
 			text : text,
 			bg: 'rgba(255,255,255,0.7)', //바탕화면 약간 어둡
 			color: '#1276AA'
 		});
 	}
-	function loadingStopAjax(){
-		$("body").waitMe("hide");
+	function loadingStopAjax(ele){
+		if(ele==undefined){
+			ele = $("body");
+		}
+		ele.waitMe("hide");
 	}
 
 	// $(function () {
@@ -78,14 +84,18 @@ const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 		var tmp = u.split("=")
 		userOri[tmp[0]]=tmp[1]
 		if(tmp[0]=='profileImg' && tmp[1]==''){
-			userOri[tmp[0]] = '/img/forum/default_profile.png'
+			userOri[tmp[0]] = 'data/profile/default_profile.png'
 		}
 	}	
 	const user = userOri;
 
-	// $(function(){
-	// 	$("#user-profile-img").css({
-	// 		"background-image" : "url('${pageContext.request.contextPath}/common/down.do?ext=img&path="+projectURL+user.profileImg+"')"
-	// 	})
-	// })
+	$(function(){
+		var set = {};
+		if(user.type=='NORMAL'){
+			set = {"background-image" : "url('${pageContext.request.contextPath}/common/down.do?ext=img&path="+user.profileImg+"')"};
+		}else{
+			set = {"background-image" : "url('"+user.profileImg+"')"};
+		}
+		$("#user-profile-img").css(set)
+	})
 </script>

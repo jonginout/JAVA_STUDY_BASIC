@@ -39,6 +39,12 @@
 	</resultMap>
 
 	
+	<select id="selectOneForum" parameterType="int" resultMap="forumMap">
+		select *
+			from forum
+		where forum_no = #{forumNo}
+	</select>
+	
 	<select id="selectForum" parameterType="forum" resultMap="forumMap">
 		select *, 
 		(
@@ -58,7 +64,7 @@
 	</select>
 	
 	<select id="selectComment" parameterType="comment" resultMap="commentMap">
-		select c.* , m.profile_img
+		select c.* , m.profile_img, m.type
 			from comments c	
 		inner join members m 
 			on c.writer = m.member_no
@@ -117,8 +123,16 @@
 	
 	<update id="updateForum" parameterType="forum">
 		UPDATE forum 
-			SET content=#{content},
+			SET content = #{content},
+				title = #{title},
 				update_date = now()
+		WHERE forum_no = #{forumNo};
+	</update>
+	
+		
+	<update id="updateDateForum" parameterType="int">
+		UPDATE forum 
+			SET update_date = now()
 		WHERE forum_no = #{forumNo};
 	</update>
 	

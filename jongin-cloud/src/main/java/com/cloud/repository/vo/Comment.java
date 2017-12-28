@@ -13,12 +13,19 @@ public class Comment {
 	
 	////////////////////////////
 	private String profileImg;
+	private String type;
 
 	public String getProfileImg() {
 		return profileImg;
 	}
 	public void setProfileImg(String profileImg) {
 		this.profileImg = profileImg;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	////////////////////////////
 	public int getCommentNo() {

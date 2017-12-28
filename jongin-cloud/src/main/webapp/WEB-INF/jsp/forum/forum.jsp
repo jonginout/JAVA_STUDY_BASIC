@@ -334,17 +334,20 @@ pageEncoding="UTF-8"%>
 	// 포럼 수정 함수
 	function editForum(no, thisE){
 		var content = parent(no).find(".forum-edit-input").val();
+		var title = content.substring(0,30);
 
 		$.ajax({
 				type : "POST",
 				url : projectURL+"/forum/editforum.json",
 				data : {
 					forumNo : no,
+					title : title,
 					content : content
 				},
 				success : function(data){
 					cancelForumEidt(thisE);
 					if(data.result){
+						parent(no).find(".titleT").html(title)						
 						parent(no).find(".content-box>span:eq(0)").html(content)
 					}else{
 						alert("수정 불가능!")
@@ -418,10 +421,22 @@ pageEncoding="UTF-8"%>
 					data[c].regDate = moment(data[c].regDate).fromNow();
 					data[c].updateDate = moment(data[c].updateDate).fromNow();
 
+					// profile URL
+					var avatarURL = "";
+					if(!data[c].profileImg){
+						avatarURL = projectURL+'/common/down.do?ext=img&path=data/profile/default_profile.png';
+					}else{
+						if(data[c].type=='NORMAL'){
+							avatarURL = projectURL+'/common/down.do?ext=img&path='+data[c].profileImg;
+						}else{
+							avatarURL = data[c].profileImg;
+						}
+					}
+
 					var html = '<div class="comment-wrap" data-commentNo="'+data[c].commentNo+'">\
 									<div class="photo">\
 										<center>\
-											<div class="avatar" style="background-image: url(\''+projectURL+'/common/down.do?ext=img&path='+data[c].profileImg+'\')"></div>\
+											<div class="avatar" style="background-image: url(\''+avatarURL+'\')"></div>\
 											<span>'+data[c].writerId+'</span>\
 										</center>\
 									</div>\
@@ -447,7 +462,7 @@ pageEncoding="UTF-8"%>
 						$(".comment-wrap[data-commentNo="+data[c].commentNo+"]").find(".photo").remove();
 						var photoHtml ='<div class="photo">\
 											<center>\
-												<div class="avatar" style="background-image: url(\''+projectURL+'/common/down.do?ext=img&path='+data[c].profileImg+'\')"></div>\
+												<div class="avatar" style="background-image: url(\''+avatarURL+'\')"></div>\
 												<span>'+data[c].writerId+'</span>\
 											</center>\
 										</div>';
@@ -550,11 +565,13 @@ pageEncoding="UTF-8"%>
 			return;
 		}
 		var no = $(this).parents(".panel-default").attr("data-no")
-		addComment(no);	
+		addComment(no, $(this));	
+		loadingAjax("", $(this))
+		$(this).attr("disabled", true);
 	})
 
 	// 댓글 추가 함수
-	function addComment(no){
+	function addComment(no, ele){
 		var content = parent(no).find(".comment-content").val();
 
 		$.ajax({
@@ -591,6 +608,12 @@ pageEncoding="UTF-8"%>
 							</div>';
 				parent(no).find(".comments").append(html);
 				$(".comment-content").val("");
+
+				ele.removeAttr("disabled")
+				loadingStopAjax(ele)
+			},
+			error : function(){
+				loadingStopAjax(ele)
 			}
 		})
 	}
@@ -598,11 +621,13 @@ pageEncoding="UTF-8"%>
 	// 좋아요 추가 이벤트
 	$("body").on("click", ".like-btn", function(){
 		var no = $(this).parents(".panel-default").attr("data-no")
-		addLike(no);
+		addLike(no, $(this));
+		loadingAjax("", $(this))		
+		$(this).attr("disabled", true);
 	})
 	
 	// 좋아요 추가 함수
-	function addLike(no){
+	function addLike(no, ele){
 
 		parent(no).find(".like-btn").css({
 			"background": "tomato",
@@ -626,6 +651,11 @@ pageEncoding="UTF-8"%>
 				}else{
 					alert("이미 좋아요를 누른 '포럼'입니다.")
 				}
+				ele.removeAttr("disabled")
+				loadingStopAjax(ele)
+			},
+			error : function(){
+				loadingStopAjax(ele)
 			}
 		})
 	}
