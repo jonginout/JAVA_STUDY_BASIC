@@ -58,6 +58,7 @@
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/login/*.do" />
 			<mvc:exclude-mapping path="/login/*.json" />
+			<mvc:exclude-mapping path="/common/down.do" />
 			<mvc:exclude-mapping path="/" />
 			<bean class="com.cloud.interceptor.LoginInterceptor" />
 		</mvc:interceptor>

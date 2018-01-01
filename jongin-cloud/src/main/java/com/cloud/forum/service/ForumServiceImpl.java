@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cloud.repository.mapper.ForumMapper;
 import com.cloud.repository.vo.Comment;
 import com.cloud.repository.vo.Forum;
+import com.cloud.repository.vo.ForumFile;
 import com.cloud.repository.vo.Like;
 import com.sun.org.apache.regexp.internal.recompile;
 
@@ -87,6 +88,16 @@ public class ForumServiceImpl implements ForumService{
 	@Override
 	public void addForum(Forum forum) throws Exception {
 		mapper.insertForum(forum);
+	}
+
+	@Override
+	public void addForumFile(ForumFile forumFile) throws Exception {
+		mapper.insertForumFile(forumFile);
+	}
+
+	@Override
+	public List<ForumFile> forumFileList(ForumFile forumFile) throws Exception {
+		return mapper.selectForumFile(forumFile);
 	}
 
 

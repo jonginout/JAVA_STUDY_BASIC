@@ -14,7 +14,14 @@ public class Comment {
 	////////////////////////////
 	private String profileImg;
 	private String type;
+	private int forumWriter;
 
+	public int getForumWriter() {
+		return forumWriter;
+	}
+	public void setForumWriter(int forumWriter) {
+		this.forumWriter = forumWriter;
+	}
 	public String getProfileImg() {
 		return profileImg;
 	}

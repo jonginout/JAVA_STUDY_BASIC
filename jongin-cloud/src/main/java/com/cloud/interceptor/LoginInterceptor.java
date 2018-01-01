@@ -11,17 +11,17 @@ import com.cloud.repository.vo.Member;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(
+			HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		
 		HttpSession session = request.getSession();
-		Member vo = (Member)session.getAttribute("user");
-		if(vo != null) {
-			/*int msgCount = new MsgServiceImpl().notReadCount(vo.getId());
-			vo.setMsgCount(msgCount);
-			
-			session.setAttribute("user", vo);*/
+		Member member = (Member) session.getAttribute("user");
+		if (member != null) {
 			return true;
 		}
 		response.sendRedirect(request.getContextPath() + "/login/loginform.do");
 		return false;
+		
 	}
 }

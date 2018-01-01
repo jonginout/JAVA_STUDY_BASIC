@@ -30,6 +30,7 @@
 		<result column="reg_date" property="regDate" />
 		<result column="update_date" property="updateDate" />
 		<result column="profile_img" property="profileImg" />
+		<result column="forum_writer" property="forumWriter" />
 	</resultMap>
 	
 	<resultMap id="likeMap" type="like">
@@ -37,12 +38,31 @@
 		<result column="forum_no" property="forumNo" />
 		<result column="liker" property="liker" />
 	</resultMap>
+	
+	<resultMap id="forumFileMap" type="forumFile">
+		<result column="forum_file_no" property="forumFileNo" />
+		<result column="forum_no" property="forumNo" />
+		<result column="file_name" property="fileName" />
+		<result column="path" property="path" />
+		<result column="ext" property="ext" />
+	</resultMap>
 
 	
 	<select id="selectOneForum" parameterType="int" resultMap="forumMap">
-		select *
-			from forum
-		where forum_no = #{forumNo}
+		  select *, 
+		(
+			select count(*)
+				from comments c
+			where c.forum_no=f.forum_no
+		) comment_count,
+		(
+			select count(*)
+				from likes l
+			where l.forum_no=f.forum_no
+		) like_count
+			from forum f
+		where status = 'PUBLIC' and forum_no = #{forumNo}
+			order by update_date desc
 	</select>
 	
 	<select id="selectForum" parameterType="forum" resultMap="forumMap">
@@ -63,12 +83,20 @@
 		LIMIT #{start}, #{count}
 	</select>
 	
+	<select id="selectForumFile" parameterType="forumFile" resultMap="forumFileMap">
+		select *
+			from forum_file
+		where forum_no = #{forumNo}
+	</select>
+	
 	<select id="selectComment" parameterType="comment" resultMap="commentMap">
-		select c.* , m.profile_img, m.type
+		select c.* , m.profile_img, m.type, f.writer forum_writer
 			from comments c	
 		inner join members m 
 			on c.writer = m.member_no
-		where forum_no = #{forumNo}
+		inner join forum f
+			on c.forum_no = f.forum_no
+		where c.forum_no = #{forumNo}
 	</select>
 	
 	<select id="checkLike" resultType="int" parameterType="like">
@@ -91,6 +119,13 @@
 			(title, content, writer_id, writer, category)
 		values
 			(#{title}, #{content}, #{writerId}, #{writer}, #{category})
+	</insert>
+		
+	<insert id="insertForumFile" parameterType="forumFile">
+		insert into forum_file
+			(forum_no, file_name, path, ext)
+		values
+			(#{forumNo}, #{fileName}, #{path}, #{ext})
 	</insert>
 	
 	<insert id="insertComment" parameterType="comment" useGeneratedKeys="true" keyProperty="commentNo" keyColumn="comment_no">

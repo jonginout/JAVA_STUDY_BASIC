@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cloud.alarm.service.AlarmService;
+import com.cloud.forum.service.ForumService;
 import com.cloud.repository.vo.Alarm;
+import com.cloud.repository.vo.Comment;
+import com.cloud.repository.vo.Forum;
 import com.cloud.repository.vo.Member;
 
 @Controller
@@ -20,6 +23,9 @@ public class AlarmController {
 
 	@Autowired
 	AlarmService service;
+	
+	@Autowired
+	ForumService forumService;
 	
 	@RequestMapping("/countalarm.json")
 	@ResponseBody
@@ -64,6 +70,20 @@ public class AlarmController {
 		Member user = (Member)session.getAttribute("user");
 		alarm.setReceiver(user.getMemberNo());
 		service.viewAllAlarm(alarm);
+	}
+	
+	@RequestMapping("/detailalarm.json")
+	@ResponseBody
+	public Map<String, Object> detailalarm(int forumNo) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+
+		Comment comment = new Comment();
+		comment.setForumNo(forumNo);
+		
+		map.put("forum", forumService.forumDetail(forumNo));
+		map.put("comments", forumService.commentList(comment));
+		
+		return map;
 	}
 	
 }

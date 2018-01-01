@@ -124,7 +124,7 @@ function dirTree() {
 	console.log("트리 로딩 완료..")
 
     $("#tree").dynatree({
-      title: "김종인님의 클라우드",
+      title: user.name+"님의 클라우드",
       fx: { height: "toggle", duration: 200 },
       autoFocus: false,
       initAjax: {

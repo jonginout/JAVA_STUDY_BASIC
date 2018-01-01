@@ -1,6 +1,15 @@
-
+.st-notification__main {
+    margin-left: -41px !important;
+    width: auto !important;
+    margin-bottom: 17px !important;
+}
 .st-notification{
     padding: 10px 10px 0 !important;
+    cursor: pointer;
+}
+.st-notification:hover{
+    background-color: rgb(255, 232, 225);
+    cursor: pointer;
 }
 .st-notification p{
     font-size: 11px !important;

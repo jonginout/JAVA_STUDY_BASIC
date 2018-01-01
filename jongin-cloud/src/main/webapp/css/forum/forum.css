@@ -10,6 +10,10 @@
 	.banner-img{
 		width: 100%;
 	}
+	div#attach-file{
+		color: white !important;
+		cursor: pointer;
+	}
 	.write-box{
 		width: 100%;
 		padding: 17px 17px 7px 17px;
@@ -17,14 +21,15 @@
 	    border-radius: 0;
 	}
 	.write-box>textarea{
-	    border-radius: 0;
+		border-radius: 0;
 	}
 	.write-btn{
 		/* padding: 0px; */
 		padding-bottom : 7px;
 		background: #1276AA;
 	    border-radius: 0;
-	    color: white;
+		color: white;
+		cursor: pointer;
 	}
 	.write-btn-group{
 		padding: 0px;
@@ -35,6 +40,9 @@
 	}
 	.panel-heading{
 		padding: 5px !important;
+	}
+	.alarm-panel-heading{
+		background-color: #ffefea !important;
 	}
 	.panel a{
 		text-decoration: none !important;		
@@ -94,10 +102,11 @@
 	#loading-bar{
 		display: none;
 		padding: 5px !important; 
+		height: 30px;
+		
 	}
-	#comment-loading-bar{
-		display: none;
-		padding: 5px !important; 
+	.comment-loading-bar{
+		height: 40px; 
 	}
 	.info-box{
 		margin:0; margin-bottom:10px; 

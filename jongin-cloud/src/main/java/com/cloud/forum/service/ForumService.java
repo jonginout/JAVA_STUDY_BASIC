@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cloud.repository.vo.Comment;
 import com.cloud.repository.vo.Forum;
+import com.cloud.repository.vo.ForumFile;
 import com.cloud.repository.vo.Like;
 
 public interface ForumService {
@@ -23,4 +24,6 @@ public interface ForumService {
 	public void editComment(Comment comment) throws Exception;
 	public void addForum(Forum forum) throws Exception;
 
+	public void addForumFile(ForumFile forumFile) throws Exception;
+	public List<ForumFile> forumFileList(ForumFile forumFile) throws Exception;
 }

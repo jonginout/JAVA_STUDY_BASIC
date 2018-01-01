@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cloud.repository.vo.Comment;
 import com.cloud.repository.vo.Forum;
+import com.cloud.repository.vo.ForumFile;
 import com.cloud.repository.vo.Like;
 
 public interface ForumMapper {
@@ -23,6 +24,8 @@ public interface ForumMapper {
 	public void updateComment(Comment comment) throws Exception;
 	public void insertForum(Forum forum) throws Exception;
 	public void updateDateForum(int forumNo) throws Exception;
+	public void insertForumFile(ForumFile forumFile) throws Exception;
+	public List<ForumFile> selectForumFile(ForumFile forumFile) throws Exception;
 
 }
 

@@ -1,6 +1,7 @@
 package com.cloud.repository.vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Forum {
 
@@ -18,6 +19,7 @@ public class Forum {
 	private Integer count;
 	
 	///////////////////////////////
+	
 	private int commentCount;
 	public int getCommentCount() {
 		return commentCount;

@@ -16,9 +16,11 @@ import com.cloud.forum.service.ForumService;
 import com.cloud.repository.vo.Alarm;
 import com.cloud.repository.vo.Comment;
 import com.cloud.repository.vo.Forum;
+import com.cloud.repository.vo.ForumFile;
 import com.cloud.repository.vo.Like;
 import com.cloud.repository.vo.Member;
 import com.google.gson.Gson;
+import com.sun.org.apache.regexp.internal.recompile;
 
 @Controller
 @RequestMapping("/forum")
@@ -31,7 +33,7 @@ public class ForumController {
 	AlarmService alarmService;
 	
 	@RequestMapping("/forum.do")
-	public void forum(Forum forum) throws Exception {}
+	public void forum() throws Exception {}
 	
 
 	@RequestMapping("/forum.json")
@@ -58,14 +60,41 @@ public class ForumController {
 		return map;
 		
 	}
+	
+	@RequestMapping("/forumfile.json")
+	@ResponseBody
+	public Map<String, Object> forumFile(ForumFile forumFile) throws Exception {
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", false);
+		
+		List<ForumFile> forumFiles = service.forumFileList(forumFile);
+		if(forumFiles.size()>0) {
+			map.put("result", true);
+			map.put("forumFiles", forumFiles);
+		}
+		
+		return map;
+	}
+	
 
 	@RequestMapping("/addforum.json")
 	@ResponseBody
-	public int addForum(Forum forum, HttpSession session) throws Exception {
+	public int addForum(
+			Forum forum, ForumFile forumFile, HttpSession session
+			) throws Exception {
+		
 		Member user = (Member) session.getAttribute("user");
 		forum.setWriter(user.getMemberNo());
 		forum.setWriterId(user.getId());
-		service.addForum(forum);		
+		service.addForum(forum);
+		
+		
+		if(forumFile.getPath()!=null) {
+			forumFile.setForumNo(forum.getForumNo());
+			service.addForumFile(forumFile);
+		}
+		System.out.println(forumFile);
+		
 		return forum.getForumNo();
 	}
 

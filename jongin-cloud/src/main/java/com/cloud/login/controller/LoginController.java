@@ -3,21 +3,14 @@ package com.cloud.login.controller;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.URL;
 import java.security.MessageDigest;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -27,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloud.login.service.LoginService;
 import com.cloud.repository.vo.AuthSms;
 import com.cloud.repository.vo.Member;
-import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/login")
@@ -222,6 +213,45 @@ public class LoginController {
 		
 		return map;
 	}
+	
+	@RequestMapping("/javaexe.json")
+	@ResponseBody
+	public void javaExe() throws Exception {
+		
+		Runtime run = Runtime.getRuntime();
+		
+		  // 컴파일                                                                        //   /usr/local/jdk8/bin/java
+												// 	  /usr/local/jdk8/bin/javac
+	      Process proc = run.exec(new String[] {"C:\\Program Files\\Java\\jdk1.8.0_141\\bin\\javac", 
+	                        "-d", 
+	                        "C:\\program-workspaces\\lecture-project\\Test\\src",
+	                        "-encoding", 
+	                        "utf-8",
+	                        "C:\\program-workspaces\\lecture-project\\Test\\src\\Run.java"});
+	      // 컴파일 될 때 까지 기달
+	      proc.waitFor();
+	      
+	      // 실행
+	      proc = run.exec(
+	            new String[] {
+	                  "C:\\program-bin\\Java\\jdk-9.0.1\\bin\\java", 
+	                  "-Dfile.encoding=UTF8", 
+	                  "-cp", 
+	                  "C:\\program-workspaces\\lecture-project\\Test\\src", "Run"});
+	      InputStream in = proc.getInputStream();
+	      BufferedReader br = new BufferedReader(new InputStreamReader(in, "utf-8"));
+	      String result = "";
+	      while (true) {
+	         String line = br.readLine();
+	         if (line == null) {
+	            break;
+	         }
+	         result += line;
+	      }
+	      System.out.println(result);   
+
+	}
+	
 
 	// 아이디 체크
 	@RequestMapping("/sms.json")
