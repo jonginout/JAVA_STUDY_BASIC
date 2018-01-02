@@ -22,6 +22,14 @@
 		<result column="auth_key" property="authKey" />
 		<result column="tel" property="tel" />
 	</resultMap>
+
+	<resultMap id="autoLoginMap" type="autoLogin">
+		<result column="auto_login_no" property="autoLoginNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="session_id" property="sessionId" />
+		<result column="limit_time" property="limitTime" />
+	</resultMap>
+	
 	
 	<select id="idChk" parameterType="string" resultType="int">
 		select
@@ -72,6 +80,32 @@
 				</if>
 			</where>
 	</delete>
+
+	<!--  자동 로그인!  -->
+	<insert id="autoLoginInsert" parameterType="autoLogin">
+		insert into auto_login
+			(member_no, session_id, limit_time)
+		values
+			(#{memberNo}, #{sessionId}, #{limitTime})
+	</insert>
+	
+	<update id="autoLoginUpdate" parameterType="int">
+		UPDATE auto_login 
+			SET limit_time = now()
+		WHERE member_no = #{memberNo};
+	</update>
+		
+    <select id="autoLoginChk" resultMap="autoLoginMap" parameterType="autoLogin">
+        select * 
+        	from auto_login 
+        where session_id = #{sessionId} and limit_time > now()
+    </select>
+
+	<select id="autoLoginToMember" parameterType="int" resultMap="memberMap">
+		select *
+			from members
+		where member_no = #{memberNo}
+	</select>
 
 </mapper>
 

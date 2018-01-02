@@ -6,15 +6,19 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,9 +28,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.WebUtils;
 
 import com.cloud.login.service.LoginService;
 import com.cloud.repository.vo.AuthSms;
+import com.cloud.repository.vo.AutoLogin;
 import com.cloud.repository.vo.Member;
 
 @Controller
@@ -50,7 +56,10 @@ public class LoginController {
 
 	@RequestMapping("/login.json")
 	@ResponseBody
-	public Map<String, Object> login(Member member, HttpSession session) throws Exception {
+	public Map<String, Object> login(
+			Member member, String save, HttpSession session, HttpServletResponse response
+			) throws Exception {
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("result", false);
 		
@@ -74,8 +83,31 @@ public class LoginController {
 		if(user!=null) {
 			user.setPass(null);
 			session.setAttribute("user", user);
-			session.setAttribute("userId", user.getId());
 			map.put("result", true);
+						
+			////////////////////////////////////////자동로그인////////
+			if(save.equals("true")) {
+				AutoLogin autoLogin = new AutoLogin();
+				
+				Cookie cookie = new Cookie("userCookie", session.getId());
+                // 쿠키를 찾을 경로를 컨텍스트 경로로 변경해 주고...
+                cookie.setPath("/");
+                int amount = 60 * 60 * 24 * 7; // 일
+                cookie.setMaxAge(amount); 
+                response.addCookie(cookie);
+                
+                // currentTimeMills()가 1/1000초 단위임으로 1000곱해서 더해야함
+                Date sessionLimit = new Date(System.currentTimeMillis() + (1000*amount));
+                
+                
+                autoLogin.setMemberNo(user.getMemberNo());
+                autoLogin.setSessionId(session.getId());
+                autoLogin.setLimitTime(sessionLimit);
+                service.autoLogin(autoLogin);
+                // 현재 세션 id와 유효시간을 사용자 테이블에 저장한다.
+			}
+			////////////////////////////////////////자동로그인////////
+
 		}else {
 			map.put("result", false);
 		}
@@ -147,10 +179,25 @@ public class LoginController {
 	}
 
 	@RequestMapping("/logout.do")
-	public String logout(HttpSession session) {
+	public String logout(
+			HttpSession session, 
+			HttpServletRequest request, HttpServletResponse response ) throws Exception {
 		Member user = (Member) session.getAttribute("user");
 		if (user != null) {
 			session.invalidate();
+			
+			Cookie userCookie = WebUtils.getCookie(request, "userCookie");
+			if(userCookie != null) {
+				// null이 아니면 존재하면!
+				userCookie.setPath("/");
+                // 쿠키는 없앨 때 유효시간을 0으로 설정하는 것 !!! invalidate같은거 없음.
+				userCookie.setMaxAge(0);
+                // 쿠키 설정을 적용한다.
+                response.addCookie(userCookie);
+                 
+                // 사용자 테이블에서도 유효기간을 현재시간으로 다시 세팅해줘야함.
+                service.autoLoginEdit(user.getMemberNo());
+			}
 		}
 		return "redirect:/login/loginform.do";
 	}
@@ -252,6 +299,40 @@ public class LoginController {
 
 	}
 	
+	@RequestMapping("/kakao.json")
+	@ResponseBody
+	public String kakao(String accessToken) throws Exception {
+		String result = "";
+
+	       String token = accessToken;
+	        String header = "Bearer " + token; // Bearer 다음에 공백 추가
+	        try {
+	            String apiURL = "https://kapi.kakao.com/v1/user/me";
+	            URL url = new URL(apiURL);
+	            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	            con.setRequestMethod("GET");
+	            con.setRequestProperty("Authorization", header);
+	            int responseCode = con.getResponseCode();
+	            BufferedReader br;
+	            if(responseCode==200) { // 정상 호출
+	                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	            } else {  // 에러 발생
+	                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	            }
+	            String inputLine;
+	            StringBuffer response = new StringBuffer();
+	            while ((inputLine = br.readLine()) != null) {
+	                response.append(inputLine);
+	            }
+	            br.close();
+	            result = response.toString();
+	        } catch (Exception e) {
+	            System.out.println(e);
+	        }
+	
+	        return result;
+	}
+		
 
 	// 아이디 체크
 	@RequestMapping("/sms.json")

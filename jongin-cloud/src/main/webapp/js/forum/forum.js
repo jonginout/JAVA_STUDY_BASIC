@@ -4,7 +4,20 @@
 	var lastFlag = false;
 	var isLoading = false;
 
+	var param = {
+		forumNo : null,
+		commentNo : null
+	};
+
 	// 알람 파라미터
+	if(location.search && location.search.indexOf("&")!=-1){
+		param = ((location.search).substring(1)).split("&");
+		param = {
+			forumNo : parseInt(param[0].split("=")[1]),
+			commentNo : parseInt(param[1].split("=")[1])
+		}
+	}
+
 	var forumNo = parseInt("${param.forumNo}")
 	var commentNo = parseInt("${param.commentNo}")
 
@@ -362,8 +375,12 @@
             loadForumFile(no);
 			loadComment(no)
 		}
+
+		// if($("#forum-content-detail.hidden-xs").css("display")!="none"){
+		// }
 	})
 
+	// 파일 불러오기
     function loadForumFile(no){
         $.ajax({
             type : "GET",
@@ -380,12 +397,17 @@
 
                         var path = (files[f].path).replace(/\\/gi, "/");
                         var viewUrl = projectURL+"/common/down.do?ext="+files[f].ext+"&path="+path;
-                        var downUrl = viewUrl+"&title="+files[f].fileName;
+						var downUrl = viewUrl+"&title="+files[f].fileName;
+						
+						// 이미지 뷰 사용가능 확장자
+						var imgFileArr = ["png","jpg","jpeg","gif","png","bmp"];
+						if(imgFileArr.indexOf(files[f].ext)!=-1){
+							viewHtml += '<br><br><img src="'+viewUrl+'" width="100%"/>'
+						}
 
-                        viewHtml += '<br><br><img src="'+viewUrl+'" width="100%"/>'
                         downHtml += '<a href="'+downUrl+'">'+files[f].fileName+'</a>';
 
-                    }
+					}
                     parent(no).find(".content-box>span:eq(1)").html(viewHtml)
                     parent(no).find(".file-box").html(downHtml)
                 }
@@ -707,11 +729,12 @@
 	/// 알람 부분
 
 
-	if(forumNo && commentNo){
-		detail()
+	if(param.forumNo && param.commentNo){
+		console.log(param.forumNo , param.commentNo)
+		detail(param.forumNo, param.commentNo)
 	}
 
-	function detail(){
+	function detail(forumNo, commentNo){
 
 		$.ajax({
 			type : "GET",

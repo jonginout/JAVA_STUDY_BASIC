@@ -23,12 +23,12 @@ pageEncoding="UTF-8"%>
 	
 
 </head>
-<body>
+<body style="background: #123142">
 
   	<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
-		  	<div id="forum-content" class="col-xs-12 col-sm-8 col-sm-push-2">
-              <!------------------------------------------------------------>
-              <!------------------------------------------------------------>
+			<!------------------------------------------------------------>
+			<!------------------------------------------------------------>
+			<div id="forum-content" class="col-xs-12 col-sm-push-3 col-sm-6">
 				<div class="container write-box">
 					<div id="attach-file"></div>
 					<textarea class="form-control write-forum-input" rows="2"></textarea>
@@ -56,9 +56,12 @@ pageEncoding="UTF-8"%>
 				<center id="loading-bar">
 				</center>
 				
+			</div>
+
+			<!-- <div id="forum-content-detail" class="hidden-xs col-sm-6">
+			</div>		 -->
               <!------------------------------------------------------------>
               <!------------------------------------------------------------>
-		  	</div>			
 
 		  <%@ include file="/WEB-INF/jsp/include/basic-js.jsp" %>
 		  

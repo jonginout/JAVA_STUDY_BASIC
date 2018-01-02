@@ -274,10 +274,7 @@ $("body").on("click", ".file-view-close", function(){
 	$(".file-view-content").html("")
 })
 
-// 자동 코멘트 높이 조정
-$('body').on('keydown keyup', '#comment-file' , function () {
-	$(this).height(1).height( $(this).prop('scrollHeight')+12 );				
-});
+ 
 
 // 코멘트 저장하기
 $("body").on("click", "#form-comment>button", function(){

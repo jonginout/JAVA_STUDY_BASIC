@@ -50,17 +50,25 @@ pageEncoding="UTF-8"%>
 										<input name="pass" id="pass" class="form-control" type="password" placeholder="비밀번호">
 										<span class="glyphicon glyphicon-remove form-control-feedback"></span>
 									</div>
+									<div class="form-group">
+										<input id="save" name="save" type="checkbox">
+										<label for="save">로그인 유지</label> 
+									</div>
 									<div class="form-group text-center">
 										<button id="login-formBtn" type="button" class="btn btn-primary btn-md">로그인</button>
 										<button id="signup-formBtn" type="button" class="btn btn-primary btn-md">회원가입</button>
-										
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
 					<center>
-						<div id="naverIdLogin"></div>
+						<a id="naverIdLogin">
+							<img src="${pageContext.request.contextPath}/img/naver_login.png">
+						</a>
+						<a id="custom-login-btn" href="javascript:loginWithKakao()">
+							<img src="${pageContext.request.contextPath}/img/kakao_login.png">
+						</a>
 					</center>
 				</div>
 			</div>
@@ -70,74 +78,17 @@ pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/jsp/include/basic-js.jsp" %>
 
+
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/login/kakaoLogin.js"></script>
+
+
 <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
-
-<script type="text/javascript">
-	var localCallbackUrl = "http://localhost:8080/jongin-cloud/login/naverLogin.do";
-	var Cafe24CallbackUrl = "http://chopo01.cafe24.com/login/naverLogin.do";
-	const callbackUrl = nowHost=='localhost' ? localCallbackUrl : Cafe24CallbackUrl;
-
-	var naverLogin = new naver.LoginWithNaverId(
-		{
-			clientId: "lbeEftb6cSDwLJdxPMJW",
-			callbackUrl: callbackUrl,
-			loginButton: {color: "green", type: 2, height: 30} /* 로그인 버튼의 타입을 지정 */
-		}
-	);
-	
-   /* 설정정보를 초기화하고 연동을 준비 */
-	naverLogin.init();
-	
-</script>
+<script src="${pageContext.request.contextPath}/js/login/naverLogin.js"></script>
 
 
-<script>
-	
-	var isNull = true;
-	$("#id,#pass").on("keyup", function () {
-		var len = $(this).val().length;
-		if(len>0){
-			$(this).parent().removeClass("has-error").addClass("has-success");
-			$(this).next().removeClass("glyphicon-remove").addClass("glyphicon-ok");
-			isNull = false;
-		}else {
-			$(this).parent().removeClass("has-success").addClass("has-error");			
-			$(this).next().removeClass("glyphicon-ok").addClass("glyphicon-remove");
-			isNull = true;
-		}
-	})
-	
-	$("#login-formBtn").click(function () {
-		if(!isNull){
-			$.ajax({
-				type : "POST",
-				url : projectURL+"/login/login.json",
-				data : {
-					id : $("#id").val(),
-					pass : $("#pass").val()
-				},
-				beforeSend : loadingAjax("로그인 중.."),
-				success : function (data) {
-					loadingStopAjax();
-					if(!data.result){
-						alert("일치하는 회원정보가 없습니다.")	
-					}else {
-						location.href = projectURL+"/cloud/cloud.do";
-					}
-				},
-				error : function () {	
-					loadingStopAjax();				
-					alert("로그인 에러")	
-				}
-			})
-		}
-	})
-	
-	$("#signup-formBtn").click(function(){
-		location.href = projectURL+"/login/signupform.do";
-	})
+<script src="${pageContext.request.contextPath}/js/login/login.js"></script>
 
-</script>
 
 </body>
 </html>

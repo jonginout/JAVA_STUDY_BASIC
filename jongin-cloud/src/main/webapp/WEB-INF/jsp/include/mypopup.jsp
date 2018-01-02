@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<ul class="st-userpopup__menu">
-			<li class="st-spanel__open" data-tab="#notifications" data-toggle="popup" data-target="#user-popup" data-method="hide">
+			<li>
 				<a href="#내피드 URL 삽입">
 					<div class="fluid-cols">
 						<div class="expand-col text-ellipsis">
@@ -31,8 +31,8 @@
 						</div>
 					</div>
 			</a></li>
-			<li data-toggle="popup" data-target="#user-popup" data-method="hide"><a
-				href="#내정보 URL 삽입">
+			<li>
+				<a href="#내정보 URL 삽입">
 					<div class="fluid-cols">
 						<div class="expand-col text-ellipsis">
 							<span>내 정보</span>

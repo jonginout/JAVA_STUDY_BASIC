@@ -75,11 +75,11 @@
 				name : user.name,
 				email : user.email,
 				profileImg : user.profile_image,
-				type : "NAVER"
+				type : "NAVER",
+				save : "true"
 			},
 			dataType : "json",
 			success : function (data) {
-				console.log(data,"ss")
 				if(data.result){
 					location.href = "${pageContext.request.contextPath}/cloud/cloud.do"
 				}

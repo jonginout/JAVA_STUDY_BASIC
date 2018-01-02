@@ -36,7 +36,10 @@
 <!-- 절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  -->
 
 
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
 <title>CLOUD OF Z</title>
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/img/favicon.ico" />
+
 
 <script type="text/javascript">
 const nowHost = location.hostname.toLowerCase();

@@ -62,8 +62,10 @@
 	.comment-btn{
 		opacity: 0.9;
 	}
+	#kPay-btn{
+		width: 100px !important;		
+	}
 	#kPay-btn:hover{
-		width: 100px !important;
 		cursor: pointer;
 		opacity: 0.8;
 	} 

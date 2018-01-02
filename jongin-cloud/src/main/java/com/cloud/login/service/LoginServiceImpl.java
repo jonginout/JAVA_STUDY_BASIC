@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.cloud.repository.mapper.MemberMapper;
 import com.cloud.repository.vo.AuthSms;
+import com.cloud.repository.vo.AutoLogin;
 import com.cloud.repository.vo.Member;
 
 
@@ -42,6 +43,28 @@ public class LoginServiceImpl implements LoginService{
 	@Override
 	public void removeKey(AuthSms authSms) throws Exception {
 		mapper.keyDelete(authSms);
+	}
+
+	
+	
+	@Override
+	public void autoLogin(AutoLogin autoLogin) throws Exception {
+		mapper.autoLoginInsert(autoLogin);
+	}
+
+	@Override
+	public AutoLogin checkAutoLogin(String sessionId) throws Exception {
+		return mapper.autoLoginChk(sessionId);
+	}
+
+	@Override
+	public Member autoLoginToMember(int memberNo) throws Exception {
+		return mapper.autoLoginToMember(memberNo);
+	}
+
+	@Override
+	public void autoLoginEdit(int memberNo) throws Exception {
+		mapper.autoLoginUpdate(memberNo);
 	}
 	
 
