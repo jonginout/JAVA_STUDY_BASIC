@@ -305,6 +305,14 @@ $("body").on("click", "#form-comment>button", function(){
 
 // 파일 삭제
 $("body").on("click", ".file-delete", function () {
+
+	////////////////////////
+	if(user.lockMode=='T'){
+		alert("※경고※\n잠금 모드가 활성화 중입니다.\n(잠금 모드 일 경우 파일 삭제, 수정 불가)")
+		return;
+	}
+	////////////////////////
+
 	if(!confirm("정말로 이 파일을 삭제하시겠습니까?\n※ 추후 복구불가")){
 		return false;
 	}
@@ -334,6 +342,14 @@ $("body").on("click", ".file-delete", function () {
 
 // 파일 리네임
 $("body").on("click", ".file-rename", function () {
+
+	////////////////////////
+	if(user.lockMode=='T'){
+		alert("※경고※\n잠금 모드가 활성화 중입니다.\n(잠금 모드 일 경우 파일 삭제, 수정 불가)")
+		return;
+	}
+	////////////////////////
+
 	var key = $(this).parents("#detailFile").attr("data-key");
 	var node = $("#tree").dynatree("getTree").getNodeByKey(key);
 	var parentKey = node.parent.data.key;
@@ -509,6 +525,14 @@ $("body").on("click", ".code-refresh", function(){
 
 // 코드 수정하기
 $("body").on("click", "#codeEidtBtn", function(){
+
+	////////////////////////
+	if(user.lockMode=='T'){
+		alert("※경고※\n잠금 모드가 활성화 중입니다.\n(잠금 모드 일 경우 파일 삭제, 수정 불가)")
+		return;
+	}
+	////////////////////////
+
 	var node = $("#tree").dynatree("getTree").getNodeByKey($(this).attr("data-key"));
 
 	$.ajax({

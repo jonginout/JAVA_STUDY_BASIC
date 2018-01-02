@@ -216,6 +216,33 @@ public class LoginController {
 		return map;
 	}
 	
+	// 비번 아이디 체크
+	@RequestMapping("/lock.json")
+	@ResponseBody
+	public Map<String, Boolean> lock(
+			Member member, HttpSession session
+			) throws Exception {
+		Map<String, Boolean> map = new HashMap<>();
+		
+		System.out.println(member.toString());
+
+		Member user = service.checkPw(member);
+		System.out.println(user);
+		if (user != null) {
+			user.setLockMode(member.getLockMode());
+			service.lockEdit(user);
+			
+			user.setPass(null);
+			session.setAttribute("user", user);
+			
+			map.put("result", true);
+			
+		} else {
+			map.put("result", false);
+		}
+		return map;
+	}
+	
 	@RequestMapping("/keysave.json")
 	@ResponseBody
 	public Map<String, Boolean> keySave(AuthSms authSms) throws Exception {

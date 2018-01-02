@@ -66,6 +66,16 @@ public class LoginServiceImpl implements LoginService{
 	public void autoLoginEdit(int memberNo) throws Exception {
 		mapper.autoLoginUpdate(memberNo);
 	}
+
+	@Override
+	public Member checkPw(Member member) throws Exception {
+		return mapper.pwChk(member);
+	}
+
+	@Override
+	public void lockEdit(Member member) throws Exception {
+		mapper.lockUpdate(member);
+	}
 	
 
 }

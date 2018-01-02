@@ -63,6 +63,7 @@ const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 		ele.waitMe("hide");
 	}
 
+	////////////////////////// loadingAjax(text, ele)/loadingStopAjax(ele)
 	// $(function () {
 	// 	$(document)
 	// 	.ajaxStart(function () {

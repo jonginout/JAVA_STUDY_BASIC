@@ -17,4 +17,8 @@ public interface LoginService {
 	public AutoLogin checkAutoLogin(String sessionId) throws Exception;
 	public Member autoLoginToMember(int memberNo) throws Exception;
 	public void autoLoginEdit(int memberNo) throws Exception;
+	
+	public Member checkPw(Member member) throws Exception;
+	public void lockEdit(Member member) throws Exception;
+
 }

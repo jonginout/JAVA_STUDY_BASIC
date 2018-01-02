@@ -17,6 +17,7 @@ public class Member {
 	private Integer maxVolume;
 	private String profileImg;
 	private String type;
+	private String lockMode;
 	
 	/////////////////////////////////
 	
@@ -64,7 +65,6 @@ public class Member {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 	public Date getRegDate() {
 		return regDate;
 	}
@@ -83,18 +83,25 @@ public class Member {
 	public void setProfileImg(String profileImg) {
 		this.profileImg = profileImg;
 	}
-	
 	public String getType() {
 		return type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
+	public String getLockMode() {
+		return lockMode;
+	}
+	public void setLockMode(String lockMode) {
+		this.lockMode = lockMode;
+	}
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", id=" + id + ", name=" + name + ", email=" + email + ", pass=" + pass
 				+ ", address=" + address + ", regDate=" + regDate + ", maxVolume=" + maxVolume + ", profileImg="
-				+ profileImg + ", type=" + type + ", images=" + Arrays.toString(images) + "]";
+				+ profileImg + ", type=" + type + ", lockMode=" + lockMode + ", images=" + Arrays.toString(images)
+				+ "]";
 	}
 
+	
 }

@@ -35,6 +35,9 @@ public class ForumController {
 	@RequestMapping("/forum.do")
 	public void forum() throws Exception {}
 	
+	@RequestMapping("/info.do")
+	public void info() throws Exception {}
+	
 
 	@RequestMapping("/forum.json")
 	@ResponseBody

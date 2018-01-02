@@ -30,9 +30,12 @@
               </a>
               <a class="st-settings__item">
                 <div class="st-settings__row">
-                  <div class="st-settings__label">온라인 모드<!-- 오프라인 모드 --></div>
-                  <div class="st-settings__control">
-                    <input id="app-settings__site" type="checkbox" name="site" checked="checked">
+                  <div class="st-settings__label" id="lock-label">잠금 해제 <i class="fa fa-unlock" aria-hidden="true"></i></div>
+                  <div class="st-settings__control" id="lock-mode">
+                      <div class="material-switch pull-right">
+                          <input id="lock-check" name="site" type="checkbox"/>
+                          <label for="lock-check" class="label-primary"></label>
+                      </div>
                   </div>
                 </div>
               </a>
@@ -52,7 +55,7 @@
                   <div class="st-settings__control text-nowrap"><i class="fa fa-angle-right st-settings__ico"></i></div>
                 </div>
               </a>
-              <a class="st-settings__item">
+              <a class="st-settings__item" data-toggle="modal" data-target="#ask">
                 <div class="st-settings__row">
                   <div class="st-settings__label">
                     문의하기
@@ -60,7 +63,7 @@
                   <div class="st-settings__control text-nowrap"><i class="fa fa-angle-right st-settings__ico"></i></div>
                 </div>
               </a>
-              <a class="st-settings__item" href="">
+              <a class="st-settings__item" href="${pageContext.request.contextPath}/forum/info.do">
                 <div class="st-settings__row">
                   <div class="st-settings__label">
                     INFORMATION
@@ -102,4 +105,72 @@
 </div>
 
 
+<script>
+
+  $(function(){
+    var checkedInit = user.lockMode=='T' ? true : false;
+    if(checkedInit){
+      var html = '잠금 모드 <i class="fa fa-lock" aria-hidden="true"></i>';
+      $("#lock-label").html(html)
+    }else{
+      var html = '잠금 해제 <i class="fa fa-unlock" aria-hidden="true"></i>';
+      $("#lock-label").html(html)
+    }
+    $("#lock-check").prop("checked", checkedInit)
+  })
+
+
+  $("body").on("click", "#lock-check", function(){
+    var checkedInit = user.lockMode=='T' ? true : false;
+
+    var pass = prompt("잠금모드\n비밀번호를 입력하시오.");
+    if(!pass){
+      $("#lock-check").prop("checked", checkedInit)
+      return;
+    }
+
+    var checked = Boolean($("#lock-check").prop("checked"))
+    checked = checked ? 'T' : 'F';
+
+
+      $.ajax({
+        type : "POST",
+        url : projectURL+"/login/lock.json",
+        data : {
+          memberNo : user.memberNo,
+          id : user.id,
+          pass : pass,
+          lockMode : checked
+        },
+        dataType : "JSON",
+        beforeSend : function(){
+          $("#lock-check").prop("checked", checkedInit)
+        },
+        success : function (data){
+
+          if(data.result){
+            user.lockMode = checked;
+            var checkedNew = user.lockMode=='T' ? true : false;
+            $("#lock-check").prop("checked", checkedNew)
+            //성공
+            // alert("성공")
+            // location.reload();
+          }else{
+            //실패
+            $("#lock-check").prop("checked", checkedInit)
+            alert("비밀번호가 일치하지 않습니다. 보안시스템 작동");
+          }
+      },
+      error : function(){
+        $("#lock-check").prop("checked", checkedInit)
+      }
+    })
+
+
+  })
+
+</script>
+
+
+<%@ include file="/WEB-INF/jsp/include/modal/notification-modal.jsp" %>
 <script src="${pageContext.request.contextPath}/js/notification/notification.js"></script>

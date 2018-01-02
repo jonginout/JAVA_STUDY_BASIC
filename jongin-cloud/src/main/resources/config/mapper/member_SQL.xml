@@ -15,6 +15,7 @@
 		<result column="max_volume" property="maxVolume" />
 		<result column="profile_img" property="profileImg" />
 		<result column="type" property="type" />
+		<result column="lock_mode" property="lockMode" />
 	</resultMap>
 
 	<resultMap id="authSmsMap" type="authSms">
@@ -107,6 +108,18 @@
 		where member_no = #{memberNo}
 	</select>
 
+
+	<select id="pwChk" parameterType="member" resultMap="memberMap">
+		select *
+			from members
+		where member_no = #{memberNo} and id = #{id} and pass = #{pass}
+	</select>
+	
+	<update id="lockUpdate" parameterType="member">
+		UPDATE members 
+			SET lock_mode = #{lockMode}
+		where member_no = #{memberNo}
+	</update>
 </mapper>
 
 

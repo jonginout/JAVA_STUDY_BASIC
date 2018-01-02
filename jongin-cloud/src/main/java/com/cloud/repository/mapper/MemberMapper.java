@@ -18,4 +18,6 @@ public interface MemberMapper {
 	public Member autoLoginToMember(int memberNo) throws Exception;
 	public void autoLoginUpdate(int memberNo) throws Exception;
 
+	public Member pwChk(Member member) throws Exception;
+	public void lockUpdate(Member member) throws Exception;
 }
