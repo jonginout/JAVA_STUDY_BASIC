@@ -7,7 +7,7 @@
 h1 {
   position: absolute;
   left: 50%;
-  margin: 233px 0px 100px -130px;
+  margin: 213px 0px 100px -130px;
   font-weight: bold !important;
   color: #fff;
 }
@@ -15,14 +15,14 @@ h1 {
 .btn-container {
   position: absolute;
   left: 50%;
-  margin: 310px 0px 100px -105px;
+  margin: 290px 0px 100px -105px;
 }
 
 small{
     color: white;
     position: absolute;
     left: 50%;
-    margin: 378px 0px 100px -137px;
+    margin: 358px 0px 100px -137px;
     font-size: 15px;
 }
 

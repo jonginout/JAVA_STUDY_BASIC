@@ -267,7 +267,6 @@
 				}
 				$("#loading-bar").hide();
 				start = start+count;
-				console.log(start)
 				isLoading = false;
 
 				loadingStopAjax($("#loading-bar"))				
@@ -894,6 +893,8 @@
 					var offset = anchorEle.offset().top; 
 					$(window).scrollTop(offset-70); 
 
+					loadForumFile(param.forumNo)
+					
 			}
 		})
 	}

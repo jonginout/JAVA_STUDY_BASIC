@@ -27,6 +27,9 @@
 	#imgTextCopy{
 		height : 300px;
 	}
+	ul.dynatree-container{
+		border: 1px solid white !important;
+	}
 </style>
 
 <div class="modal modal-middle fade scale-out" id="file-modal" tabindex="-1" role="dialog">

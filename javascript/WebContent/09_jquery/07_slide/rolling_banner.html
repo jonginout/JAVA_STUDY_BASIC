@@ -36,6 +36,7 @@
 	    <button>다음</button>
     </div>
     <script>
+        
 		var index = 0;
 		function moveSlider() {
 			var move = -(index*600);
@@ -45,16 +46,24 @@
 		}
 
 		$("button:eq(0)").click(function () {
-			if(index==0) index = 4;
-			else index--;
+			if(index==0){
+                index = 4;
+            }else{
+                index--;
+            } 
 			moveSlider();
 		})
-		$("button:eq(1)").click(function () {
-			if(index==4) index = 0;
-			else index++;
-			moveSlider();
 
+		$("button:eq(1)").click(function () {
+			if(index==4){
+                index = 0;
+            }else{
+                index++;
+            }
+			moveSlider();
 		})
+
+
     </script>
 </body>
 </html>

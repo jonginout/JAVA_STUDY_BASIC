@@ -40,40 +40,45 @@
         color: white;
         margin: auto !important;
     }
+    #mini-fab{
+        display: none;
+    }
+    #floating-btn{
+        /* z-index: 999;
+        position: relative;    */
+    }
 </style>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-        <div class="btn-group-sm hidden" id="mini-fab">
-            <a href="#" class="btn btn-info btn-fab" data-toggle="tooltip" data-placement="left" data-original-title="Other" title="" id="autre">
-                <span class="float-btn-content">ss</span>
-            </a>
-            <a href="#" class="btn btn-warning btn-fab" data-toggle="tooltip" data-placement="left" data-original-title="SMS" title="" id="sms">
-                <span class="float-btn-content">ss</span>
+<div id="floating-btn">
+    <div class="btn-group-sm" id="mini-fab">
+        <a href="${pageContext.request.contextPath}/" class="btn btn-info btn-fab" id="autre">
+            <span class="float-btn-content">
+                <i class="fa fa-home" aria-hidden="true"></i>
+            </span>
+        </a>
+        <a href="#" class="btn btn-warning btn-fab" id="sms">
+            <span class="float-btn-content">
+                <i class="fa fa-commenting-o" aria-hidden="true"></i>
+            </span>
 
-            </a>
-            <a href="#" class="btn btn-danger btn-fab" data-toggle="tooltip" data-placement="left" data-original-title="Mail" title="" id="mail">
-                <span class="float-btn-content">ss</span>
-            </a>
-        </div>
-        <div class="btn-group">
-            <a href="javascript:void(0)" class="btn btn-fab" id="float-btn" >
-                <span class="float-btn-content"><i class="fa fa-bars" aria-hidden="true"></i></span>
-            </a>
-        </div>
-        </div>
+        </a>
+        <a href="#" class="btn btn-danger btn-fab" id="mail">
+            <span class="float-btn-content">
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            </span>
+        </a>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-fab" id="float-btn" >
+            <span class="float-btn-content"><i class="fa fa-bars" aria-hidden="true"></i></span>
+        </a> 
     </div>
 </div>
 
 <script>
     $("#float-btn").click(function() {
-      $("#mini-fab").toggleClass('hidden');
+      $("#mini-fab").toggle(300);
     });
 
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip({
-            delay : 100
-          })
-    })
+
 </script>
