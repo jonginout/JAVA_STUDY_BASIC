@@ -51,8 +51,8 @@ pageEncoding="UTF-8"%>
 				
 			</div>
 
-			<!-- <div id="forum-content-detail" class="hidden-xs col-sm-6">
-			</div>		 -->
+			<%@ include file="/WEB-INF/jsp/include/floating.jsp" %>
+
               <!------------------------------------------------------------>
               <!------------------------------------------------------------>
 

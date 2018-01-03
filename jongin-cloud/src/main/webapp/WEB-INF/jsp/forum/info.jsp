@@ -21,13 +21,15 @@
 				<div class="st-panel__header">
 					<div class="fluid-cols">
 						<div class="expand-col">
-							<span class="st-panel__title"> <span>INFORMATION</span>
+							<span class="st-panel__title">
+								<h1><strong>CLOUD OF Z <i class="fa fa-cloud-download" aria-hidden="true"></i></strong></h1>
 							</span>
 						</div>
 					</div>
 				</div>
+				<br>
 				<div class="st-panel__content">
-					ggg
+					개발자 : 갓종인
 				</div>
 			</div>
 			<br>

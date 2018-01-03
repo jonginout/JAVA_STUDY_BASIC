@@ -10,62 +10,30 @@
 	<meta name="robots" content="noindex">
 	<%@ include file="/WEB-INF/jsp/include/basicinclude.jsp" %>
 </head>
-<body style="background: #1276AA;">
-	<style>
-		.content{
-			position: relative;
-			top : 38%;
-			display: none;
-		}
-		#logo {
-			color: white;
-			text-align: center;
-			margin: 0px;
-			font-size: 45px;
-			top: 50%;
-		}
-		button{
-			margin-top : 15px;
-			margin-bottom: 8px;
-		}
-		#copyright{
-			color: white;
-			font-size: 9px;
-		}
-	</style>
-	<div class="col-xs-12 content">
-		<h1 id="logo">
-			<strong>
-				CLOUD  Z <i class="fa fa-cloud-download" aria-hidden="true"></i>
-			</strong>
-		</h1>
-		<div class="col-xs-12 col-md-4 col-md-push-4">
-			<button type="button" class="btn btn-default btn-md btn-block">GETTING STARTED</button> 
-			<small id="copyright">Copyright © JONGIN All rights reserved.</small>
-		</div>		
+<body style="background: #1276AA; display: none">
+
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index/index.css">
+
+	<div id="start-btn">
+		<h1>CLOUD OF Z <i class="fa fa-cloud-download" aria-hidden="true"></i></h1>
+		<div class="btn-container">
+			<a href="#" class="btn">START</a>
+		</div>
+		<small id="copyright">Copyright © JONGIN All rights reserved.</small>
 	</div>
-	
-	<script type="text/javascript">
-		$(function () {			
-			$(".content").fadeIn(1400)
-			
-			
-			var url = "${pageContext.request.contextPath}/login/loginform.do";
-			if("${user}"){
-				url = "${pageContext.request.contextPath}/cloud/cloud.do"
-			}
-			
-			$("body").on("click", "button", function () {
-				location.href = url;
-			})
-		})
-	</script>
+
 </body>
 </html>
 
+<script>
+
+	$(function(){
+		$("body").fadeIn(1400)
+
+		$("body").on("click", "#start-btn", function(){
+			location.href = "${pageContext.request.contextPath}/cloud/cloud.do"
+		})
+	})
 
 
-<!-- <h1>홈화면으로 리다이렉션 합니다.</h1> -->
-<%
-//response.sendRedirect("cloud/cloud.do");
-%>
+</script>
