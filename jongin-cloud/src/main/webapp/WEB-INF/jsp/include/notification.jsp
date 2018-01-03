@@ -149,16 +149,25 @@
         success : function (data){
 
           if(data.result){
+            //성공
+
             user.lockMode = checked;
             var checkedNew = user.lockMode=='T' ? true : false;
             $("#lock-check").prop("checked", checkedNew)
-            //성공
-            // alert("성공")
-            // location.reload();
+            if(checkedNew){
+              var html = '잠금 모드 <i class="fa fa-lock" aria-hidden="true"></i>';
+              $("#lock-label").html(html)
+            }else{
+              var html = '잠금 해제 <i class="fa fa-unlock" aria-hidden="true"></i>';
+              $("#lock-label").html(html)
+            }
+
           }else{
+
             //실패
             $("#lock-check").prop("checked", checkedInit)
             alert("비밀번호가 일치하지 않습니다. 보안시스템 작동");
+
           }
       },
       error : function(){

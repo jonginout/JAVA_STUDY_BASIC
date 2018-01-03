@@ -34,7 +34,6 @@
                 </center>
 			</div>
 			<div class="modal-footer">
-				<span id="textConvertBtn"></span>
 				<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
 			</div>
 		</div>
