@@ -237,7 +237,7 @@ function showFileDetail(key) {
 					
 	if(!selectNode.isFolder){
 		
-		html += `<br><div class="input-group" style="z-index: -1;">
+		html += `<br><div class="input-group">
 					<input id="copy" type="text" class="form-control" readonly>
 					<span class="input-group-btn">
 					<button class="btn btn-success make-down-link">

@@ -44,8 +44,8 @@
         display: none;
     }
     #floating-btn{
-        /* z-index: 999;
-        position: relative;    */
+        position: fixed;
+        z-index: 999;
     }
 </style>
 

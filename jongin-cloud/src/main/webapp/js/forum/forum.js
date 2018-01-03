@@ -29,7 +29,7 @@
 	// 기본 리스트 불러오기 및 무한스크롤 이벤트
 	$(function(){
 		
-		loadForum(0,20)
+		loadForum(0,20, true)
 
 		$(window).scroll(function() {
 			
@@ -140,13 +140,18 @@
 					$("#buffer-box").prepend(html);
                     $("#buffer-box>.panel-default[data-no="+data+"]").show(300);
                     
-                    attachCloudFile = null;
+					attachCloudFile = null;
+					$("#attach-file").html("")
 			}
 		})
 	})
 
 	// 20개씩 불러오는 에이젝스
-	function loadForum(st, co){
+	function loadForum(st, co, init){
+
+		if(init){
+			loadingAjax("화면 구성중...")
+		}
 
 		$(window).scrollTop($(document).height()); 
 		
@@ -269,10 +274,16 @@
 				start = start+count;
 				isLoading = false;
 
-				loadingStopAjax($("#loading-bar"))				
+				loadingStopAjax($("#loading-bar"))
+				if(init){
+					loadingStopAjax()
+				}	
 			},
 			error : function(){
-				loadingStopAjax($("#loading-bar"))								
+				loadingStopAjax($("#loading-bar"))	
+				if(init){
+					loadingStopAjax()
+				}								
 			}
 		})
 
@@ -400,7 +411,7 @@
 						
 						// 이미지 뷰 사용가능 확장자
 						var imgFileArr = ["png","jpg","jpeg","gif","png","bmp"];
-						if(imgFileArr.indexOf(files[f].ext)!=-1){
+						if(imgFileArr.indexOf((files[f].ext).toLowerCase())!=-1){
 							viewHtml += '<br><br><img src="'+viewUrl+'" width="100%"/>'
 						}
 
