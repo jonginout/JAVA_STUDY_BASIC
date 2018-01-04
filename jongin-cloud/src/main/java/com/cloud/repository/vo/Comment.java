@@ -10,6 +10,7 @@ public class Comment {
 	private String content;
 	private Date regDate;
 	private Date updateDate;
+	private String status;
 	
 	////////////////////////////
 	private String profileImg;
@@ -76,6 +77,13 @@ public class Comment {
 	}
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	@Override
 	public String toString() {

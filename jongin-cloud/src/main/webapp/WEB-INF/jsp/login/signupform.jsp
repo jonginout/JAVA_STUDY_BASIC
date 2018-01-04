@@ -8,18 +8,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<%@ include file="/WEB-INF/jsp/include/basicinclude.jsp"%>
+<%@ include file="/WEB-INF/jsp/include/basicinclude.jsp"%> 
 <script src="${pageContext.request.contextPath}/js/signup/daum-address-api.js"></script>
 <script src="${pageContext.request.contextPath}/js/signup/signup.js" type="text/javascript"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login/signup.css">
 
 </head>
 <body>
 
-	<%@ include file="/WEB-INF/jsp/include/header.jsp"%>
-
-	<center>
-		<div class="st-panel" style="margin: 68px 10px 20px 10px !important">
-			<div class="st-panel__cont text-center" style="min-height: 590px !important; max-width: 360px !important;">
+<center>
+		<div class="st-panel">
+			<div class="st-panel__cont text-center">
 				<div class="st-panel__header">
 					<div class="fluid-cols">
 						<div class="expand-col">
@@ -119,7 +118,7 @@
 					</a>
 				</div>
 			</div>
-	</center>
+		</center>
 
 	<%@ include file="/WEB-INF/jsp/include/basic-js.jsp"%>
 

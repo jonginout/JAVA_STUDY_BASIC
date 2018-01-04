@@ -16,6 +16,7 @@
 		<result column="profile_img" property="profileImg" />
 		<result column="type" property="type" />
 		<result column="lock_mode" property="lockMode" />
+		<result column="status" property="status" />
 	</resultMap>
 
 	<resultMap id="authSmsMap" type="authSms">

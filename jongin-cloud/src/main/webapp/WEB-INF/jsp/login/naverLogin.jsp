@@ -26,7 +26,6 @@
 	});
 
 
-	const nowHost = location.hostname.toLowerCase();	
 	var localCallbackUrl = "http://localhost:8080/jongin-cloud/login/naverLogin.do";
 	var Cafe24CallbackUrl = "http://chopo01.cafe24.com/login/naverLogin.do";
 	var JonginCallbackUrl = "http://jongin.pe.kr/login/naverLogin.do";

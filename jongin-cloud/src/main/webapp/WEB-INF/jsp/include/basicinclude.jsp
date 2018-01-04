@@ -2,6 +2,13 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+
+<meta property="og:url"                content="http://jongin.pe.kr" />
+<meta property="og:title"              content="CLOUD OF Z" />
+<meta property="og:description"        content="HELLO I'M CLOUD Z" />
+<meta property="og:image"              content="http://postfiles4.naver.net/MjAxODAxMDRfODQg/MDAxNTE1MDM5MzgxODUw.H7VVZ9IJP0ukVLCI4c25UPJRQc13utN7bU9UgbPnrHYg.i8fkaHVia7wrkxOhGkG1WaZ9nfyIoBgi-RTfFsWXCxEg.PNG.jonginout/og.png?type=w2" />
+
+
 <!-- 절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  -->
 
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet" type="text/css">

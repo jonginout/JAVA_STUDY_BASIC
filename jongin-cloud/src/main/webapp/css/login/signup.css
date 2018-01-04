@@ -1,0 +1,16 @@
+center{
+    margin : 10px;
+}
+@media (min-width: 768px ) {
+    center{
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.st-panel__cont.text-center{
+    margin: auto !important;
+    min-height: 590px !important; 
+    max-width: 360px !important;
+}

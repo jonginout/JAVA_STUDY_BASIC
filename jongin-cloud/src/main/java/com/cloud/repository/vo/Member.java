@@ -18,9 +18,11 @@ public class Member {
 	private String profileImg;
 	private String type;
 	private String lockMode;
+	private String status;
 	
 	/////////////////////////////////
 	
+
 	private MultipartFile[] images;
 	public MultipartFile[] getImages() {
 		return images;
@@ -95,13 +97,20 @@ public class Member {
 	public void setLockMode(String lockMode) {
 		this.lockMode = lockMode;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", id=" + id + ", name=" + name + ", email=" + email + ", pass=" + pass
 				+ ", address=" + address + ", regDate=" + regDate + ", maxVolume=" + maxVolume + ", profileImg="
-				+ profileImg + ", type=" + type + ", lockMode=" + lockMode + ", images=" + Arrays.toString(images)
-				+ "]";
+				+ profileImg + ", type=" + type + ", lockMode=" + lockMode + ", status=" + status + ", images="
+				+ Arrays.toString(images) + "]";
 	}
+
 
 	
 }

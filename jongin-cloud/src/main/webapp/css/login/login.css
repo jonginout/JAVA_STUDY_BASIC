@@ -2,3 +2,13 @@ img{
     width: 70px;
     height: 31px;
 }
+#naverIdLogin{
+    background : #00c73c;
+    color: white;
+    font-weight: bold;
+}
+#custom-login-btn{
+    background: rgb(249, 224, 0);
+    color: rgb(59, 30, 30);;
+    font-weight: 1000;
+}

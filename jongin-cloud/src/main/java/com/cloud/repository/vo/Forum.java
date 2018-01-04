@@ -17,6 +17,7 @@ public class Forum {
 	private String category;
 	private Integer start;
 	private Integer count;
+	private String writerStatus;
 	
 	///////////////////////////////
 	
@@ -107,6 +108,13 @@ public class Forum {
 	}
 	public void setCount(Integer count) {
 		this.count = count;
+	}
+	
+	public String getWriterStatus() {
+		return writerStatus;
+	}
+	public void setWriterStatus(String writerStatus) {
+		this.writerStatus = writerStatus;
 	}
 	@Override
 	public String toString() {

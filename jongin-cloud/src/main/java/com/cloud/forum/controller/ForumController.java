@@ -165,7 +165,7 @@ public class ForumController {
 		map.put("result", false);
 		Member user = (Member) session.getAttribute("user");
 		forum.setWriter(user.getMemberNo());
-		if(service.chkWriter(forum)>0) {
+		if(service.chkWriter(forum)>0 || user.getStatus().equals("ADMIN")) {
 			service.removeForum(forum);
 			map.put("result", true);			
 		}
@@ -181,7 +181,7 @@ public class ForumController {
 		map.put("result", false);
 		Member user = (Member) session.getAttribute("user");
 		forum.setWriter(user.getMemberNo());
-		if(service.chkWriter(forum)>0) {
+		if(service.chkWriter(forum)>0 || user.getStatus().equals("ADMIN")) {
 			service.editForum(forum);
 			map.put("result", true);			
 		}
@@ -197,7 +197,7 @@ public class ForumController {
 		map.put("result", false);
 		Member user = (Member) session.getAttribute("user");
 		comment.setWriter(user.getMemberNo());
-		if(service.chkCommentWriter(comment)>0) {
+		if(service.chkCommentWriter(comment)>0 || user.getStatus().equals("ADMIN")) {
 			service.removeComment(comment);
 			map.put("result", true);			
 		}
@@ -213,7 +213,7 @@ public class ForumController {
 		map.put("result", false);
 		Member user = (Member) session.getAttribute("user");
 		comment.setWriter(user.getMemberNo());
-		if(service.chkCommentWriter(comment)>0) {
+		if(service.chkCommentWriter(comment)>0 || user.getStatus().equals("ADMIN")) {
 			service.editComment(comment);
 			map.put("result", true);			
 		}

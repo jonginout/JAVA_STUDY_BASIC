@@ -19,6 +19,7 @@
 		<result column="count" property="count" />
 		<result column="comment_count" property="commentCount" />
 		<result column="like_count" property="likeCount" />
+		<result column="writer_status" property="writerStatus" />
 	</resultMap>
 
 	<resultMap id="commentMap" type="comment">
@@ -31,6 +32,7 @@
 		<result column="update_date" property="updateDate" />
 		<result column="profile_img" property="profileImg" />
 		<result column="forum_writer" property="forumWriter" />
+		<result column="status" property="status" />
 	</resultMap>
 	
 	<resultMap id="likeMap" type="like">
@@ -49,7 +51,7 @@
 
 	
 	<select id="selectOneForum" parameterType="int" resultMap="forumMap">
-		  select *, 
+		  select f.* , m.status writer_status, 
 		(
 			select count(*)
 				from comments c
@@ -61,12 +63,14 @@
 			where l.forum_no=f.forum_no
 		) like_count
 			from forum f
-		where status = 'PUBLIC' and forum_no = #{forumNo}
+		inner join members m
+			on f.writer = m.member_no
+		where f.status = 'PUBLIC' and f.forum_no = #{forumNo}
 			order by update_date desc
 	</select>
 	
 	<select id="selectForum" parameterType="forum" resultMap="forumMap">
-		select *, 
+		select f.*, m.status writer_status,
 		(
 			select count(*)
 				from comments c
@@ -78,7 +82,9 @@
 			where l.forum_no=f.forum_no
 		) like_count
 			from forum f
-		where status = 'PUBLIC'
+		inner join members m
+			on f.writer = m.member_no
+		where f.status = 'PUBLIC'
 			order by update_date desc
 		LIMIT #{start}, #{count}
 	</select>
@@ -90,7 +96,7 @@
 	</select>
 	
 	<select id="selectComment" parameterType="comment" resultMap="commentMap">
-		select c.* , m.profile_img, m.type, f.writer forum_writer
+		select c.* , m.profile_img, m.status, m.type, f.writer forum_writer
 			from comments c	
 		inner join members m 
 			on c.writer = m.member_no

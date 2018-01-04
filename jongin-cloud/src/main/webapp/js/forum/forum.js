@@ -110,6 +110,15 @@
 										<span>'+user.id+'</span>\
 									</div>\
 									<div class="button-box pull-right">\
+										<button class="btn btn-default btn-xs forum-delete">\
+											삭제\
+										</button>\
+										<button class="btn btn-default btn-xs forum-edit">\
+											수정\
+										</button>\
+										<button class="btn btn-default btn-xs forum-edit-submit">\
+											수정완료!\
+										</button>\
 									</div>\
 								</h5>\
 								<div class="content-box">\
@@ -190,16 +199,21 @@
 
 				for (var f in forums) {
 
-					if(forumNo==forums[f].forumNo){
+					if(param.forumNo==forums[f].forumNo){
 						continue;
 						// 알람 때문에 최상으로 갔으면 스킵
+					}
+					var adminStyle = "";
+					if(forums[f].writerStatus=='ADMIN'){
+						forums[f].writerId = forums[f].writerId+" [운영자]"
+						adminStyle = "style=\"background:#c6e8ef !important\"";
 					}
 
 					forums[f].regDate = moment(forums[f].regDate).fromNow();
 					forums[f].updateDate = moment(forums[f].updateDate).fromNow();
 					html = '\
 					<div class="panel panel-default" data-no="'+forums[f].forumNo+'">\
-						<div class="panel-heading">\
+						<div class="panel-heading" '+adminStyle+'>\
 						<h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#forum'+forums[f].forumNo+'">\
 							<div class="category">'+forums[f].category+'</div>\
 							<div class="contentT">\
@@ -256,7 +270,7 @@
 					</div>';
 					$(".forum-list").append(html)
 					// 작성자만 글삭제 수정버튼
-					if(user.memberNo==forums[f].writer){
+					if(user.memberNo==forums[f].writer || user.status == 'ADMIN'){
 						var btnHtml = ` <button class="btn btn-default btn-xs forum-delete">\
 											삭제\
 										</button>\
@@ -478,8 +492,13 @@
 					}
 
 					var owner = ""
+					var adminStyle = ""
 					if(data[c].writer==data[c].forumWriter){			
 						owner = "[글쓴이]"			
+					}
+					if(data[c].status == 'ADMIN'){
+						owner += " [운영자]"
+						adminStyle = "style=\"background:#c6e8ef !important\"";
 					}
 
 					var html = '<div class="comment-wrap" data-commentNo="'+data[c].commentNo+'">\
@@ -489,7 +508,7 @@
 											<span>'+data[c].writerId+'</span>\
 										</center>\
 									</div>\
-									<div class="comment-block">\
+									<div class="comment-block" '+adminStyle+'>\
 										<p class="comment-text">\
 											<span>'+data[c].content+'</span>\
 											<span></span>\
@@ -503,12 +522,14 @@
 								</div>';
 					parent(no).find(".comment-box>.comments").append(html);
 
-
-					if(data[c].writer==user.memberNo){						
+					if(user.status == 'ADMIN'){
 						var btnHtml = `<li class="modify-comment">수정</li>\
 										<li class="modify-comment-submit">수정완료</li>\
 										<li class="delete-comment">삭제</li>`;
 						$(".comment-wrap[data-commentNo="+data[c].commentNo+"]").find(".comment-actions").html(btnHtml)
+					}
+
+					if(data[c].writer==user.memberNo ){						
 
 						$(".comment-wrap[data-commentNo="+data[c].commentNo+"]").find(".photo").remove();
 						var photoHtml ='<div class="photo">\
@@ -549,7 +570,8 @@
 			var content = commentParent.find(".comment-text>span:eq(0)").text().trim();
 			commentParent.find(".comment-text>span:eq(0)").hide();
 			var html = '<textarea class="form-control comment-edit-input" style="resize:none;">'+content+'</textarea>';
-			commentParent.find(".comment-text>span:eq(2)").html(html);
+			console.log(html)
+			commentParent.find(".comment-text>span:eq(1)").html(html);
 		}
 	})
 
@@ -560,7 +582,7 @@
 
 		commentParent.find(".cancel-edit-comment").text("수정").removeClass("cancel-edit-comment");
 		commentParent.find(".comment-text>span:eq(0)").show();
-		commentParent.find(".comment-text>span:eq(2)").html("");
+		commentParent.find(".comment-text>span:eq(1)").html("");
 	}
 	
 	// 댓글 수정 취소 이벤트
@@ -762,6 +784,12 @@
 
 				data.forum.updateDate = moment(data.forum.updateDate).fromNow();
 
+				var adminStyle = "";
+				if(data.forum.writerStatus=='ADMIN'){
+					data.forum.writerId = data.forum.writerId+" [운영자]"
+					adminStyle = "style=\"background:#c6e8ef !important\"";
+				}
+
 				var html = '\
 					<div class="panel panel-default" data-no="'+data.forum.forumNo+'">\
 						<div class="panel-heading alarm-panel-heading">\
@@ -821,8 +849,8 @@
 					</div>';
 					$(".forum-list").prepend(html);
 					// 작성자만 글삭제 수정버튼
-					if(user.memberNo==data.forum.writer){
-									var btnHtml = ` <button class="btn btn-default btn-xs forum-delete">\
+					if(user.memberNo==data.forum.writer || user.status == 'ADMIN'){
+						var btnHtml = ` <button class="btn btn-default btn-xs forum-delete">\
 										삭제\
 									</button>\
 									<button class="btn btn-default btn-xs forum-edit">\
@@ -831,7 +859,7 @@
 									<button class="btn btn-default btn-xs forum-edit-submit">\
 										수정완료!\
 									</button>`;
-					parent(data.forum.forumNo).find(".button-box").html(btnHtml)
+						parent(data.forum.forumNo).find(".button-box").html(btnHtml)
 					}
 						
 					///////
@@ -857,8 +885,14 @@
 
 						
 						var owner = ""
+						var adminStyle = "";
+						
 						if(comments[c].writer==comments[c].forumWriter){			
 							owner = "[글쓴이]"			
+						}
+						if(comments[c].status == 'ADMIN'){
+							owner += " [운영자]"
+							adminStyle = "style=\"background:#c6e8ef !important\"";
 						}
 	
 						var html = '<div class="comment-wrap" data-commentNo="'+comments[c].commentNo+'">\
@@ -868,7 +902,7 @@
 												<span>'+comments[c].writerId+'</span>\
 											</center>\
 										</div>\
-										<div class="comment-block">\
+										<div class="comment-block" '+adminStyle+'>\
 											<p class="comment-text">\
 												<span>'+comments[c].content+'</span>\
 												<span></span>\
@@ -881,11 +915,8 @@
 										</div>\
 									</div>';
 						$(".panel-default").find(".comment-box>.comments").append(html);
+
 						if(comments[c].writer==user.memberNo){
-							var btnHtml = `<li class="modify-comment">수정</li>\
-											<li class="modify-comment-submit">수정완료</li>\
-											<li class="delete-comment">삭제</li>`;
-							$(".comment-wrap[data-commentNo="+comments[c].commentNo+"]").find(".comment-actions").html(btnHtml)
 	
 							$(".comment-wrap[data-commentNo="+comments[c].commentNo+"]").find(".photo").remove();
 							var photoHtml ='<div class="photo">\

@@ -11,13 +11,8 @@ if(nowHost=='localhost'){
     callbackUrl = JonginCallbackUrl
 }
 
-var naverLogin = new naver.LoginWithNaverId(
-    {
-        clientId: "lbeEftb6cSDwLJdxPMJW",
-        callbackUrl: callbackUrl,
-        loginButton: {color: "green", type: 2, height: 30} /* 로그인 버튼의 타입을 지정 */
-    }
-);
 
-/* 설정정보를 초기화하고 연동을 준비 */
-naverLogin.init();
+$("#naverIdLogin").click(function(){
+    location.href = "https://nid.naver.com/oauth2.0/authorize?client_id=lbeEftb6cSDwLJdxPMJW&response_type=code&redirect_uri="+callbackUrl
+})
+

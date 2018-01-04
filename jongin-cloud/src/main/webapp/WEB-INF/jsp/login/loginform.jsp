@@ -63,12 +63,8 @@ pageEncoding="UTF-8"%>
 						</div>
 					</div>
 					<center>
-						<a id="naverIdLogin">
-							<img src="${pageContext.request.contextPath}/img/naver_login.png">
-						</a>
-						<a id="custom-login-btn" href="javascript:loginWithKakao()">
-							<img src="${pageContext.request.contextPath}/img/kakao_login.png">
-						</a>
+						<a id="naverIdLogin" type="button" class="btn btn-md">NAVER</a>
+						<a id="custom-login-btn" href="javascript:loginWithKakao()" type="button" class="btn btn-md">KAKAO</a>
 					</center>
 				</div>
 			</div>
