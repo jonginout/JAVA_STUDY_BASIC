@@ -51,11 +51,6 @@ public class ForumController {
 		
 		List<Forum> forums = service.forumList(forum);
 		if(forums.size()>1) {				
-			for (Forum f : forums) {
-				if(f.getCategory().equals("FREE")) {
-					f.setCategory("자유");
-				}
-			}
 			map.put("result", new Gson().toJson(forums));
 		}else {
 			map.put("result", false);		

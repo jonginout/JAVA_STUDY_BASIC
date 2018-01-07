@@ -698,3 +698,12 @@ $("body").on("click", ".make-down-link", function(){
 		});
 
 })
+
+
+
+///
+
+$("body").on('keydown keyup', '#comment-file', function () {
+	$(this).height(1).height( $(this).prop('scrollHeight')+7 );
+});
+	

@@ -152,6 +152,9 @@
 	.like-i{
 		color: tomato;
 	}
+	.kakao-share-btn>i{
+		color: #f3ad11;
+	}
 	.comment-i{
 		color: darksalmon !important; 
 	}
@@ -231,4 +234,25 @@
 	}
 	.comment-actions li:hover {
 		color: #0095ff;
+	}
+
+
+
+	.category[data-category='자유']{
+		background-color: #1276AA;
+	}
+	.category[data-category='질문']{
+		background-color: #fda913;
+	}
+	.category[data-category='유머']{
+		background-color: #ae79f2;
+	}
+	.category[data-category='정치']{
+		background-color: #f279ae;
+	}
+	.category[data-category='홍보']{
+		background-color: #f2711c;
+	}
+	.category[data-category='취업']{
+		background-color: #49a4d1;
 	}

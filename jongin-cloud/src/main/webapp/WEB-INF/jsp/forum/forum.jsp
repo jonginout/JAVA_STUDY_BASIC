@@ -55,7 +55,8 @@ pageEncoding="UTF-8"%>
 
 		  <%@ include file="/WEB-INF/jsp/include/basic-js.jsp" %>
 		  
-		  <%@ include file="/WEB-INF/jsp/forum/modal/forum-modal.jsp" %>
+			<%@ include file="/WEB-INF/jsp/forum/modal/forum-modal.jsp" %>
+			<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 		  <script src="${pageContext.request.contextPath}/js/forum/forum.js"></script>
 
 		</body>
