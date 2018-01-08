@@ -55,7 +55,7 @@
 	})
 
 	// 자동 높이 조절
-	$("body").on('keydown keyup', '.write-forum-input', function () {
+	$("body").on('keydown keyup', '.write-forum-input,.forum-edit-input,.comment-edit-input', function () {
 		$(this).height(1).height( $(this).prop('scrollHeight')+7 );
 	});
 		
@@ -157,7 +157,7 @@
 									</button>\
 								</center>\
 								<div class="input-group comment-input-box">\
-									<textarea class="form-control comment-content" rows="2" style="resize:none"></textarea>\
+									<textarea class="form-control comment-content" rows="2"></textarea>\
 									<span class="input-group-addon btn btn-primary comment-btn">전송</span>\
 								</div>\
 								<div class="comment-box">\
@@ -283,7 +283,7 @@
 									</button>\
 								</center>\
 								<div class="input-group comment-input-box">\
-									<textarea class="form-control comment-content" rows="2" style="resize:none"></textarea>\
+									<textarea class="form-control comment-content" rows="2"></textarea>\
 									<span class="input-group-addon btn btn-primary comment-btn">전송</span>\
 								</div>\
 								<div class="comment-box">\
@@ -343,7 +343,7 @@
 			$(this).text("수정취소").addClass("cancel-edit");
 			var content = parent(no).find(".content-box>span:eq(0)").text().trim();
 			parent(no).find(".content-box>span:eq(0)").hide();
-			var html = '<textarea class="form-control forum-edit-input" style="resize:none;">'+content+'</textarea>';
+			var html = '<textarea class="form-control forum-edit-input">'+content+'</textarea>';
 			parent(no).find(".content-box>span:eq(2)").html(html);
 		}
 		
@@ -595,7 +595,7 @@
 			$(this).text("수정취소").addClass("cancel-edit-comment");
 			var content = commentParent.find(".comment-text>span:eq(0)").text().trim();
 			commentParent.find(".comment-text>span:eq(0)").hide();
-			var html = '<textarea class="form-control comment-edit-input" style="resize:none;">'+content+'</textarea>';
+			var html = '<textarea class="form-control comment-edit-input">'+content+'</textarea>';
 			console.log(html)
 			commentParent.find(".comment-text>span:eq(1)").html(html);
 		}
@@ -865,7 +865,7 @@
 									</button>\
 								</center>\
 								<div class="input-group comment-input-box">\
-									<textarea class="form-control comment-content" rows="2" style="resize:none"></textarea>\
+									<textarea class="form-control comment-content" rows="2"></textarea>\
 									<span class="input-group-addon btn btn-primary comment-btn">전송</span>\
 								</div>\
 								<div class="comment-box">\
@@ -1034,7 +1034,7 @@
 			ele.removeAttr("disabled")
 			loadingStopAjax(ele)
 
-			var viewUrl = "http://postfiles4.naver.net/MjAxODAxMDRfODQg/MDAxNTE1MDM5MzgxODUw.H7VVZ9IJP0ukVLCI4c25UPJRQc13utN7bU9UgbPnrHYg.i8fkaHVia7wrkxOhGkG1WaZ9nfyIoBgi-RTfFsWXCxEg.PNG.jonginout/og.png?type=w2";
+			var viewUrl = "http://postfiles14.naver.net/MjAxODAxMDdfMjI5/MDAxNTE1MzM0MjI3NTc5.O1aFNsRAa-SQzrMNjUmKXVktv00NhDpzWecKgWuFey8g.cGOHY4o96sxhES1UJKr4hJMuEVhsJagabO64DeZ1tFUg.PNG.jonginout/coz.png?type=w2";
 			if(data.forum.img){
 				var path = (data.forum.img[0].path).replace(/\\/gi, "/");
 				var viewUrl = "http://jongin.pe.kr/common/down.do?ext="+data.forum.img[0].ext+"&path="+path;

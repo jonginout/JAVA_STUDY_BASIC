@@ -6,7 +6,7 @@
 <meta property="og:url"                content="http://jongin.pe.kr" />
 <meta property="og:title"              content="CLOUD OF Z" />
 <meta property="og:description"        content="HELLO I'M CLOUD Z" />
-<meta property="og:image"              content="http://postfiles4.naver.net/MjAxODAxMDRfODQg/MDAxNTE1MDM5MzgxODUw.H7VVZ9IJP0ukVLCI4c25UPJRQc13utN7bU9UgbPnrHYg.i8fkaHVia7wrkxOhGkG1WaZ9nfyIoBgi-RTfFsWXCxEg.PNG.jonginout/og.png?type=w2" />
+<meta property="og:image"              content="http://postfiles14.naver.net/MjAxODAxMDdfMjI5/MDAxNTE1MzM0MjI3NTc5.O1aFNsRAa-SQzrMNjUmKXVktv00NhDpzWecKgWuFey8g.cGOHY4o96sxhES1UJKr4hJMuEVhsJagabO64DeZ1tFUg.PNG.jonginout/coz.png?type=w2" />
 
 
 <!-- 절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  절대 삭제 금지  -->
