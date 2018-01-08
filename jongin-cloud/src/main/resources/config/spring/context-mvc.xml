@@ -46,8 +46,7 @@
 
 	<!-- 컨트롤러 없이 서블릿이 별다른 기능없이 단순한 페이지 이동만 -->
 	<!-- path 호출된 주소 일떄/ view-name 여기로 이동만 해준다. -->
-	<!-- <mvc:view-controller path="/cloud/cloud.do" view-name="cloud/cloud" 
-		/> -->
+	<mvc:view-controller path="/test/test.do" view-name="test/test"/>
 
 	<!-- WEB의 정적 페이지 처리 등을 위해 사용 -->
 	<mvc:default-servlet-handler />
@@ -59,6 +58,7 @@
 			<mvc:exclude-mapping path="/login/*.do" />
 			<mvc:exclude-mapping path="/login/*.json" />
 			<mvc:exclude-mapping path="/common/down.do" />
+			<mvc:exclude-mapping path="/test/test.do" />
 			<mvc:exclude-mapping path="/" />
 			<bean class="com.cloud.interceptor.LoginInterceptor" />
 		</mvc:interceptor>

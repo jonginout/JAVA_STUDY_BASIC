@@ -110,3 +110,5 @@ const projectURL = nowHost=='localhost' ? "/jongin-cloud" : "";
 		$("#user-profile-img").css(set)
 	})
 </script>
+
+<script src="https://unpkg.com/vue"></script>

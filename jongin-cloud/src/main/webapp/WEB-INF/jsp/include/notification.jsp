@@ -30,10 +30,15 @@
               </a>
               <a class="st-settings__item">
                 <div class="st-settings__row">
-                  <div class="st-settings__label" id="lock-label">잠금 해제 <i class="fa fa-unlock" aria-hidden="true"></i></div>
+                  <div class="st-settings__label" id="lock-label">
+                    <!--  -->
+                    <span v-if="checked">잠금 모드 <i class="fa fa-lock" aria-hidden="true"></i></span>
+                    <span v-else>잠금 해제 <i class="fa fa-unlock" aria-hidden="true"></i></span>
+                    <!--  -->                    
+                  </div>
                   <div class="st-settings__control" id="lock-mode">
                       <div class="material-switch pull-right">
-                          <input id="lock-check" name="site" type="checkbox"/>
+                          <input id="lock-check" name="site" type="checkbox" v-on:click="lockMode"/>
                           <label for="lock-check" class="label-primary"></label>
                       </div>
                   </div>
@@ -107,18 +112,43 @@
 
 <script>
 
+  var checkedInit = user.lockMode=='T' ? true : false;
   $(function(){
-    var checkedInit = user.lockMode=='T' ? true : false;
-    if(checkedInit){
-      var html = '잠금 모드 <i class="fa fa-lock" aria-hidden="true"></i>';
-      $("#lock-label").html(html)
-    }else{
-      var html = '잠금 해제 <i class="fa fa-unlock" aria-hidden="true"></i>';
-      $("#lock-label").html(html)
-    }
     $("#lock-check").prop("checked", checkedInit)
   })
+	var app = new Vue({
+    el: '#lock-label',
+    data: {
+      checked: checkedInit
+    }
+	});
 
+  // $(function(){
+  //   var checkedInit = user.lockMode=='T' ? true : false;
+  //   if(checkedInit){
+  //     var html = '잠금 모드 <i class="fa fa-lock" aria-hidden="true"></i>';
+  //     $("#lock-label").html(html)
+  //   }else{
+  //     var html = '잠금 해제 <i class="fa fa-unlock" aria-hidden="true"></i>';
+  //     $("#lock-label").html(html)
+  //   }
+  //   $("#lock-check").prop("checked", checkedInit)
+  // })
+  
+//   var lockClick = new Vue({
+//   el: '#lock-mode',
+//   methods: {
+//     lockMode : function (e) {
+//       var checkedInit = user.lockMode=='T' ? true : false;
+//       var pass = prompt("잠금모드\n비밀번호를 입력하시오.");
+//       if(!pass){
+//         $("#lock-check").prop("checked", checkedInit)
+//         return;
+//       }
+
+//     }
+//   }
+// })
 
   $("body").on("click", "#lock-check", function(){
     var checkedInit = user.lockMode=='T' ? true : false;
