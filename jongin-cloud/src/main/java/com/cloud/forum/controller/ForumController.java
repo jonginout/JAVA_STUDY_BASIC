@@ -20,7 +20,6 @@ import com.cloud.repository.vo.ForumFile;
 import com.cloud.repository.vo.Like;
 import com.cloud.repository.vo.Member;
 import com.google.gson.Gson;
-import com.sun.org.apache.regexp.internal.recompile;
 
 @Controller
 @RequestMapping("/forum")
@@ -43,6 +42,8 @@ public class ForumController {
 	@ResponseBody
 	public Map<String, Object> forumJson(Forum forum) throws Exception {
 		Map<String, Object> map = new HashMap<>();
+		
+		System.out.println(forum);
 		
 		if(forum.getStart()==null) {
 			forum.setStart(0);

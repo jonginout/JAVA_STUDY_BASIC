@@ -32,12 +32,28 @@
           },
           methods: {
         
+            // params: {
+            //             memberNo : 9,
+            //             id : "cv613",
+            //             pass : "chvy918",
+            //             lockMode : 'T'
+            //         }
+
             clickBtn() {
-                axios.get('${pageContext.request.contextPath}/forum/forum.json', {
-                    params: {
-                        start : 0,
-                        count : 20
-                    }
+                // var params2 = new URLSearchParams()
+                // params2.append('memberNo', 9);
+                // params2.append('id', 'cv613');
+                // params2.append('pass', 'chvy918');
+                // params2.append('lockMode', 'T');
+
+
+                axios.post('${pageContext.request.contextPath}/login/lock.json', {
+                         
+                        memberNo : 9,
+                        id : "cv613",
+                        pass : "chvy918",
+                        lockMode : 'T'
+                    
                 })
             //   axios({
             //       method : "get",

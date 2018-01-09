@@ -7,9 +7,9 @@
 
 <div class="st-spanel" id="side-bar">
 <div class="st-spanel__tabs">
-  <ul class="nav">
+  <ul class="nav nav-btn">
     <li class="active alt"><a href="#settings" data-toggle="tab" tabindex="-1">앱 메뉴</a></li>
-    <li class="header-alarm-btn"><a href="#notifications" data-toggle="tab" tabindex="-1">내 알람</a></li>
+    <li class="header-alarm-btn"><a href="#notifications" data-toggle="tab" tabindex="-1" v-on:click="loadAlarmList">내 알람</a></li>
     <li class="st-spanel__close"><a class="fa fa-long-arrow-right" tabindex="-1"></a></li>
   </ul>
 </div>
@@ -28,7 +28,7 @@
                   <div class="st-settings__control"><i class="fa fa-spin fa-circle-o-notch st-settings__loader"></i></div>
                 </div>
               </a>
-              <a class="st-settings__item">
+              <a class="st-settings__item lock">
                 <div class="st-settings__row">
                   <div class="st-settings__label" id="lock-label">
                     <!--  -->
@@ -38,7 +38,9 @@
                   </div>
                   <div class="st-settings__control" id="lock-mode">
                       <div class="material-switch pull-right">
-                          <input id="lock-check" name="site" type="checkbox" v-on:click="lockMode"/>
+                          <!--  -->
+                          <input id="lock-check" name="site" type="checkbox" :checked="checked" v-on:click="lockMode"/>
+                          <!--  -->
                           <label for="lock-check" class="label-primary"></label>
                       </div>
                   </div>
@@ -100,7 +102,8 @@
           </div>
           <div class="st-notifications__list">
             <div class="st-spanel__scroll scrollbar">
-              <div class="alarm-list"></div>
+              <!-- <div class="alarm-list"></div> -->
+              <alarm-list></alarm-list>
             </div>
           </div>
         </div>
@@ -109,107 +112,9 @@
   </div>
 </div>
 
-
-<script>
-
-  var checkedInit = user.lockMode=='T' ? true : false;
-  $(function(){
-    $("#lock-check").prop("checked", checkedInit)
-  })
-	var app = new Vue({
-    el: '#lock-label',
-    data: {
-      checked: checkedInit
-    }
-	});
-
-  // $(function(){
-  //   var checkedInit = user.lockMode=='T' ? true : false;
-  //   if(checkedInit){
-  //     var html = '잠금 모드 <i class="fa fa-lock" aria-hidden="true"></i>';
-  //     $("#lock-label").html(html)
-  //   }else{
-  //     var html = '잠금 해제 <i class="fa fa-unlock" aria-hidden="true"></i>';
-  //     $("#lock-label").html(html)
-  //   }
-  //   $("#lock-check").prop("checked", checkedInit)
-  // })
-  
-//   var lockClick = new Vue({
-//   el: '#lock-mode',
-//   methods: {
-//     lockMode : function (e) {
-//       var checkedInit = user.lockMode=='T' ? true : false;
-//       var pass = prompt("잠금모드\n비밀번호를 입력하시오.");
-//       if(!pass){
-//         $("#lock-check").prop("checked", checkedInit)
-//         return;
-//       }
-
-//     }
-//   }
-// })
-
-  $("body").on("click", "#lock-check", function(){
-    var checkedInit = user.lockMode=='T' ? true : false;
-
-    var pass = prompt("잠금모드\n비밀번호를 입력하시오.");
-    if(!pass){
-      $("#lock-check").prop("checked", checkedInit)
-      return;
-    }
-
-    var checked = Boolean($("#lock-check").prop("checked"))
-    checked = checked ? 'T' : 'F';
-
-
-      $.ajax({
-        type : "POST",
-        url : projectURL+"/login/lock.json",
-        data : {
-          memberNo : user.memberNo,
-          id : user.id,
-          pass : pass,
-          lockMode : checked
-        },
-        dataType : "JSON",
-        beforeSend : function(){
-          $("#lock-check").prop("checked", checkedInit)
-        },
-        success : function (data){
-
-          if(data.result){
-            //성공
-
-            user.lockMode = checked;
-            var checkedNew = user.lockMode=='T' ? true : false;
-            $("#lock-check").prop("checked", checkedNew)
-            if(checkedNew){
-              var html = '잠금 모드 <i class="fa fa-lock" aria-hidden="true"></i>';
-              $("#lock-label").html(html)
-            }else{
-              var html = '잠금 해제 <i class="fa fa-unlock" aria-hidden="true"></i>';
-              $("#lock-label").html(html)
-            }
-
-          }else{
-
-            //실패
-            $("#lock-check").prop("checked", checkedInit)
-            alert("비밀번호가 일치하지 않습니다. 보안시스템 작동");
-
-          }
-      },
-      error : function(){
-        $("#lock-check").prop("checked", checkedInit)
-      }
-    })
-
-
-  })
-
-</script>
-
-
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js";></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/notification/lock-mode.js"></script>
 <%@ include file="/WEB-INF/jsp/include/modal/notification-modal.jsp" %>
 <script src="${pageContext.request.contextPath}/js/notification/notification.js"></script>
