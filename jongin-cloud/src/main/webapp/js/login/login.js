@@ -1,3 +1,4 @@
+
 var isNull = true;
 	$("#id,#pass").on("keyup", function () {
 		var len = $(this).val().length;

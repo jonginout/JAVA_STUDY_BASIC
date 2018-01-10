@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.cloud.login.service.LoginService;
@@ -54,7 +55,20 @@ public class LoginController {
 	@RequestMapping("/signupform.do")
 	public void signupForm() throws Exception {
 	}
+	
 
+	@RequestMapping("/init.json")
+	public String init(
+			Member member, RedirectAttributes attr
+			) throws Exception {
+
+		System.out.println(member.toString());
+		
+		attr.addFlashAttribute("member", member);
+		return "redirect:/login/loginform.do";
+	}
+	
+	
 	@RequestMapping("/login.json")
 	@ResponseBody
 	public Map<String, Object> login(

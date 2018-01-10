@@ -40,7 +40,7 @@ pageEncoding="UTF-8"%>
 	
               <!------------------------------------------------------------>
               <!------------------------------------------------------------>
-    				
+
                 	<div class="container" id="cloud-content">
 	    				<c:if test="${!empty user}">
 							<div class="button-box">
