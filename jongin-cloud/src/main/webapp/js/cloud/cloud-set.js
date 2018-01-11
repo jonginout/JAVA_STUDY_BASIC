@@ -395,10 +395,10 @@ $("body").on("click", ".file-rename", function () {
 			},
 		success : function (data) {
 			if(data.result){
-				swal("Success", "삭제 성공", "success")
+				swal("Success", "수정 성공", "success")
 				lazyReloadTarget(parentKey)
 			}else {
-				swal("Error", "삭제 실패", "error")
+				swal("Error", "수정 실패", "error")
 			}
 		}
 	})
