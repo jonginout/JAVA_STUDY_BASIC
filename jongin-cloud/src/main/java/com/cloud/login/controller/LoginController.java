@@ -75,6 +75,8 @@ public class LoginController {
 			Member member, String save, HttpSession session, HttpServletResponse response
 			) throws Exception {
 		
+		System.out.println(member.toString());
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("result", false);
 		

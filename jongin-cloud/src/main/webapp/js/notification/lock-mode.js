@@ -28,12 +28,12 @@ methods: {
                 user.lockMode = changeLock;
                 notificationApp.checked = checkedNew
             }else{
-                alert("비밀번호가 일치하지 않습니다. 보안시스템 작동");
+                swal("Error", "비밀번호가 일치하지 않습니다. 보안시스템 작동", "error")
             }
 
         })
         .catch(function (error) {
-            alert("서버에러 관리자에게 문의하세요.")
+            swal("Error", "서버에러 관리자에게 문의하세요.", "error")
         })
 
     }

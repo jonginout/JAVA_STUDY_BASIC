@@ -210,7 +210,7 @@ function dirTree() {
             
             if(hitMode=="before" || hitMode=="after"){
             	if(node.data.title==user.id){
-            		alert("루트 폴더 밖으로는 옮길 수 없습니다.")
+					swal("Error", "루트 폴더 밖으로는 옮길 수 없습니다.", "error")
             		return false;
             	}
             	hitModeChk = true;
@@ -275,7 +275,7 @@ function moveFile(moveNode, recNode, hitModeChk) {
 				// 옮겨진 곳을 한번 리로드
 				lazyReloadTarget(recNode.key)
 			}else {
-				alert("파일이동 실패!!");					
+				swal("Error", "파일이동 실패!!", "error")
 			}
 		}
 	})

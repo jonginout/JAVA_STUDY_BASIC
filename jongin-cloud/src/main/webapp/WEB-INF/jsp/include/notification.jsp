@@ -102,8 +102,8 @@
           </div>
           <div class="st-notifications__list">
             <div class="st-spanel__scroll scrollbar">
-              <!-- <div class="alarm-list"></div> -->
-              <alarm-list></alarm-list>
+              <div class="alarm-list"></div>
+              <!-- <alarm-list></alarm-list> -->
             </div>
           </div>
         </div>

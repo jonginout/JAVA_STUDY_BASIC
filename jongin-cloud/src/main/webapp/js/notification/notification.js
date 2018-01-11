@@ -122,7 +122,8 @@ $(function(){
           data : {
             receiver : user.memberNo
           },
-          success : function(data){      
+          success : function(data){ 
+            console.log(data)     
             $(".alarm-list").html("");
   
             moment.locale('ko');

@@ -63,7 +63,7 @@ $("#reload").click(function () {
 // 새폴더
 $("#newFolder").click(function () {
 	if(!nowNode || !nowNode.isFolder){
-		alert("폴더를 선택하지 않았거나, 선택하신 폴더가 없습니다.");
+		swal("Error", "폴더를 선택하지 않았거나,\n선택하신 폴더가 없습니다.", "error")
 		return false;
 	}
 	var newFolderName = prompt("새폴더 이름을 작성하세요.");
@@ -80,7 +80,7 @@ $("#newFolder").click(function () {
 		dataType : "json",
 		success : function (data) {
 			if(data.dup){
-				alert("똑같은 이름의 폴더가 존재합니다.");
+				swal("Error", "똑같은 이름의 폴더가 존재합니다.", "error")
 				return false;
 			}
 			$("#nowList").html("");
@@ -93,12 +93,11 @@ $("#newFolder").click(function () {
 // 새코드
 $("#newCode").click(function () {
 	if(!nowNode || !nowNode.isFolder){
-		alert("폴더를 선택하지 않았거나, 선택하신 폴더가 없습니다.");
+		swal("Error", "폴더를 선택하지 않았거나,\n선택하신 폴더가 없습니다.", "error")
 		return false;
 	}
 	var newCodeFile = prompt("새 코드파일 이름을 작성하세요.(확장자 까지 포함)\n-권장 파일 형식 [java, js, html, css, jsp, php, txt]");
 	if(!newCodeFile){
-		alert("파일명을 입력하세요.");
 		return false;
 	}else{
 		var newExt = newCodeFile.substring(newCodeFile.lastIndexOf(".")+1);
@@ -113,7 +112,7 @@ $("#newCode").click(function () {
 		dataType : "json",
 		success : function (data) {
 			if(data.dup){
-				alert("똑같은 이름의 파일이 존재합니다.");
+			swal("Error", "똑같은 이름의 파일이 존재합니다.", "error")
 				return false;
 			}
 			$("#nowList").html("");
@@ -129,7 +128,7 @@ function lazyReloadActive() {
 		node.reloadChildren(function(node, isOk) {
 		});
 	} else {
-		alert("Please activate a lazy node first.");
+		swal("Error", "Please activate a lazy node first.", "error")
 	}
 	
 };
@@ -141,7 +140,7 @@ function lazyReloadTarget(key) {
 		node.reloadChildren(function(node, isOk) {
 		});
 	} else {
-		alert("Please activate a lazy node first.");
+		swal("Error", "Please activate a lazy node first.", "error")
 	}
 };
 
@@ -280,7 +279,7 @@ $("body").on("click", ".file-view-close", function(){
 $("body").on("click", "#form-comment>button", function(){
 
 	if($("#comment-file").val().length<3){
-		alert("코멘트를 3자 이상 입력하세요!")
+		swal("Error", "코멘트를 3자 이상 입력하세요!", "error")
 		return false;
 	}
 
@@ -295,10 +294,10 @@ $("body").on("click", "#form-comment>button", function(){
 			path : nowNode.path.substring(0,(nowNode.path.lastIndexOf(nowNode.title))-1)
 		},
 		success : function(){
-			alert("코멘트 저장 완료");
+			swal("Success", "코멘트 저장 완료", "success")
 		},
 		error : function(){
-			alert("코멘트 저장 실패");
+			swal("Error", "코멘트 저장 완료", "error")
 		}
 	})
 })
@@ -308,36 +307,55 @@ $("body").on("click", ".file-delete", function () {
 
 	////////////////////////
 	if(user.lockMode=='T'){
-		alert("※경고※\n잠금 모드가 활성화 중입니다.\n(잠금 모드 일 경우 파일 삭제, 수정 불가)")
+		swal("※경고※", "잠금 모드가 활성화 중입니다.\n잠금 모드 일 경우 파일 삭제, 수정 불가", "error")
 		return;
 	}
 	////////////////////////
 
-	if(!confirm("정말로 이 파일을 삭제하시겠습니까?\n※ 추후 복구불가")){
-		return false;
-	}
+	swal({
+		title: "Deleted",
+		text: "이 파일을 삭제하시겠습니까?\n※ 추후 복구불가",
+		type: "warning",
+		showCancelButton: true,
+		closeOnConfirm: false
+	  },
+	  function(isConfirm) {
+		if (isConfirm) {
+			deleteFile()
+		}else{
+			return false;
+		}
+	  });
+
+
+	// if(!confirm("정말로 이 파일을 삭제하시겠습니까?\n※ 추후 복구불가")){
+	// 	return false;
+	// }
+	
 	var key = $(this).parents("#detailFile").attr("data-key");
 	var parentKey = $("#tree").dynatree("getTree").getNodeByKey(key).parent.data.key;
 	var path = $("#tree").dynatree("getTree").getNodeByKey(key).data.path;
 	var nowSize = $("#tree").dynatree("getActiveNode").data.size;
 	
-	$.ajax({
-		type : "POST",
-		url : projectURL+"/cloud/filedelete.json",
-		data : {path:path},
-		success : function () {
-			alert("삭제 성공");
-			lazyReloadTarget(parentKey);
-			showFileDetail(parentKey)
-
-			//용량 삭제
-			rootNode.size = rootNode.size - nowSize;
-			volumeCheck(rootNode.size)
-		},
-		error : function () {
-			alert("삭제 실패!!");
-		}
-	})
+	function deleteFile(){
+		$.ajax({
+			type : "POST",
+			url : projectURL+"/cloud/filedelete.json",
+			data : {path:path},
+			success : function () {
+				swal("Success", "삭제 성공", "success")
+				lazyReloadTarget(parentKey);
+				showFileDetail(parentKey)
+	
+				//용량 삭제
+				rootNode.size = rootNode.size - nowSize;
+				volumeCheck(rootNode.size)
+			},
+			error : function () {
+				swal("Error", "삭제 실패", "error")
+			}
+		})
+	}
 })
 
 // 파일 리네임
@@ -345,7 +363,7 @@ $("body").on("click", ".file-rename", function () {
 
 	////////////////////////
 	if(user.lockMode=='T'){
-		alert("※경고※\n잠금 모드가 활성화 중입니다.\n(잠금 모드 일 경우 파일 삭제, 수정 불가)")
+		swal("※경고※", "잠금 모드가 활성화 중입니다.\n잠금 모드 일 경우 파일 삭제, 수정 불가", "error")
 		return;
 	}
 	////////////////////////
@@ -377,10 +395,10 @@ $("body").on("click", ".file-rename", function () {
 			},
 		success : function (data) {
 			if(data.result){
-				alert("파일명 변경 성공");
+				swal("Success", "삭제 성공", "success")
 				lazyReloadTarget(parentKey)
 			}else {
-				alert("파일명 변경 실패!!");
+				swal("Error", "삭제 실패", "error")
 			}
 		}
 	})
@@ -400,7 +418,7 @@ $("body").on("click", ".file-down", function () {
 $("#uploadForm>input[type=file]").click(function () {
 	$("#uploadForm>input[name=uploadPath]").val("");
 	if(!nowNode || !nowNode.isFolder){
-		alert("폴더를 선택하지 않았거나, 선택하신 폴더가 없습니다.");
+		swal("Error", "폴더를 선택하지 않았거나,\n선택하신 폴더가 없습니다.", "error")
 		return false;
 	}
 	$("#uploadForm>input[name=uploadPath]").val(nowNode.path)			
@@ -420,16 +438,31 @@ function fileSizeChk(fd){
 // 업로드 버튼
 $("#uploadForm>button").click(function () {
 	if(!$("#uploadForm>input[name=uploadPath]").val()){
-		alert("파일을 선택하세요.")
+		swal("Error", "파일을 선택하세요.", "error")
 		return false;
 	}
 	var fd = new FormData($("#uploadForm")[0]);
 
 	//용량체크
 	if(rootNode.size + fileSizeChk(fd)>rootNode.maxSize){
-		if(confirm("용량초과!! 용량추가 하시겠습니까?")){
-			$("button[data-target='#addVolume']").trigger("click");
-		}
+		swal({
+			title: "Max Cloud",
+			text: "용량초과!! 용량추가 하시겠습니까?",
+			type: "warning",
+			showCancelButton: true,
+			closeOnConfirm: false
+		  },
+		  function(isConfirm) {
+			if (isConfirm) {
+				swal.close()
+				$("button[data-target='#addVolume']").trigger("click");
+			}else{
+				return false;
+			}
+		  });	
+		// if(confirm("용량초과!! 용량추가 하시겠습니까?")){
+		// 	$("button[data-target='#addVolume']").trigger("click");
+		// }
 		return;
 	}
 	
@@ -448,7 +481,7 @@ $("#uploadForm>button").click(function () {
 			if(data.dup){
 				msg = "파일 업로드 성공!\n※ 중복된 파일명은 자동 변경되어 업로드 되었습니다. ※"
 			}
-			alert(msg);
+			swal("Success", msg, "success")
 			$("#uploadForm")[0].reset();
 			$("#uploadForm>input[name=uploadPath]").val("");
 			lazyReloadActive();
@@ -459,7 +492,7 @@ $("#uploadForm>button").click(function () {
 			loadingStopAjax()
 		},
 		error : function () {
-			alert("파일 업로드 실패!!");
+			swal("Error", "파일 업로드 실패!!", "error")
 			loadingStopAjax()
 		}
 	})
@@ -491,7 +524,7 @@ $("body").on("click", ".code-view", function(){
 
 		},
 		error : function () {
-			alert("코드 보기 실패!!");
+			swal("Error", "코드 보기 실패!!", "error")
 		}
 	});
 })
@@ -528,7 +561,7 @@ $("body").on("click", "#codeEidtBtn", function(){
 
 	////////////////////////
 	if(user.lockMode=='T'){
-		alert("※경고※\n잠금 모드가 활성화 중입니다.\n(잠금 모드 일 경우 파일 삭제, 수정 불가)")
+		swal("※경고※", "잠금 모드가 활성화 중입니다.\n잠금 모드 일 경우 파일 삭제, 수정 불가", "error")
 		return;
 	}
 	////////////////////////
@@ -543,12 +576,12 @@ $("body").on("click", "#codeEidtBtn", function(){
 			path : node.data.path
 			},
 		success : function(data){
-			alert("코드 저장 성공!");
+			swal("Success", "코드 저장 성공!", "success")
 			$(".code-view").trigger("click");
 			$("#updateDate").html(dateFormat(Date.now()))
 		},
 		error : function(){
-			alert("코드 수정 실패!!");
+			swal("Error", "코드 수정 실패!!", "error")
 		}
 	})
 	
@@ -632,9 +665,21 @@ $("body").on("drop", '.file', function (e){
 
 		//용량체크
 		if(rootNode.size + fileSizeChk(fd)>rootNode.maxSize){
-			if(confirm("용량초과!! 용량추가 하시겠습니까?")){
-				$("button[data-target='#addVolume']").trigger("click");
-			}
+			swal({
+				title: "Max Cloud",
+				text: "용량초과!! 용량추가 하시겠습니까?",
+				type: "warning",
+				showCancelButton: true,
+				closeOnConfirm: false
+			  },
+			  function(isConfirm) {
+				if (isConfirm) {
+					swal.close()
+					$("button[data-target='#addVolume']").trigger("click");
+				}else{
+					return false;
+				}
+			  });
 			return;
 		}
 		 

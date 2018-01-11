@@ -37,6 +37,9 @@
 <!-- 웨잇미 -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/waitme/waitMe.css">
 
+<!-- 스윗 얼럿 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/sweetalert/sweetalert.css"/>
+
 <!-- 종인 정의 CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/include/basic-css.css">
 

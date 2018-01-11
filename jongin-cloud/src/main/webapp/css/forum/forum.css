@@ -1,5 +1,4 @@
 @charset "UTF-8";
-	
 	body{
 		background: whitesmoke;
 	}
@@ -120,6 +119,7 @@
     	color: white !important;
 	}
 	.content-box{ 
+		width: 100% !important;
 		background: #f2f3f5;
 		padding: 10px;
 		overflow:hidden;

@@ -55,7 +55,7 @@
 	})
 
 	// 자동 높이 조절
-	$("body").on('keydown keyup', '.write-forum-input,.forum-edit-input,.comment-edit-input', function () {
+	$("body").on('keydown keyup click', '.write-forum-input,.forum-edit-input,.comment-edit-input', function () {
 		$(this).height(1).height( $(this).prop('scrollHeight')+7 );
 	});
 		
@@ -65,7 +65,7 @@
 		var content = $(".write-forum-input").val().trim();
 
 		if(content.length<3){
-			alert("포럼을 3글자 이상 입력하세요.");
+			swal("Error", "포럼을 3글자 이상 입력하세요.", "error")
 			$("#select-category").modal("hide");
 			$(".write-forum-input").focus();
 			return;
@@ -333,10 +333,25 @@
 	$("body").on("click", ".forum-delete,.forum-edit", function(){
 		var no = $(this).parents(".panel-default").attr("data-no")
 		if($(this).hasClass("forum-delete")){
-			if(confirm("정말로 삭제하시겠습니까?")){
-				deleteForum(no)
-				return
-			}
+			swal({
+				title: "Delete",
+				text: "정말로 삭제하시겠습니까?",
+				type: "warning",
+				showCancelButton: true,
+				closeOnConfirm: false
+			  },
+			  function(isConfirm) {
+				if (isConfirm) {
+					deleteForum(no)
+					swal.close()
+				}else{
+					return false;
+				}
+			  });	
+			// if(confirm("정말로 삭제하시겠습니까?")){
+			// 	deleteForum(no)
+			// 	return
+			// }
 		}else if($(this).hasClass("forum-edit")){
 			parent(no).find(".forum-edit-submit").show();
 			
@@ -389,7 +404,7 @@
 						parent(no).find(".titleT").html(title)						
 						parent(no).find(".content-box>span:eq(0)").html(content)
 					}else{
-						alert("수정 불가능!")
+						swal("Error", "수정 불가!", "error")
 					}
 				}
 			})
@@ -408,7 +423,7 @@
 					if(data.result){
 						parent(no).fadeOut(300, function(){ parent(no).remove();});
 					}else{
-						alert("삭제 불가능!")
+						swal("Error", "삭제 불가!", "error")
 					}
 				}
 			})
@@ -585,10 +600,25 @@
 		var commentNo = commentParent.attr("data-commentNo")
 
 		if($(this).hasClass("delete-comment")){
-			if(confirm("정말로 삭제하시겠습니까?")){
-				deleteComment(commentNo, commentParent)
-				return
-			}
+			swal({
+				title: "Delete",
+				text: "정말로 삭제하시겠습니까?",
+				type: "warning",
+				showCancelButton: true,
+				closeOnConfirm: false
+			  },
+			  function(isConfirm) {
+				if (isConfirm) {
+					deleteComment(commentNo, commentParent)
+					swal.close()
+				}else{
+					return false;
+				}
+			  });	
+			// if(confirm("정말로 삭제하시겠습니까?")){
+			// 	deleteComment(commentNo, commentParent)
+			// 	return
+			// }
 		}else if($(this).hasClass("modify-comment")){
 			commentParent.find(".modify-comment-submit").css({"display":"inline"});
 			
@@ -637,7 +667,7 @@
 				if(data.result){
 					$(".comment-wrap[data-commentNo="+commentNo+"]").find(".comment-text>span:eq(0)").html(content)
 				}else{
-					alert("수정 불가능!")
+					swal("Error", "수정 불가!", "error")
 				}
 			}
 		})
@@ -656,7 +686,7 @@
 				if(data.result){
 					commentParent.fadeOut(300, function(){ commentParent.remove();});
 				}else{
-					alert("삭제 불가능!")
+					swal("Error", "삭제 불가!", "error")
 				}
 			}
 		})
@@ -665,7 +695,7 @@
 	// 댓글 추가 이벤트
 	$("body").on("click", ".comment-btn", function(){
 		if($(this).prev().val().length<1){
-			alert("댓글을 입력하세요.")
+			swal("Error", "댓글을 입력하세요.", "error")
 			return;
 		}
 		var no = $(this).parents(".panel-default").attr("data-no")
@@ -765,7 +795,7 @@
 					var nowLikeCnt = parseInt(parent(no).find(".like-count").text().trim())
 					parent(no).find(".like-count").text(nowLikeCnt+1)
 				}else{
-					alert("이미 좋아요를 누른 '포럼'입니다.")
+					swal("Error", "이미 좋아요를 누른 포럼입니다.", "error")
 				}
 				ele.removeAttr("disabled")
 				loadingStopAjax(ele)
@@ -804,7 +834,7 @@
 			success : function(data){
 
 				if(data.forum==null){
-					alert("존재하지않는 포럼 입니다.");
+					swal("Error", "존재하지않는 포럼 입니다.", "error")
 					return;
 				}
 

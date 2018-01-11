@@ -13,12 +13,9 @@
 
 <body style="background: #1276AA; display: none">
 
+
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index/index.css">
 
-	<!-- <form id="form" method="post" action="${pageContext.request.contextPath}/login/init.json">
-		<input type="hidden" id="hidden-id" name="id" value="chopo01">
-		<input type="hidden" id="hidden-pw" name="pass" value="chvy918">
-	</form> -->
 	<div id="start-btn">
 		<h1>CLOUD OF Z <i class="fa fa-cloud-download" aria-hidden="true"></i></h1>
 		<div class="btn-container">
@@ -30,6 +27,8 @@
 </body>
 </html>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/lib/sweetalert/sweetalert.min.js"></script>
+
 <script>
 
 
@@ -38,8 +37,70 @@
 		$("body").fadeIn(1400)
 
 		$("body").on("click", "#start-btn", function(){
-			// $("#form").submit();
-			location.href = "${pageContext.request.contextPath}/cloud/cloud.do"
+			var id = "${param.id}"
+			if(id){
+				swal({
+					title: '클라우드 보안!',
+					icon: "warning",
+					text: id+"님의 비밀번호를 작성하세요:",
+					type: "input",
+					inputType : "password",
+					showCancelButton: true,
+					// cancelButtonText: "",
+					closeOnConfirm: false,
+					animation: "slide-from-top",
+					showLoaderOnConfirm: true,
+					inputPlaceholder: "비밀번호를 작성하세요."
+				  }, function (inputValue) {
+					  console.log(inputValue)
+					if (inputValue === false) return false;
+					if (inputValue === "") {
+					  swal.showInputError("비밀번호를 작성하세요.");
+					  return false
+					}
+					$.ajax({
+						method : "post",
+						url : projectURL+"/login/login.json",
+						data : {
+							id : id,
+							pass : inputValue,
+							save : true
+						},
+						success : function (data) {
+							if(!data.result){
+								swal({
+									title: "Sorry!",
+									text: "일치하는 회원정보가 없습니다.\n일반 로그인 하시겠습니까?",
+									type: "warning",
+									showCancelButton: true
+								},
+								function(){
+									location.href = projectURL+"/login/loginform.do";
+								})
+								return
+							}else {
+								swal({
+									title: "Nice!",
+									text: "인증완료",
+									type: "success",
+									showCancelButton: true
+								},
+								function(){
+									location.href = projectURL+"/cloud/cloud.do";
+								});
+								return
+							}
+						},
+						error : function () {	
+							swal("Sorry!", "서버에러 관리자에게 문의하세요", "warning");
+							return						
+						}
+					})
+				  }
+				);
+			}else{
+				location.href = "${pageContext.request.contextPath}/cloud/cloud.do"
+			}
 		})
 	})
 

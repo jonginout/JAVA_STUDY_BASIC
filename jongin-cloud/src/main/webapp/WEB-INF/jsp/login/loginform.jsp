@@ -74,40 +74,6 @@ pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/jsp/include/basic-js.jsp" %>
 
-<script>
-
-	$(function(){
-		var hiddenId = '${member.id}';
-		var hiddenPw = '${member.pass}';
-		if(hiddenId && hiddenPw){
-			console.log(hiddenId,hiddenPw)
-			$.ajax({
-				type : "POST",
-				url : projectURL+"/login/login.json",
-				data : {
-					id : hiddenId,
-					pass : hiddenPw,
-					save : true
-				},
-				beforeSend : loadingAjax("비트 SNS로 로그인 접근중..."),
-				success : function (data) {
-					loadingStopAjax();
-					if(!data.result){
-						alert("일치하는 회원정보가 없습니다.")	
-					}else {
-						location.href = projectURL+"/cloud/cloud.do";
-					}
-				},
-				error : function () {	
-					loadingStopAjax();				
-					alert("로그인 에러")	
-				}
-			})
-		}
-	})
-
-</script>
-
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/login/kakaoLogin.js"></script>
 
