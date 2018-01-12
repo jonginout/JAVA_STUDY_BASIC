@@ -174,7 +174,7 @@ function dirTree() {
         },
 		onPostInit: function(isReloading, isError) {
 
-			setIcon($("#tree").dynatree("getTree").tnRoot.childList[1].childList)
+			 setIcon($("#tree").dynatree("getTree").tnRoot.childList[1].childList)
 
 			//용량 체크!
 			rootNode = $("#tree").dynatree("getTree").getNodeByKey("_2").data
