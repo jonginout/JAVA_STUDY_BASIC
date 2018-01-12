@@ -1,4 +1,6 @@
 
+
+
 $(function(){
 
     function hideShowAllReadBtn(){
@@ -103,7 +105,7 @@ $(function(){
     }
   
     // 알람 실시간 로딩
-      $("body").on("click", ".header-alarm-btn", function(){
+    $("body").on("click", ".header-alarm-btn", function(){
       $(".alarm-list").html("");
       loadAlarmList()
       hideShowAllReadBtn()
@@ -120,7 +122,8 @@ $(function(){
           data : {
             receiver : user.memberNo
           },
-          success : function(data){      
+          success : function(data){ 
+            console.log(data)     
             $(".alarm-list").html("");
   
             moment.locale('ko');

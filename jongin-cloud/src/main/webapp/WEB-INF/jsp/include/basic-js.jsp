@@ -24,6 +24,7 @@
 	<!-- 김종인 데이트 라이브러리 -->
 	<script src="${pageContext.request.contextPath}/js/common/date.format.js"></script>
     <script src="${pageContext.request.contextPath}/lib/waitme/waitMe.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/sweetalert/sweetalert.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/moment/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/common/date.format.js"></script>
 
@@ -31,3 +32,4 @@
     
     <%@ include file="/WEB-INF/jsp/include/floating.jsp" %>
  
+    

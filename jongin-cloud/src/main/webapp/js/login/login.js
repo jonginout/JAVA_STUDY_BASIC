@@ -1,3 +1,4 @@
+
 var isNull = true;
 	$("#id,#pass").on("keyup", function () {
 		var len = $(this).val().length;
@@ -26,14 +27,14 @@ var isNull = true;
 				success : function (data) {
 					loadingStopAjax();
 					if(!data.result){
-						alert("일치하는 회원정보가 없습니다.")	
+						swal("Error", "일치하는 회원정보가 없습니다.", "error")
 					}else {
 						location.href = projectURL+"/cloud/cloud.do";
 					}
 				},
 				error : function () {	
-					loadingStopAjax();				
-					alert("로그인 에러")	
+					loadingStopAjax();		
+					swal("Error", "로그인 에러", "error")
 				}
 			})
 		}

@@ -74,7 +74,6 @@ pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/jsp/include/basic-js.jsp" %>
 
-
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/login/kakaoLogin.js"></script>
 

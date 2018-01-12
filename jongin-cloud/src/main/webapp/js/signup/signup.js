@@ -61,27 +61,39 @@ $(function() {
 
 		for(let i = 0; i < ptn.length; i ++) {
 			if(ptn[i].matches() == false) {
-				alert(ptn[i].msg + ", " + ptn[i].id.val());
-				ptn[i].id.focus();
-				e.preventDefault();
+				swal({
+					title: "Error",
+					text: ptn[i].msg,
+					type: "error",
+					closeOnConfirm: false
+				  },
+				  function(isConfirm) {
+					swal.close()
+					ptn[i].id.focus();
+					e.preventDefault();
+					return;
+				  });
+				// alert(ptn[i].msg + ", " + ptn[i].id.val());
+				// ptn[i].id.focus();
+				// e.preventDefault();
 				return;
 			}
 		}
 		
 		if(!$("#key").val()){
-			alert("인증키를 입력하세요!")
+			swal("Error", "인증키를 입력하세요!", "error")		
 			$("#key").focus();
 			return;
 		}
 
 		if(!AUTHSMSKEY){
-			alert("휴대폰 본인인증을 해주세요.");
+			swal("Error", "휴대폰 본인인증을 해주세요.", "error")
 			$("#tel").focus();
 			return;
 		}
 		
 		if($("input[name=images]").val() == "") {
-			alert("프로필 사진을 등록해주세요.");
+			swal("Error", "프로필 사진을 등록해주세요.", "error")
 			e.preventDefault();
 			return;
 		}
@@ -102,7 +114,7 @@ $(function() {
 		var tel = $("#tel").val();
 		var pattern = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/;
 		if (!pattern.test(tel)) {
-			alert("잘못된 휴대폰 번호입니다. - 를 포함한 숫자를 입력하세요.");
+			swal("Error", "잘못된 휴대폰 번호입니다.\n - 를 포함한 숫자를 입력하세요.", "error")
 			return false;
 		}
 		sendSmsKey(tel)
@@ -116,11 +128,11 @@ $(function() {
 		var inputKey = $("#key").val();
 
 		if(!inputTel){
-			alert("인증키를 입력하세요!")
+			swal("Error", "인증키를 입력하세요!", "error")
 			return;
 		}
 		if(!inputKey){
-			alert("인증키를 입력하세요!")
+			swal("Error", "인증키를 입력하세요!", "error")
 			return;			
 		}
 		
@@ -134,18 +146,18 @@ $(function() {
 			dataType : "json",
 			success : function(data){
 				if(data.result){
-					alert("인증 성공!")
+					swal("Success", "인증 성공!", "success")
 					$("#tel").attr("disabled", true);
 					$("#sendSMSBtn").attr("disabled", true);
 					$("#key").attr("disabled", true);
 					$("#authKeyBtn").attr("disabled", true);
 					AUTHSMSKEY = true;
 				}else{
-					alert("인증번호를 확인하세요.")
+					swal("Error", "인증번호를 확인하세요.", "error")
 				}
 			},
 			error : function(){
-				alert("서버오류 개발자에게 문의하세요!")
+				swal("Error", "서버오류 개발자에게 문의하세요!", "error")
 			}
 		})
 
@@ -169,15 +181,30 @@ function saveAuthKey(tel, randomKey){
 		dataType : "json",
 		success : function(data){
 			if(data.dup){
-				if(confirm("이미 요청한 인증키가 존재합니다.\n재요청 하시겠습니까?")){
-					smsKeyResend(tel);
-				}
+				swal({
+					title: "Resend",
+					text: "이미 요청한 인증키가 존재합니다.\n재요청 하시겠습니까?",
+					type: "warning",
+					showCancelButton: true,
+					closeOnConfirm: false
+				  },
+				  function(isConfirm) {
+					if (isConfirm) {
+						smsKeyResend(tel);
+						swal.close()
+					}else{
+						return false;
+					}
+				  });	
+				// if(confirm("이미 요청한 인증키가 존재합니다.\n재요청 하시겠습니까?")){
+				// 	smsKeyResend(tel);
+				// }
 			}else{
 				$(".auth-input").show();
 			}
 		},
 		error : function(){
-			alert("서버오류 개발자에게 문의하세요!")
+			swal("Error", "서버오류 개발자에게 문의하세요!", "error")
 		}
 	})
 
@@ -197,7 +224,7 @@ function smsKeyResend(tel){
 			sendSmsKey(tel)
 		},
 		error : function(){
-			alert("서버오류 개발자에게 문의하세요!")
+			swal("Error", "서버오류 개발자에게 문의하세요!", "error")
 		}
 	})
 }
@@ -226,14 +253,14 @@ function sendSmsKey(tel){
 			success : function(data){
 				//010-4021-6749
 				if(!data.result){
-					alert("서버에러! 개발자에게 문의하세요!")						
+					swal("Error", "서버오류 개발자에게 문의하세요!", "error")				
 				}else{
 					saveAuthKey(tel, randomKey)
-					alert("인증키가 문자로 발송되었습니다.")
+					swal("Success", "인증키가 문자로 발송되었습니다.", "success")
 				}
 			},
 			error : function(data){
-				alert("인증키 전송 에러!")
+				swal("Error", "인증키 전송 에러!", "error")
 			}
 		})
 	}
@@ -264,12 +291,24 @@ function submitForm() {
 		beforeSend: loadingAjax("회원가입 처리중..."),
 		success : function(data) {
 			loadingStopAjax();
-			alert("회원가입 성공!! 로그인 페이지로 이동합니다.")
-			location.href = projectURL+"/login/loginform.do"
+			
+			swal({
+				title: "Success",
+				text: "회원가입 성공!!\n로그인 페이지로 이동합니다.",
+				type: "success",
+				closeOnConfirm: false
+			  },
+			  function(isConfirm) {
+				if (isConfirm) {
+					location.href = projectURL+"/login/loginform.do"
+					swal.close()
+					return;
+				}
+			  });
 		},
 		error : function(data) {
 			loadingStopAjax();
-			alert("회원가입 실패")
+			swal("Error", "회원가입 실패", "error")
 		}
 	})
 	

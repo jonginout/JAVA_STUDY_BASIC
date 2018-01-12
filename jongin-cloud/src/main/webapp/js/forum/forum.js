@@ -16,6 +16,11 @@
 			forumNo : parseInt(param[0].split("=")[1]),
 			commentNo : parseInt(param[1].split("=")[1])
 		}
+	}else{
+		param = ((location.search).substring(1)).split(":");
+		param = {
+			forumNo : parseInt(param[0].split("=")[1])
+		}
 	}
 
 	var forumNo = parseInt("${param.forumNo}")
@@ -46,15 +51,28 @@
 
 	// 글 추가 
 	$("body").on("click",".write-forum", function(){
+		$("#select-category").modal("show");
+	})
+
+	// 자동 높이 조절
+	$("body").on('keydown keyup click', '.write-forum-input,.forum-edit-input,.comment-edit-input', function () {
+		$(this).height(1).height( $(this).prop('scrollHeight')+7 );
+	});
+		
+
+	$("body").on("click","#post-forum", function(){
+
 		var content = $(".write-forum-input").val().trim();
 
 		if(content.length<3){
-			alert("포럼을 3글자 이상 입력하세요.");
+			swal("Error", "포럼을 3글자 이상 입력하세요.", "error")
+			$("#select-category").modal("hide");
+			$(".write-forum-input").focus();
 			return;
         }
 
         var title = content.substring(0,30);
-        var category = '자유';
+        var category = $("#categorys").val();
         
         var data = {}
         if(attachCloudFile){
@@ -72,7 +90,9 @@
                 content : content,
                 category : category,
             }
-        }
+		}
+		$("#select-category").modal("hide");
+		
 		$.ajax({
 			type : "POST",
 			url : projectURL+"/forum/addforum.json",
@@ -83,7 +103,7 @@
 					<div class="panel panel-default" data-no="'+data+'" style="display: none">\
 						<div class="panel-heading">\
 						<h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#forum'+data+'">\
-							<div class="category">'+category+'</div>\
+							<div class="category" data-category="'+category+'">'+category+'</div>\
 							<div class="contentT">\
 								<span class="titleT">'+title+'</span>\
 								<span class="dateT"><span id="moment"> 지금</span> | 댓글 <span class="comment-count">0</span> | <span id="author">'+user.id+'</span>\
@@ -132,9 +152,12 @@
 									<button class="btn btn-default btn-sm like-btn">\
 										<i class="fa fa-heart like-i" aria-hidden="true"></i> 좋아요\
 									</button>\
+									<button class="btn btn-default btn-sm kakao-share-btn">\
+										<i class="fa fa-share-alt" aria-hidden="true"></i> 카톡 공유\
+									</button>\
 								</center>\
 								<div class="input-group comment-input-box">\
-									<textarea class="form-control comment-content" rows="2" style="resize:none"></textarea>\
+									<textarea class="form-control comment-content" rows="2"></textarea>\
 									<span class="input-group-addon btn btn-primary comment-btn">전송</span>\
 								</div>\
 								<div class="comment-box">\
@@ -206,7 +229,7 @@
 					var adminStyle = "";
 					if(forums[f].writerStatus=='ADMIN'){
 						forums[f].writerId = forums[f].writerId+" [운영자]"
-						adminStyle = "style=\"background:#c6e8ef !important\"";
+						adminStyle = "style=\"background:#f8f9ee !important\"";
 					}
 
 					forums[f].regDate = moment(forums[f].regDate).fromNow();
@@ -215,7 +238,7 @@
 					<div class="panel panel-default" data-no="'+forums[f].forumNo+'">\
 						<div class="panel-heading" '+adminStyle+'>\
 						<h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#forum'+forums[f].forumNo+'">\
-							<div class="category">'+forums[f].category+'</div>\
+							<div class="category" data-category="'+forums[f].category+'">'+forums[f].category+'</div>\
 							<div class="contentT">\
 								<span class="titleT">'+forums[f].title+'</span>\
 								<span class="dateT"><span id="moment">'+forums[f].updateDate+'</span> | 댓글 <span class="comment-count">'+forums[f].commentCount+'</span> | <span id="author">'+forums[f].writerId+'</span>\
@@ -255,9 +278,12 @@
 									<button class="btn btn-default btn-sm like-btn">\
 										<i class="fa fa-heart like-i" aria-hidden="true"></i> 좋아요\
 									</button>\
+									<button class="btn btn-default btn-sm kakao-share-btn">\
+										<i class="fa fa-share-alt" aria-hidden="true"></i> 카톡 공유\
+									</button>\
 								</center>\
 								<div class="input-group comment-input-box">\
-									<textarea class="form-control comment-content" rows="2" style="resize:none"></textarea>\
+									<textarea class="form-control comment-content" rows="2"></textarea>\
 									<span class="input-group-addon btn btn-primary comment-btn">전송</span>\
 								</div>\
 								<div class="comment-box">\
@@ -307,17 +333,32 @@
 	$("body").on("click", ".forum-delete,.forum-edit", function(){
 		var no = $(this).parents(".panel-default").attr("data-no")
 		if($(this).hasClass("forum-delete")){
-			if(confirm("정말로 삭제하시겠습니까?")){
-				deleteForum(no)
-				return
-			}
+			swal({
+				title: "Delete",
+				text: "정말로 삭제하시겠습니까?",
+				type: "warning",
+				showCancelButton: true,
+				closeOnConfirm: false
+			  },
+			  function(isConfirm) {
+				if (isConfirm) {
+					deleteForum(no)
+					swal.close()
+				}else{
+					return false;
+				}
+			  });	
+			// if(confirm("정말로 삭제하시겠습니까?")){
+			// 	deleteForum(no)
+			// 	return
+			// }
 		}else if($(this).hasClass("forum-edit")){
 			parent(no).find(".forum-edit-submit").show();
 			
 			$(this).text("수정취소").addClass("cancel-edit");
 			var content = parent(no).find(".content-box>span:eq(0)").text().trim();
 			parent(no).find(".content-box>span:eq(0)").hide();
-			var html = '<textarea class="form-control forum-edit-input" style="resize:none;">'+content+'</textarea>';
+			var html = '<textarea class="form-control forum-edit-input">'+content+'</textarea>';
 			parent(no).find(".content-box>span:eq(2)").html(html);
 		}
 		
@@ -363,7 +404,7 @@
 						parent(no).find(".titleT").html(title)						
 						parent(no).find(".content-box>span:eq(0)").html(content)
 					}else{
-						alert("수정 불가능!")
+						swal("Error", "수정 불가!", "error")
 					}
 				}
 			})
@@ -382,7 +423,7 @@
 					if(data.result){
 						parent(no).fadeOut(300, function(){ parent(no).remove();});
 					}else{
-						alert("삭제 불가능!")
+						swal("Error", "삭제 불가!", "error")
 					}
 				}
 			})
@@ -498,7 +539,7 @@
 					}
 					if(data[c].status == 'ADMIN'){
 						owner += " [운영자]"
-						adminStyle = "style=\"background:#c6e8ef !important\"";
+						adminStyle = "style=\"background:#f8f9ee !important\"";
 					}
 
 					var html = '<div class="comment-wrap" data-commentNo="'+data[c].commentNo+'">\
@@ -559,17 +600,32 @@
 		var commentNo = commentParent.attr("data-commentNo")
 
 		if($(this).hasClass("delete-comment")){
-			if(confirm("정말로 삭제하시겠습니까?")){
-				deleteComment(commentNo, commentParent)
-				return
-			}
+			swal({
+				title: "Delete",
+				text: "정말로 삭제하시겠습니까?",
+				type: "warning",
+				showCancelButton: true,
+				closeOnConfirm: false
+			  },
+			  function(isConfirm) {
+				if (isConfirm) {
+					deleteComment(commentNo, commentParent)
+					swal.close()
+				}else{
+					return false;
+				}
+			  });	
+			// if(confirm("정말로 삭제하시겠습니까?")){
+			// 	deleteComment(commentNo, commentParent)
+			// 	return
+			// }
 		}else if($(this).hasClass("modify-comment")){
 			commentParent.find(".modify-comment-submit").css({"display":"inline"});
 			
 			$(this).text("수정취소").addClass("cancel-edit-comment");
 			var content = commentParent.find(".comment-text>span:eq(0)").text().trim();
 			commentParent.find(".comment-text>span:eq(0)").hide();
-			var html = '<textarea class="form-control comment-edit-input" style="resize:none;">'+content+'</textarea>';
+			var html = '<textarea class="form-control comment-edit-input">'+content+'</textarea>';
 			console.log(html)
 			commentParent.find(".comment-text>span:eq(1)").html(html);
 		}
@@ -611,7 +667,7 @@
 				if(data.result){
 					$(".comment-wrap[data-commentNo="+commentNo+"]").find(".comment-text>span:eq(0)").html(content)
 				}else{
-					alert("수정 불가능!")
+					swal("Error", "수정 불가!", "error")
 				}
 			}
 		})
@@ -630,7 +686,7 @@
 				if(data.result){
 					commentParent.fadeOut(300, function(){ commentParent.remove();});
 				}else{
-					alert("삭제 불가능!")
+					swal("Error", "삭제 불가!", "error")
 				}
 			}
 		})
@@ -639,7 +695,7 @@
 	// 댓글 추가 이벤트
 	$("body").on("click", ".comment-btn", function(){
 		if($(this).prev().val().length<1){
-			alert("댓글을 입력하세요.")
+			swal("Error", "댓글을 입력하세요.", "error")
 			return;
 		}
 		var no = $(this).parents(".panel-default").attr("data-no")
@@ -739,7 +795,7 @@
 					var nowLikeCnt = parseInt(parent(no).find(".like-count").text().trim())
 					parent(no).find(".like-count").text(nowLikeCnt+1)
 				}else{
-					alert("이미 좋아요를 누른 '포럼'입니다.")
+					swal("Error", "이미 좋아요를 누른 포럼입니다.", "error")
 				}
 				ele.removeAttr("disabled")
 				loadingStopAjax(ele)
@@ -761,7 +817,7 @@
 	/// 알람 부분
 
 
-	if(param.forumNo && param.commentNo){
+	if(param.forumNo){
 		console.log(param.forumNo , param.commentNo)
 		detail(param.forumNo, param.commentNo)
 	}
@@ -778,7 +834,7 @@
 			success : function(data){
 
 				if(data.forum==null){
-					alert("존재하지않는 포럼 입니다.");
+					swal("Error", "존재하지않는 포럼 입니다.", "error")
 					return;
 				}
 
@@ -787,14 +843,14 @@
 				var adminStyle = "";
 				if(data.forum.writerStatus=='ADMIN'){
 					data.forum.writerId = data.forum.writerId+" [운영자]"
-					adminStyle = "style=\"background:#c6e8ef !important\"";
+					adminStyle = "style=\"background:#f8f9ee !important\"";
 				}
 
 				var html = '\
 					<div class="panel panel-default" data-no="'+data.forum.forumNo+'">\
 						<div class="panel-heading alarm-panel-heading">\
 						<h4 class="panel-title" data-toggle="collapse" data-parent="#accordion" href="#forum'+data.forum.forumNo+'">\
-							<div class="category">'+data.forum.category+'</div>\
+							<div class="category" data-category="'+data.forum.category+'">'+data.forum.category+'</div>\
 							<div class="contentT">\
 								<span class="titleT">'+data.forum.title+'</span>\
 								<span class="dateT"><span id="moment"> '+data.forum.updateDate+'</span> | 댓글 <span class="comment-count">'+data.forum.commentCount+'</span> | <span id="author">'+data.forum.writerId+'</span>\
@@ -834,9 +890,12 @@
 									<button class="btn btn-default btn-sm like-btn">\
 										<i class="fa fa-heart like-i" aria-hidden="true"></i> 좋아요\
 									</button>\
+									<button class="btn btn-default btn-sm kakao-share-btn">\
+										<i class="fa fa-share-alt" aria-hidden="true"></i> 카톡 공유\
+									</button>\
 								</center>\
 								<div class="input-group comment-input-box">\
-									<textarea class="form-control comment-content" rows="2" style="resize:none"></textarea>\
+									<textarea class="form-control comment-content" rows="2"></textarea>\
 									<span class="input-group-addon btn btn-primary comment-btn">전송</span>\
 								</div>\
 								<div class="comment-box">\
@@ -862,6 +921,8 @@
 						parent(data.forum.forumNo).find(".button-box").html(btnHtml)
 					}
 						
+					loadForumFile(forumNo)
+
 					///////
 
 					var comments = data.comments; 
@@ -892,7 +953,7 @@
 						}
 						if(comments[c].status == 'ADMIN'){
 							owner += " [운영자]"
-							adminStyle = "style=\"background:#c6e8ef !important\"";
+							adminStyle = "style=\"background:#f8f9ee !important\"";
 						}
 	
 						var html = '<div class="comment-wrap" data-commentNo="'+comments[c].commentNo+'">\
@@ -929,14 +990,123 @@
 						}
 					}
 
-					// 앵커!
-					var anchorEle = $(".comment-wrap[data-commentNo="+commentNo+"]");
-					anchorEle.find(".comment-block").animate({ backgroundColor: "rgb(255, 232, 225)" }, "slow");
-					var offset = anchorEle.offset().top; 
-					$(window).scrollTop(offset-70); 
-
-					loadForumFile(param.forumNo)
+					if(param.commentNo){
+						// 앵커!
+						var anchorEle = $(".comment-wrap[data-commentNo="+commentNo+"]");
+						anchorEle.find(".comment-block").animate({ backgroundColor: "rgb(255, 232, 225)" }, "slow");
+						var offset = anchorEle.offset().top; 
+						$(window).scrollTop(offset-70); 
+	
+						loadForumFile(param.forumNo)
+					}
 					
 			}
 		})
 	}
+
+
+
+	// // 사용할 앱의 JavaScript 키를 설정해 주세요.
+	Kakao.init('d97a3b08e5637c89bd3b046a6e13e268');
+	// // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+
+	// 카카오톡 공유링크 버튼
+	$("body").on("click", ".kakao-share-btn", function(){
+
+		var ele = $(this);
+
+		loadingAjax("", ele)
+
+		ele.attr("disabled", "disabled")
+
+		var forumNo = ele.parents(".panel-default").data("no");
+
+		$.ajax({
+			type : "GET",
+			url : projectURL+"/alarm/detailalarm.json",
+			data : {
+				forumNo : forumNo,
+			},
+			dataType : "JSON",
+			success : function(data){
+
+				var forumInfo = data;
+
+				$.ajax({
+					type : "GET",
+					url : projectURL+"/forum/forumfile.json",
+					data : {
+						forumNo : forumNo
+					},
+					success : function(data){
+						if(data.result){
+							forumInfo.forum.img = data.forumFiles;
+						}
+
+
+						sendLink(forumInfo);
+
+					},
+					error : function(){
+						ele.removeAttr("disabled")	
+						loadingStopAjax(ele)
+					}
+				})
+
+			}
+		})
+
+
+
+		
+		function sendLink(data) {
+
+			ele.removeAttr("disabled")
+			loadingStopAjax(ele)
+
+			var viewUrl = "http://postfiles14.naver.net/MjAxODAxMDdfMjI5/MDAxNTE1MzM0MjI3NTc5.O1aFNsRAa-SQzrMNjUmKXVktv00NhDpzWecKgWuFey8g.cGOHY4o96sxhES1UJKr4hJMuEVhsJagabO64DeZ1tFUg.PNG.jonginout/coz.png?type=w2";
+			if(data.forum.img){
+				var path = (data.forum.img[0].path).replace(/\\/gi, "/");
+				var viewUrl = "http://jongin.pe.kr/common/down.do?ext="+data.forum.img[0].ext+"&path="+path;
+			}
+
+			viewUrl = encodeURI(viewUrl)
+			console.log(viewUrl)
+
+
+			Kakao.Link.sendDefault({
+				objectType: 'feed',
+				content: {
+					title: data.forum.title,
+					description: data.forum.content,
+					imageUrl: viewUrl,
+					link: {
+						webUrl: "http://jongin.pe.kr/forum/forum.do?forumNo="+data.forum.forumNo,
+						mobileWebUrl : "http://jongin.pe.kr/forum/forum.do?forumNo="+data.forum.forumNo
+					}
+				},
+				social: {
+					likeCount: data.forum.likeCount,
+					commentCount: data.comments.length,
+					viewCount: data.forum.view
+				},
+				buttons: [
+					{
+						title: 'COZ 홈',
+						link: {
+							webUrl: "http://jongin.pe.kr",
+							mobileWebUrl: "http://jongin.pe.kr"
+						}
+					},
+					{
+						title: '웹으로 보기',
+						link: {
+							webUrl: "http://jongin.pe.kr/forum/forum.do?forumNo="+data.forum.forumNo,
+							mobileWebUrl: "http://jongin.pe.kr/forum/forum.do?forumNo="+data.forum.forumNo
+						}
+					}
+				]
+			});
+		}
+
+	})

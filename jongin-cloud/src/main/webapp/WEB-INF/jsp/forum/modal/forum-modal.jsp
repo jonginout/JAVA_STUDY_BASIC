@@ -12,7 +12,7 @@
 		padding : 10px 15px 10px 15px !important;
 		margin: 0px;
 	}
-	.modal-header>h3{
+	.modal-header>h3,.modal-header>h4{
 		margin: 0px;
 	}
 	.modal-footer{
@@ -30,6 +30,10 @@
 	ul.dynatree-container{
 		border: 1px solid white !important;
 	}
+	#categorys{
+		margin: 10px;
+		width : 94%;
+	}
 </style>
 
 <div class="modal modal-middle fade scale-out" id="file-modal" tabindex="-1" role="dialog">
@@ -43,6 +47,30 @@
 			<div class="modal-footer">
 				<button class="btn btn-default" id="attach-file-btn">첨부하기</button>			
 				<button class="btn btn-default file-view-close" type="button" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal modal-middle fade scale-out" id="select-category" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document" style="width: 94% !important">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4><i class="fa fa-tag" aria-hidden="true"></i> 카테고리 선택</h4>
+			</div>
+			<div>
+				<select class="form-control" id="categorys">
+					<option value="자유">자유</option>
+					<option value="질문">질문</option>
+					<option value="유머">윾머</option>
+					<option value="정치">정치/시사</option>
+					<option value="홍보">홍보</option>
+					<option value="취업">구인/구직</option>
+				</select>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default file-view-close" type="button" data-dismiss="modal">취소</button>
+				<button class="btn btn-default" id="post-forum"><i class="fa fa-pencil" aria-hidden="true"></i> 글작성</button>			
 			</div>
 		</div>
 	</div>

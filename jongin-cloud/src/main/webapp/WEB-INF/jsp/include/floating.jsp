@@ -36,7 +36,7 @@
     #autre{
         bottom: 200px;
     }
-    #link{
+    #reload{
         bottom: 255px;
     }
     .float-btn-content{
@@ -54,9 +54,9 @@
 
 <div id="floating-btn">
     <div class="btn-group-sm" id="mini-fab">
-        <a class="btn btn-warning btn-fab" id="link">
+        <a class="btn btn-warning btn-fab" id="reload">
             <span class="float-btn-content">
-                <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                <i class="fa fa-refresh" aria-hidden="true"></i>
             </span>
         </a>
         <a href="${pageContext.request.contextPath}/" class="btn btn-info btn-fab" id="autre">
@@ -85,59 +85,17 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <script>
-    $("#float-btn").click(function() {
+    $("body").on("click", "#float-btn",function() {
       $("#mini-fab").toggle(300);
     });
 
-    $("#scroll-top").click(function(){
+    $("body").on("click", "#scroll-top",function() {
         var body = $('html, body');
         body.animate({scrollTop:0}, 500, 'swing');
     })
 
-
-    $("#link").click(function(){
-
-
-
-        //<![CDATA[
-    // // 사용할 앱의 JavaScript 키를 설정해 주세요.
-    Kakao.init('d97a3b08e5637c89bd3b046a6e13e268');
-    // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
-    Kakao.Link.createDefaultButton({
-      container: '#link',
-      objectType: 'feed',
-      content: {
-        title: '딸기 치즈 케익',
-        description: '#케익 #딸기 #삼평동 #카페 #분위기 #소개팅',
-        imageUrl: 'http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
-        link: {
-          mobileWebUrl: 'https://developers.kakao.com',
-          webUrl: 'https://developers.kakao.com'
-        }
-      },
-      social: {
-        likeCount: 286,
-        commentCount: 45,
-        sharedCount: 845
-      },
-      buttons: [
-        {
-          title: '웹으로 보기',
-          link: {
-            mobileWebUrl: 'https://developers.kakao.com',
-            webUrl: 'https://developers.kakao.com'
-          }
-        },
-        {
-          title: '앱으로 보기',
-          link: {
-            mobileWebUrl: 'https://developers.kakao.com',
-            webUrl: 'https://developers.kakao.com'
-          }
-        }
-      ]
-    });
-  //]]>
+    $("body").on("click", "#reload",function() {
+        location.reload()
     })
 
 </script>

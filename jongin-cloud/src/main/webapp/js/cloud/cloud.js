@@ -112,6 +112,47 @@ function showChildList(node) {
 	console.log("활성화된 노드 nowNode",nowNode)
 }
 
+function setIcon(array){
+	var iconFileDir = projectURL+"/lib/dynatree-master/icon/small/"
+
+	for( var i in array ){
+
+		if(array[i].data.isFolder){
+			array[i].data.icon = iconFileDir+"folder.png";
+			continue;
+		}
+
+		var ext = array[i].data.ext.toLowerCase();
+		var fc = fileExtChecker(ext);
+		var icon = iconFileDir;
+
+		if(fc=='img'){
+			icon += "file-img.png"			
+		}else if(fc=='code'){
+			icon += "file-code.png"
+		}else if(fc=='pdf'){
+			icon += "file-pdf.png"
+		}else if(fc=='audio'){
+			icon += "file-audio.png"
+		}else if(fc=='movie'){
+			icon += "file-movie.png"
+		}else if(fc=='zip'){
+			icon += "file-zip.png"
+		}else if(ext=='docx' || ext=='docm' || ext=='doc' || ext=='dotx' || ext=='dotm' || ext=='dot'){
+			icon += "file-word.png"
+		}else if(ext=='xls' || ext=='xlsx' || ext=='csv'){
+			icon += "file-xls.png"
+		}else if(ext=='pptx' || ext=='ppt' || ext=='pptm'){
+			icon += "file-ppt.png"
+		}else{
+			icon += "file-default.png"
+		}
+		
+		array[i].data.icon = icon;
+	}
+
+	$("#tree").dynatree("getTree").renderInvisibleNodes()
+}
 
 // 트리 가져오기
 function dirTree() {
@@ -132,11 +173,21 @@ function dirTree() {
 		data : {user:user.memberId},
         },
 		onPostInit: function(isReloading, isError) {
+
+			setIcon($("#tree").dynatree("getTree").tnRoot.childList[1].childList)
+
 			//용량 체크!
 			rootNode = $("#tree").dynatree("getTree").getNodeByKey("_2").data
 			volumeCheck($("#tree").dynatree("getTree").getNodeByKey("_2").data.size);
+			
+
+			rootNode.icon = projectURL+"/lib/dynatree-master/icon/small/root.png";
+			this.renderInvisibleNodes() // html 변경 강제실행 아이콘 변경에 매우 중요
 		},
       onActivate: function(node) {
+
+		// node.data.icon = projectURL+"/lib/dynatree-master/icon/file.png";
+
     	console.log(node)
     	showChildList(node);
     	showFileDetail(node.data.key);
@@ -148,7 +199,10 @@ function dirTree() {
           data : { path : node.data.path },
 		  debugLazyDelay: 200,
           success : function (node) {
-        	  console.log(node)
+
+			  console.log(node.childList)
+			  setIcon(node.childList)
+
         	  showChildList(node)
         	  showFileDetail(node.data.key)
         	  focusFile($(".file[data-key="+node.data.key+"]"));
@@ -210,7 +264,7 @@ function dirTree() {
             
             if(hitMode=="before" || hitMode=="after"){
             	if(node.data.title==user.id){
-            		alert("루트 폴더 밖으로는 옮길 수 없습니다.")
+					swal("Error", "루트 폴더 밖으로는 옮길 수 없습니다.", "error")
             		return false;
             	}
             	hitModeChk = true;
@@ -275,7 +329,7 @@ function moveFile(moveNode, recNode, hitModeChk) {
 				// 옮겨진 곳을 한번 리로드
 				lazyReloadTarget(recNode.key)
 			}else {
-				alert("파일이동 실패!!");					
+				swal("Error", "파일이동 실패!!", "error")
 			}
 		}
 	})

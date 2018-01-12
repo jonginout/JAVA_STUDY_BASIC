@@ -1,10 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
-h1 {
+
+#start-btn h1 {
   position: absolute;
   left: 50%;
   margin: 213px 0px 100px -130px;
@@ -12,13 +8,13 @@ h1 {
   color: #fff;
 }
 
-.btn-container {
+#start-btn .btn-container {
   position: absolute;
   left: 50%;
   margin: 290px 0px 100px -105px;
 }
 
-small{
+#start-btn small{
     color: white;
     position: absolute;
     left: 50%;
@@ -26,7 +22,8 @@ small{
     font-size: 15px;
 }
 
-.btn {
+#start-btn .btn {
+  text-align: center;
   width: 200px;
   height: 40px;
   background-color: #fff;
@@ -62,7 +59,7 @@ small{
   -webkit-animation-direction: alternate;
   animation-direction: alternate;
 }
-.btn:before {
+#start-btn .btn:before {
   pointer-events: none;
   position: absolute;
   z-index: -1;
@@ -95,7 +92,7 @@ small{
   -webkit-animation-direction: alternate;
   animation-direction: alternate;
 }
-.btn:hover {
+#start-btn .btn:hover {
   background-color: #e16e50;
 }
 
