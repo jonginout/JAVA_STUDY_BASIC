@@ -142,12 +142,16 @@ public class CloudController {
 
 		String path = "cloud/" + user;
 
+//		String folder = "/cloud/" + user;
+//		String cmd = "chmod 777 " + folder; 
+//		Runtime rt = Runtime.getRuntime();
+//		Process prc = rt.exec(cmd);
+//		prc.waitFor();
+		
 		File f = new File(path);
 		if (!f.exists()) {
 			f.mkdirs();
-			System.out.println("new" + user);
 		}
-		// 폴더 만들기
 
 		List<Tree> trees = pullFile(path);
 		Tree tree = new Tree();
