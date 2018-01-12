@@ -98,9 +98,10 @@
 	</update>
 		
     <select id="autoLoginChk" resultMap="autoLoginMap" parameterType="autoLogin">
-        select * 
-        	from auto_login 
+        select *
+			from auto_login 
         where session_id = #{sessionId} and limit_time > now()
+			order by limit_time desc limit 1
     </select>
 
 	<select id="autoLoginToMember" parameterType="int" resultMap="memberMap">
