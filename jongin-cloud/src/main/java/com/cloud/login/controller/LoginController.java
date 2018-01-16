@@ -98,6 +98,8 @@ public class LoginController {
 				System.out.println("외부 로그인 최초 회원가입!");
 			}
 		
+		}else {
+			member.setPass(Encryption.getSHA512(member.getPass()));
 		}
 		
 //		member.setPass(Encryption.getSHA512(member.getPass()));
