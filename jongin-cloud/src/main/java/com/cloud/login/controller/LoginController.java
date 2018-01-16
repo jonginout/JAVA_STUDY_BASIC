@@ -25,13 +25,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
+import com.cloud.common.Encryption;
 import com.cloud.login.service.LoginService;
 import com.cloud.repository.vo.AuthSms;
 import com.cloud.repository.vo.AutoLogin;
@@ -84,18 +84,23 @@ public class LoginController {
 		
 		if(loginType!=null) {
 			
+			Member vo = new Member();
+			vo = member;
+			
+			vo.setPass(Encryption.getSHA512(loginType));
 			member.setPass(loginType);
 			
-			if(service.checkId(member.getId())<1) {
+			if(service.checkId(vo.getId())<1) {
 				
 	//			member.setAddress("");
-				service.signup(member);
+				service.signup(vo);
 				
 				System.out.println("외부 로그인 최초 회원가입!");
 			}
 		
 		}
 		
+//		member.setPass(Encryption.getSHA512(member.getPass()));
 		Member user = service.login(member);
 		if(user!=null) {
 			user.setPass(null);
@@ -148,6 +153,8 @@ public class LoginController {
 		member.setAddress(adress);
 		member.setEmail(email);
 		member.setType("NORMAL");
+        member.setPass(Encryption.getSHA512(member.getPass()));
+
 		
 		// root는 공용폴더
 		// path는 실제 경로

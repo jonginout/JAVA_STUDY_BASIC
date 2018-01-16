@@ -43,15 +43,14 @@ public class ForumController {
 	public Map<String, Object> forumJson(Forum forum) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 		
-		System.out.println(forum);
-		
 		if(forum.getStart()==null) {
 			forum.setStart(0);
 			forum.setCount(20);
 		}
 		
 		List<Forum> forums = service.forumList(forum);
-		if(forums.size()>1) {				
+		
+		if(forums.size()>=1) {				
 			map.put("result", new Gson().toJson(forums));
 		}else {
 			map.put("result", false);		

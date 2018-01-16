@@ -52,7 +52,6 @@
 					showLoaderOnConfirm: true,
 					inputPlaceholder: "비밀번호를 작성하세요."
 				  }, function (inputValue) {
-					  console.log(inputValue)
 					if (inputValue === false) return false;
 					if (inputValue === "") {
 					  swal.showInputError("비밀번호를 작성하세요.");
