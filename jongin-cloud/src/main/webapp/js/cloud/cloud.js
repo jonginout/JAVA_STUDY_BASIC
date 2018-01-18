@@ -200,17 +200,18 @@ function dirTree() {
             		return false;
             	}
             	hitModeChk = true;
-// node.data.path = node.data.path.substring(0,
-// node.data.path.lastIndexOf("\\"));
+				// node.data.path = node.data.path.substring(0,
+				// node.data.path.lastIndexOf("\\"));
             }
             
-            // 노드 (겉모습만 이동)
-            sourceNode.move(node, hitMode);
-            
+			
             console.log("옮길 것",sourceNode.data.path);
             console.log("옮겨질 곳",node.data.path);
 
-            moveFile(sourceNode.data, node.data, hitModeChk)
+			
+			// 노드 (겉모습만 이동 하기위한 요소들을 보내기)
+			var modeNodeObject = [sourceNode, node, hitMode];
+			moveFile(sourceNode.data, node.data, hitModeChk, modeNodeObject);
             
           }
         },
@@ -237,7 +238,7 @@ function dirTree() {
 
 
 // 파일 드래그 앤 드롭 이동
-function moveFile(moveNode, recNode, hitModeChk) {
+function moveFile(moveNode, recNode, hitModeChk, modeNodeObject) {
 	
 	// hitMode 였을때는 path를 부모경로로 잠시 바꿔준다.
 	var recPath = recNode.path;
@@ -254,6 +255,10 @@ function moveFile(moveNode, recNode, hitModeChk) {
 		},
 		success : function (data) {
 			if(data.result){
+
+				// 노드 겉모습만 이동 성공해야만 이동 하니깐
+				modeNodeObject[0].move(modeNodeObject[1], modeNodeObject[2]);
+
 				var node =  $("#tree").dynatree("getTree").getNodeByKey(moveNode.key);
 				// path 값을 한번 초기화
 				node.data.path = data.path;
