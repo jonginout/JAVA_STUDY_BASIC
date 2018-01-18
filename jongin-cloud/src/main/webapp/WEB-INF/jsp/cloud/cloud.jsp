@@ -36,6 +36,7 @@ pageEncoding="UTF-8"%>
   	<%@ include file="/WEB-INF/jsp/include/header.jsp" %>
 
 	<!-- 트리 로드 -->
+	<script src="${pageContext.request.contextPath}/js/cloud/set-icon.js"></script>	
 	<script src="${pageContext.request.contextPath}/js/cloud/cloud.js"></script>
 	
               <!------------------------------------------------------------>

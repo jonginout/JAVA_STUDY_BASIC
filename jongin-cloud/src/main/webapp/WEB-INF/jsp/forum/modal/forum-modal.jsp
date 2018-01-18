@@ -76,7 +76,7 @@
 	</div>
 </div>
 
-
+<script src="${pageContext.request.contextPath}/js/cloud/set-icon.js"></script>	
 <script>
 
 	var selectCloudFile;
@@ -109,6 +109,7 @@
 		}
 	})
 
+
 // 트리 가져오기
 function dirTree() {
 
@@ -120,31 +121,40 @@ function dirTree() {
 	console.log("트리 로딩 완료..")
 
 	$("#tree").dynatree({
-	title: user.name+"님의 클라우드",
-	fx: { height: "toggle", duration: 200 },
-	autoFocus: false,
-	initAjax: {
-		url: projectURL+"/cloud/list.json",
-		data : {user:user.memberId},
+		title: user.name+"님의 클라우드",
+		fx: { height: "toggle", duration: 200 },
+		autoFocus: false,
+		initAjax: {
+			url: projectURL+"/cloud/list.json",
+			data : {user:user.memberId},
+			},
+		onPostInit: function(isReloading, isError) {
+
+			setIcon($("#tree").dynatree("getTree").tnRoot.childList[1].childList)
+			var rootNode = $("#tree").dynatree("getTree").getNodeByKey("_2").data
+			rootNode.icon = projectURL+"/lib/dynatree-master/icon/small/root.png";
+			this.renderInvisibleNodes() // html 변경 강제실행 아이콘 변경에 매우 중요
+			console.log(this)
 		},
-	onActivate: function(node) {
-		selectCloudFile = node.data
-		console.log(selectCloudFile)
+		onActivate: function(node) {
+			selectCloudFile = node.data
+			console.log(selectCloudFile)
+			},
+		onLazyRead: function(node){
+			node.appendAjax({
+			url: projectURL+"/cloud/sublist.json",
+			data : { path : node.data.path },
+			debugLazyDelay: 200,
+			success : function (node) {
+				setIcon(node.childList)
+				console.log(node)
+				}
+			});
 		},
-	onLazyRead: function(node){
-		node.appendAjax({
-		url: projectURL+"/cloud/sublist.json",
-		data : { path : node.data.path },
-		debugLazyDelay: 200,
-		success : function (node) {
-			console.log(node)
-			}
-		});
-	},
-	// onClick : function (node) {
-	// },
-	minExpandLevel: 2,
-	debugLevel: 0
+		// onClick : function (node) {
+		// },
+		minExpandLevel: 2,
+		debugLevel: 0
 	});
 
 

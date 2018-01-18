@@ -43,11 +43,11 @@ function focusFile(ele) {
 
 // 파일 선택시 빨강 포커스
 $("body").on("click", ".file", function () {
+	focusFile($(this));
 	var key = $(this).attr("data-key");
 	var node = $("#tree").dynatree("getTree").getNodeByKey(key);
 	node.activate(); // 강제 엑티브
 	node.expand(); // 강제 오픈
-	focusFile($(this));
 	showFileDetail(key);
 })
 
