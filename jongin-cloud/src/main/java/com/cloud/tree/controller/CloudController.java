@@ -5,9 +5,11 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -288,8 +290,12 @@ public class CloudController {
 	public Map<String, Object> codeView(String path) throws Exception {
 		Map<String, Object> map = new HashMap<>();
 
-		FileReader fr = new FileReader(path);
-		BufferedReader br = new BufferedReader(fr);
+//		FileReader fr = new FileReader(path);
+//		BufferedReader br = new BufferedReader(fr);
+		
+		File file = new File(path);
+//		
+		BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF8"));
 
 		String line;
 		String code = "";
@@ -308,9 +314,12 @@ public class CloudController {
 		deleteFile(path);
 
 		File file = new File(path);
-		FileWriter fw = new FileWriter(file);
-		fw.write(changeCode);
-		fw.close();
+		
+		FileOutputStream fileStream = new FileOutputStream(file);
+		OutputStreamWriter osw = new OutputStreamWriter(fileStream, "UTF-8");
+		
+		osw.write(changeCode);
+		osw.close();
 
 	}
 

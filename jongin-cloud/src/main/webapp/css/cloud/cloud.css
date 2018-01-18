@@ -42,8 +42,11 @@
 		display: inline-block;
 	}
 	.CodeMirror {
-		border: 1px solid #eee;
+		border: 1px solid black;
 		height: auto;
+	}
+	.codeBtn-box>button{
+		margin-bottom: 6px;
 	}
 	#image-down-link{
 		overflow: hidden;

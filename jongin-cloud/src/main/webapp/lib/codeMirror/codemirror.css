@@ -9,6 +9,28 @@
   padding : 0px !important;
 }
 
+.CodeMirror-fullscreen {
+  position: fixed !important;
+  top: 0; left: 0; right: 0; bottom: 0;
+  height: auto;
+  z-index: 999 !important;
+}
+#full-screen-close{
+  /* background: #1678ab; */
+  font-size: 30px;
+  color: white;
+  top: 15px;
+  /* border-radius: 31px !important; */
+  width: 22px;
+  height: 22px;
+  line-height: normal;
+  z-index: 999 !important;
+  position: fixed;
+  right: 30px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
 /* PADDING */
 
 .CodeMirror-lines {

@@ -22,6 +22,7 @@ pageEncoding="UTF-8"%>
 	<script src="${pageContext.request.contextPath}/lib/codeMirror/javascript.js"></script>
 	<script src="${pageContext.request.contextPath}/lib/codeMirror/active-line.js"></script>
 	<script src="${pageContext.request.contextPath}/lib/codeMirror/matchbrackets.js"></script>
+	<script src="${pageContext.request.contextPath}/lib/codeMirror/fullscreen.js"></script>
 	
 	<!-- pdf view -->
 	<script src="${pageContext.request.contextPath}/lib/pdfobject/pdfobject.min.js"></script>

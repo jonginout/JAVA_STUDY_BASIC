@@ -511,15 +511,21 @@ $("body").on("click", ".code-view", function(){
 		success : function (data) {
 
 			var html ='<form class="CodeMirror">\
-						<textarea id="code" name="code"></textarea>\
-					  </form>';
+						<textarea id="code" name="code" class="code-editor"></textarea>\
+					  </form>\
+					  <p style="text-align: right">F11 : 전체화면</p>';
+					  
 			$(".code-content").html(html);
-			loadEditor(data.code);
 
-			var buttonHtml = '<button class="btn btn-default" type="button" id="codeEidtBtn" data-key="'+key+'">\
+			loadEditor(data.code);
+						
+			var buttonHtml = '<button class="btn btn-default code-plus-btn" type="button" id="codeEidtBtn" data-key="'+key+'">\
 								<i class="fa fa-floppy-o" aria-hidden="true"></i> 수정하기\
-							  </button>';
-			$("#codeEidtBtn").remove();
+							</button> ';
+			buttonHtml +='<button class="btn btn-default code-plus-btn" type="button" id="zoomCodeBtn" data-key="'+key+'">\
+							   <i class="fa fa-search-plus" aria-hidden="true"></i> 확대\
+						  </button> ';
+			$(".code-plus-btn").remove();
 			$(".codeBtn-box").append(buttonHtml);
 
 		},
@@ -529,15 +535,20 @@ $("body").on("click", ".code-view", function(){
 	});
 })
 
+// 확대 하기
+$("body").on("click", "#zoomCodeBtn", function(){
+	editor.setOption("fullScreen", !editor.getOption("fullScreen"));
+})
+$("body").on("click", "#full-screen-close", function(){
+	if (editor.getOption("fullScreen")) editor.setOption("fullScreen", false);
+})
+
+
 // 코드 에디터 로드하기
 function loadEditor(code){
+
 	$("#plzSave").remove();
-	editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-				lineNumbers: true,
-				styleActiveLine: true,
-				matchBrackets: true, 
-				theme : "ambiance",
-			  });
+	editor = codeLoad("code");
 	editor.setValue(code)
 
 	editor.on("change", function(){
@@ -548,6 +559,25 @@ function loadEditor(code){
 		`;
 		$("#fileName").html(nowNode.title+plzSave);
 	})
+}
+
+// 코드 로드
+function codeLoad(ele){
+	return CodeMirror.fromTextArea(document.getElementById(ele), {
+		lineNumbers: true,
+		styleActiveLine: true,
+		matchBrackets: true, 
+		viewportMargin: Infinity,
+		theme : "ambiance",
+		extraKeys: {
+			"F11": function(cm) {
+				cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+			},
+			"Esc": function(cm) {
+				if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+			}
+		}	
+	  });
 }
 
 // 코드 새로고침
