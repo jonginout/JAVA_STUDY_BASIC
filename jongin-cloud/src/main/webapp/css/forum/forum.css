@@ -247,7 +247,10 @@
 		color: skyblue;
 		cursor: pointer;		
 	}
-
+	.CodeMirror {
+		border: 1px solid black;
+		height: auto;
+	}
 
 
 	.category[data-category='자유']{
