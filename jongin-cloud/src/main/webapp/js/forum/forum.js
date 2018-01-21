@@ -468,20 +468,71 @@
 						
 						// 이미지 뷰 사용가능 확장자
 						var imgFileArr = ["png","jpg","jpeg","gif","png","bmp"];
+						// 코드 뷰 사용가능 확장자
+						var codeFileArr = ["java","js","html","css","jsp","php","txt"];
 						if(imgFileArr.indexOf((files[f].ext).toLowerCase())!=-1){
 							viewHtml += '<br><br><img src="'+viewUrl+'" width="100%"/>'
+						}else if(codeFileArr.indexOf((files[f].ext).toLowerCase())!=-1){
+							viewHtml ='<br><br>\
+										<form class="CodeMirror" data-forumNo="'+files[f].forumNo+'">\
+											<textarea id="code'+files[f].forumNo+'" name="code'+files[f].forumNo+'" class="code-editor"></textarea>\
+									   </form>\
+									   <a id="zoomCodeBtn">\
+									  	 <i class="fa fa-search-plus" aria-hidden="true"></i> 확대\
+								   	   </a>';
 						}
 
                         downHtml += '<a href="'+downUrl+'">'+files[f].fileName+'</a>';
 
 					}
                     parent(no).find(".content-box>span:eq(1)").html(viewHtml)
-                    parent(no).find(".file-box").html(downHtml)
+					parent(no).find(".file-box").html(downHtml)
+					
+
+					$.ajax({
+						type : "post",
+						url : projectURL+"/cloud/codeview.json",
+						data : {path : files[f].path},
+						success : function (data) {
+							codeLoad("code"+files[f].forumNo,data.code);
+						}
+					});
+
                 }
                 
             }
         })
-    }
+	}
+
+	// 코드 로드
+	function codeLoad(ele, code){
+		var editor = CodeMirror.fromTextArea(document.getElementById(ele), {
+			lineNumbers: true,
+			styleActiveLine: true,
+			matchBrackets: true, 
+			viewportMargin: Infinity,
+			readOnly: 'nocursor',
+			theme : "ambiance",
+			extraKeys: {
+				"F11": function(cm) {
+					cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+				},
+				"Esc": function(cm) {
+					if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+				}
+			}	
+		});
+
+		editor.setValue(code)
+		// 확대 하기
+		$("body").on("click", "#zoomCodeBtn", function(){
+			editor.setOption("fullScreen", !editor.getOption("fullScreen"));
+		})
+		$("body").on("click", "#full-screen-close", function(){
+			if (editor.getOption("fullScreen")) editor.setOption("fullScreen", false);
+		})
+	}
+
 
 	//조회수 상승
 	function addView(no){

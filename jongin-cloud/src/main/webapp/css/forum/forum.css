@@ -238,6 +238,15 @@
 	.comment-actions li:hover {
 		color: #0095ff;
 	}
+	#zoomCodeBtn{
+		color: black;
+		margin: 0px;
+		font-size: 1.12em;
+	}
+	#zoomCodeBtn:hover{
+		color: skyblue;
+		cursor: pointer;		
+	}
 
 
 

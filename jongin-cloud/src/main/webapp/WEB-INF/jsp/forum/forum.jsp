@@ -11,6 +11,15 @@ pageEncoding="UTF-8"%>
 	
 	<%@ include file="/WEB-INF/jsp/include/basicinclude.jsp" %>
 
+	<!-- 코드미러 -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/codeMirror/codemirror.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/codeMirror/ambiance.css">
+	<script src="${pageContext.request.contextPath}/lib/codeMirror/codemirror.js"></script>
+	<script src="${pageContext.request.contextPath}/lib/codeMirror/javascript.js"></script>
+	<script src="${pageContext.request.contextPath}/lib/codeMirror/active-line.js"></script>
+	<script src="${pageContext.request.contextPath}/lib/codeMirror/matchbrackets.js"></script>
+	<script src="${pageContext.request.contextPath}/lib/codeMirror/fullscreen.js"></script>
+
 	<!-- 클라우드 CSS -->
 	<link href="${pageContext.request.contextPath}/css/forum/forum.css" rel="stylesheet" type="text/css" id="skinSheet">
 	
